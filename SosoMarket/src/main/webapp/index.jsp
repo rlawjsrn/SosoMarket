@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h4> index.jsp입니다 지인</h4>
+<h4> index.jsp입니다 지인
+디나 커밋 </h4> 
 </body>
 </html>
