@@ -7,7 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h4> index.jsp입니다 지인 밍구리 커밋 테스트
-디나 커밋 </h4> 
+	<form>
+		<p>아 이 디:<input type="text" name="user_id">
+	</form>
 </body>
 </html>

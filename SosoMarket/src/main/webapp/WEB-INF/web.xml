@@ -31,4 +31,14 @@
     <servlet-name>ProdOneServlet</servlet-name>
     <url-pattern>/ProdOneServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>memberServlet</display-name>
+    <servlet-name>memberServlet</servlet-name>
+    <servlet-class>com.tbk.prj.member.memberServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>memberServlet</servlet-name>
+    <url-pattern>/memberServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
