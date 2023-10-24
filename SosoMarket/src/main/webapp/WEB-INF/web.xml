@@ -33,6 +33,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>MypageLikeServlet</display-name>
+    <servlet-name>MypageLikeServlet</servlet-name>
+    <servlet-class>com.tbk.prj.mypage.MypageLikeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MypageLikeServlet</servlet-name>
+    <url-pattern>/MypageLikeServlet</url-pattern>
     <display-name>memberServlet</display-name>
     <servlet-name>memberServlet</servlet-name>
     <servlet-class>com.tbk.prj.member.memberServlet</servlet-class>
