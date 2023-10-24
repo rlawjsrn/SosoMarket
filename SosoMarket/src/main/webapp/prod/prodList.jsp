@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상품전체조회페이지</title>
 </head>
 <body>
-<h4> index.jsp입니다 지인 밍구리 커밋 테스트
-디나 커밋 </h4> 
-<a href="/SosoMarket/MypageLikeList.do">테스트</a>
+상품전체조회페이지상품전체조회페이지
 </body>
 </html>
