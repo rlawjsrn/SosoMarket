@@ -6,7 +6,7 @@ import common.DAO;
 
 public class ProdOneDAO extends DAO {
 
-	// 상품 한 건 조회
+	// 상품 한 건 조회 (쿼리 수정 필요 - 231024지인)
 	public ProdVO prodOne(String prodId) {
 		connect(); // db연결
 		String sql = "SELECT"
