@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">  <servlet>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  <servlet>
     <description></description>
     <display-name>ProdServlet</display-name>
     <servlet-name>ProdServlet</servlet-name>
@@ -29,5 +30,15 @@
   <servlet-mapping>
     <servlet-name>ProdOneServlet</servlet-name>
     <url-pattern>/ProdOneServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>memberServlet</display-name>
+    <servlet-name>memberServlet</servlet-name>
+    <servlet-class>com.tbk.prj.member.memberServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>memberServlet</servlet-name>
+    <url-pattern>/memberServlet</url-pattern>
   </servlet-mapping>
 </web-app>
