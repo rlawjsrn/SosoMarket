@@ -12,20 +12,22 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/ProdList.do")
 public class ProdServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
 	public ProdServlet() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		System.out.println("실행되니??????");
+
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("prod/prodList.jsp");
-		
-		ProdDAO dao = new ProdDAO();
-		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("prod/prodOne.jsp");
+		dispatcher.forward(request, response);
+//		ProdDAO dao = new ProdDAO();
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
