@@ -7,8 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form>
-		<p>아 이 디:<input type="text" name="user_id">
+	<form method="post" action="/SosoMarket/LogIn.do">
+		<p>아 이 디:<input type="text" name="memberid">
+		<p>비밀번호:<input type="password" name="password">
+		<input type="submit" value="로그인">
 	</form>
 </body>
 </html>
