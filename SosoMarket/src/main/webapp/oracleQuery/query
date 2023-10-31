@@ -1,0 +1,13 @@
+// 관심상품 쿼리
+회원별 찜 목록
+SELECT pi.product_interest_id, pi.member_id, pp.product_photo_id, p.product_name, p.product_status, p.product_price
+FROM product p, product_interest pi, product_photo pp
+WHERE pp.product_id = p.product_id
+AND pi.product_id = p.product_id
+AND pi.member_id = 'test2';
+
+상품별 찜 개수
+select count(product_id)
+from product_interest
+where product_id = 'protest1';
+

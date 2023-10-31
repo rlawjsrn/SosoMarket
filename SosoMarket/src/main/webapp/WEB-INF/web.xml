@@ -2,6 +2,18 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<servlet>
+		<description></description>
+		<display-name>ProdServlet</display-name>
+		<servlet-name>ProdServlet</servlet-name>
+		<servlet-class>com.tbk.prj.prod.ProdServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProdServlet</servlet-name>
+		<url-pattern>/ProdServlet</url-pattern>
+	</servlet-mapping>
+
 	<display-name>SosoMarket</display-name>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
@@ -21,6 +33,19 @@
 		<servlet-name>ProdOneServlet</servlet-name>
 		<url-pattern>/ProdOneServlet</url-pattern>
 	</servlet-mapping>
+
+		<servlet>
+		<description></description>
+		<display-name>MypageLikeListServlet</display-name>
+		<servlet-name>MypageLikeListServlet</servlet-name>
+		<servlet-class>com.tbk.prj.mypage.MypageLikeListServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MypageLikeListServlet</servlet-name>
+		<url-pattern>/MypageLikeListServlet</url-pattern>
+	</servlet-mapping>
+</web-app>
+
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
 		<url-pattern>/</url-pattern>
@@ -39,3 +64,4 @@
 	</servlet-mapping>
 
 </web-app>
+
