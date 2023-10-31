@@ -8,6 +8,7 @@
 <title>상품전체조회페이지</title>
 </head>
 <body>
-상품전체조회페이지상품전체조회페이지
+<a href="/SosoMarket/ProdList.do">상품 전체 조회</a>
+
 </body>
 </html>
