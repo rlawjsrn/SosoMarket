@@ -1,12 +1,14 @@
 package com.tbk.prj.mypage;
 
-import java.sql.Date;
 
 public class MypageLikeVO {
 	private String productInterestId;
 	private String memberId;
 	private String productId;
-	private Date generationDate;
+	private String productPhotoId;
+	private String productName;
+	private String productStatus;
+	private int productPrice;
 
 	public String getProductInterestId() {
 		return productInterestId;
@@ -32,12 +34,36 @@ public class MypageLikeVO {
 		this.productId = productId;
 	}
 
-	public Date getGenerationDate() {
-		return generationDate;
+	public String getProductPhotoId() {
+		return productPhotoId;
 	}
 
-	public void setGenerationDate(Date generationDate) {
-		this.generationDate = generationDate;
+	public void setProductPhotoId(String productPhotoId) {
+		this.productPhotoId = productPhotoId;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getProductStatus() {
+		return productStatus;
+	}
+
+	public void setProductStatus(String productStatus) {
+		this.productStatus = productStatus;
+	}
+
+	public int getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(int productPrice) {
+		this.productPrice = productPrice;
 	}
 
 }

@@ -13,17 +13,18 @@
 	<table border="1">  <!-- sd -->
 		<tr>
 			<th width="50">상품 아이디</th>
-			<th width="150">판매자</th>
-			<th width="200">판매 번호</th>
-			<th width="150">생성일자dfs</th>
+			<th width="150">상품 사진</th>
+			<th width="200">상품 이름</th>
+			<th width="150">상품 상태</th>
+			<th width="150">상품 가격</th>
 		</tr>
-	
-		<c:forEach var="like" items="${likeList}">
+		<c:forEach var="vo" items="${list}">
 			<tr class="row">
-				<td align="center">${like.productInterestId }</td>
-				<td>${like.memberId }</td>
-				<td align="center">${like.productId }</td>
-				<td align="center">${like.generationDate }</td>
+				<td align="center">${vo.productInterestId }</td>
+				<td align="center">${vo.productPhotoId }</td>
+				<td align="center">${vo.productName }</td>
+				<td align="center">${vo.productStatus }</td>
+				<td align="center">${vo.productPrice }</td>
 			</tr>
 		</c:forEach>
 	</table>
