@@ -45,8 +45,6 @@
 		<servlet-name>MypageLikeListServlet</servlet-name>
 		<url-pattern>/MypageLikeListServlet</url-pattern>
 	</servlet-mapping>
-</web-app>
-
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
 		<url-pattern>/</url-pattern>
