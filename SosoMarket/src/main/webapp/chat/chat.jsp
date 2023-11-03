@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
+	<a href="/SosoMarket/ChatList.do">채팅리스트</a>
 </body>
 </html>
