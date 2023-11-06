@@ -1,7 +1,9 @@
 package com.tbk.prj.mypage;
 
+import java.sql.Date;
 
 public class MypageLikeVO {
+	private String buyId;
 	private String productInterestId;
 	private String memberId;
 	private String productId;
@@ -9,6 +11,15 @@ public class MypageLikeVO {
 	private String productName;
 	private String productStatus;
 	private int productPrice;
+	private Date generationDate;
+
+	public Date getGenerationDate() {
+		return generationDate;
+	}
+
+	public void setGenerationDate(Date generationDate) {
+		this.generationDate = generationDate;
+	}
 
 	public String getProductInterestId() {
 		return productInterestId;

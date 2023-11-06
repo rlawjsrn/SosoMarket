@@ -1,13 +1,59 @@
 // 관심상품 쿼리
-회원별 찜 목록
-SELECT pi.product_interest_id, pi.member_id, pp.product_photo_id, p.product_name, p.product_status, p.product_price
+// 회원별 찜 목록 수정 버전
+SELECT p.product_id, pi.product_interest_id, pi.member_id, pp.product_photo_id, p.product_name, p.product_status, p.product_price
 FROM product p, product_interest pi, product_photo pp
 WHERE pp.product_id = p.product_id
 AND pi.product_id = p.product_id
-AND pi.member_id = 'test2';
+AND pi.member_id = 'test2'
+AND pp.product_photo_id IN (SELECT max(product_photo_id)
+                            FROM product_photo
+                            GROUP BY product_id);
+
+// 회원별 찜 목록 2차 수정
+SELECT p.product_id, pi.product_interest_id, pi.member_id, pp.product_photo_id, p.product_name, p.product_status, p.product_price
+FROM product p, product_interest pi, product_photo pp
+WHERE substr(pp.product_photo_name,1,6) = p.product_id
+AND pi.product_id = p.product_id
+AND pi.member_id = 'test2'
+AND pp.product_photo_id IN (SELECT max(product_photo_id)
+                            FROM product_photo
+                            GROUP BY substr(product_photo_name,1,6));
 
 상품별 찜 개수
 select count(product_id)
 from product_interest
 where product_id = 'protest1';
 
+
+// 판매내역
+SELECT p.product_id, pp.product_photo_id, p.product_name, p.product_status, p.product_price, p.generation_date
+FROM product p, product_photo pp
+WHERE pp.product_id = p.product_id
+AND p.product_status = 1
+AND p.member_id = 'test1'
+AND pp.product_photo_id IN (SELECT max(product_photo_id)
+                            FROM product_photo
+                            GROUP BY product_id)
+                            
+// 판매내역 수정
+SELECT p.product_id, pp.product_photo_id, p.product_name, p.product_status, p.product_price, p.generation_date
+FROM product p, product_photo pp
+WHERE substr(pp.product_photo_name,1,6) = p.product_id
+AND p.product_status = 1
+AND p.member_id = 'test1'
+AND pp.product_photo_id IN (SELECT max(product_photo_id)
+                            FROM product_photo
+                            GROUP BY substr(product_photo_name,1,6));
+
+
+// 구매내역
+SELECT b.buy_id, p.product_id, pp.product_photo_id, p.product_name, p.product_status, p.product_price, p.generation_date
+FROM product p, product_photo pp, buy b, member m
+WHERE substr(pp.product_photo_name,1,6) = p.product_id
+AND b.product_id = p.product_id
+AND b.member_id = m.member_id
+AND p.product_status = 1
+AND b.member_id = 'test2'
+AND pp.product_photo_id IN (SELECT max(product_photo_id)
+                            FROM product_photo
+                            GROUP BY substr(product_photo_name,1,6));
