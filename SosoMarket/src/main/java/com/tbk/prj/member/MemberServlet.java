@@ -66,7 +66,7 @@ public class MemberServlet extends HttpServlet {
 		if(result == 1) {
 			request.getSession().setAttribute("messageType", "성공 메세지");
 			request.getSession().setAttribute("messageContent", "회원가입에 성공했습니다.");
-			response.sendRedirect("member/signin.jsp");
+			response.sendRedirect("member/login.jsp");
 			return;
 		}else {
 			request.getSession().setAttribute("messageType", "오류 메세지");

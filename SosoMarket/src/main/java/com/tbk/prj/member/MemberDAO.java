@@ -89,7 +89,7 @@ public class MemberDAO extends DAO {
 			connect();
 			psmt = null;
 			rs = null;
-			sql = "SELECT member_id, password FROM MEMBER WHERE member_id = ? AND password";
+			sql = "SELECT * FROM MEMBER WHERE member_id = ? AND password = ?";
 			try {
 				psmt = conn.prepareStatement(sql);
 				psmt.setString(1, memberId);
@@ -100,7 +100,10 @@ public class MemberDAO extends DAO {
 					MemberVO vo = new MemberVO();
 					vo.setMemberId(rs.getString("member_id"));
 					vo.setPassword(rs.getString("password"));
+					vo.setNickname(rs.getString("nickname"));
 					return vo;
+				}else {
+					return null;
 				}
 			}catch (Exception e) {
 				// TODO: handle exception

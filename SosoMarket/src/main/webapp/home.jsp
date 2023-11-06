@@ -37,7 +37,7 @@
 </head>
 
 <body>
-	<jsp:include page="../resources/header.html" />
+	<jsp:include page="./resources/header.html" />
 
 	<!-- NAVIGATION -->
 	<nav id="navigation">

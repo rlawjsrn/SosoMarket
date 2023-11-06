@@ -5,21 +5,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 
 /**
- * Servlet implementation class MemberLogInServlet
+ * Servlet implementation class MemberServlet
  */
-@WebServlet("/LogIn.do")
-public class MemberLogInServlet extends HttpServlet {
+@WebServlet("/MemberIdCheckServlet")
+public class MemberIdCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberLogInServlet() {
+    public MemberIdCheckServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,26 +30,7 @@ public class MemberLogInServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		String memberId = request.getParameter("memberId");
-		String password = request.getParameter("password");
-		//int idck = 
-		MemberVO vo = new MemberDAO().loginmember(memberId, password);
-		// 로그인 성공
-		if(memberId.equals(vo.getMemberId())&& password.equals(vo.getPassword())) {
-			System.out.println("1 :"+vo.getMemberId());
-			System.out.println("2 :"+vo.getPassword());
-			HttpSession session = request.getSession();
-			
-			session.setAttribute("memberId", vo.getMemberId());
-			session.setAttribute("password", vo.getPassword());
-			session.setAttribute("nickname", vo.getNickname());
-			
-			response.sendRedirect("member/login.jsp");
-			
-		}else {// 로그인 실패
-			request.getSession().setAttribute("messageContent", "아이디와 비밀번호를 확인해주세요.");
-			response.sendRedirect("member/login.jsp");
-		}
-		
+		response.getWriter().write(new MemberDAO().idCheck(memberId+""));
 	}
 
 	/**
