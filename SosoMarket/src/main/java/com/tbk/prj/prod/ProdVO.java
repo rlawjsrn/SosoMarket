@@ -8,7 +8,7 @@ public class ProdVO {
 	int prodViews; // 조회수
 	String prodDscrp; // 상품설명
 	String placeTrans; // 거래희망장소
-	String prodPhotoId;// 상품사진아이디
+	String prodPhotoPath;// 상품사진경로
 
 	public String getProdId() {
 		return prodId;
@@ -66,18 +66,18 @@ public class ProdVO {
 		this.placeTrans = placeTrans;
 	}
 
-	public String getProdPhotoId() {
-		return prodPhotoId;
+	public String getProdPhotoPath() {
+		return prodPhotoPath;
 	}
 
-	public void setProdPhotoId(String prodPhotoId) {
-		this.prodPhotoId = prodPhotoId;
+	public void setProdPhotoPath(String prodPhotoPath) {
+		this.prodPhotoPath = prodPhotoPath;
 	}
 
 	@Override
 	public String toString() {
 		return "ProdVO [prodId=" + prodId + ", prodName=" + prodName + ", prodStatus=" + prodStatus + ", prodPrice="
 				+ prodPrice + ", prodViews=" + prodViews + ", prodDescription=" + prodDscrp + ", placeTrans="
-				+ placeTrans + ", prodPhotoId=" + prodPhotoId + "]";
+				+ placeTrans + ", prodPhotoPath=" + prodPhotoPath + "]";
 	}
 }
