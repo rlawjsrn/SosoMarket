@@ -65,4 +65,14 @@
     <servlet-name>ChatListServlet</servlet-name>
     <url-pattern>/ChatListServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ChatRoomServlet</display-name>
+    <servlet-name>ChatRoomServlet</servlet-name>
+    <servlet-class>com.tbk.prj.chat.ChatRoomServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChatRoomServlet</servlet-name>
+    <url-pattern>/ChatRoomServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

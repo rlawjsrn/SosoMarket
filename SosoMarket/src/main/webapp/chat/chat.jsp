@@ -8,5 +8,6 @@
 </head>
 <body>
 	<a href="/SosoMarket/ChatList.do">채팅리스트</a>
+	<a href="/SosoMarket/ChatRoom.do">채팅방</a>
 </body>
 </html>

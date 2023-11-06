@@ -9,9 +9,6 @@
 <title>소소마켓</title>
 
 <!-- 채팅화면 style -->
-<!-- orig Bootstrap -->
-<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
-<!-- this Bootstrap -->
 <link type="text/css" rel="stylesheet"
 	href="resources/css/bootstrap.min.css?after" />
 <script
@@ -21,11 +18,9 @@
 <link rel="stylesheet" href="resources/css/style-chat.css?after">
 
 </head>
+
+<!-- 나중에 삭제할 부분 -->
 <body>
-
-	<!-- 헤더 연결 -->
-	<jsp:include page="../resources/header.html"></jsp:include>
-
 	<!-- chat container -->
 	<div class="chat-container">
 		<div class="messaging">
@@ -47,9 +42,10 @@
 								</div>
 								<div class="chat_ib">
 									<h5>
-										테스트용<span class="chat_date">--------</span>
+										Sunil Rajput <span class="chat_date">Dec 25</span>
 									</h5>
-									<p>테스트</p>
+									<p>Test, which is a new approach to have all solutions
+										astrology under one roof.</p>
 								</div>
 							</div>
 						</div>
@@ -83,5 +79,57 @@
 		</div>
 	</div>
 
+</body>
+
+<body>
+	<!-- 채팅창 내부 (수정 중!!!) -->
+	<div class="msg_history">
+		<c:forEach var="vo" items="${list }">
+			<!-- <c:if test="${vo. eq 1 }"> -->
+		</c:forEach>
+
+		<c:forEach var="vo" items="${list}">
+			<c:if test="${vo.productStatus eq 1}">
+				<!-- product_status = 1 -> 거래완료 -->
+				<tr>
+					<td class="product-thumbnail"><img src="${vo.productPhotoId }"
+						alt="Image" class="img-fluid"></td>
+					<td class="product-name">
+						<h2 class="h5 text-black">${vo.productName }</h2>
+					</td>
+					<td>${vo.productPrice }</td>
+					<td>거래완료</td>
+					<td>${vo.generationDate }</td>
+				</tr>
+			</c:if>
+		</c:forEach>
+
+		<div class="incoming_msg">
+			<div class="incoming_msg_img">
+				<img src="https://ptetutorials.com/images/user-profile.png"
+					alt="sunil">
+			</div>
+			<div class="received_msg">
+				<div class="received_withd_msg">
+					<p>상대방채팅</p>
+					<span class="time_date"> 11:01 AM | June 9</span>
+				</div>
+			</div>
+		</div>
+		<div class="outgoing_msg">
+			<div class="sent_msg">
+				<p>본인채팅</p>
+				<span class="time_date"> 11:01 AM | June 9</span>
+			</div>
+		</div>
+	</div>
+	<div class="type_msg">
+		<div class="input_msg_write">
+			<input type="text" class="write_msg" placeholder="메시지 보내기" />
+			<button class="msg_send_btn" type="button">
+				<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+			</button>
+		</div>
+	</div>
 </body>
 </html>

@@ -11,16 +11,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ChatListServlet
+ * Servlet implementation class ChatRoomServlet
  */
-@WebServlet("/ChatList.do")
-public class ChatListServlet extends HttpServlet {
+
+@WebServlet("/ChatRoom.do")
+public class ChatRoomServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChatListServlet() {
+    public ChatRoomServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,14 +31,14 @@ public class ChatListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		ChatListDAO dao = new ChatListDAO();
+		ChatRoomDAO dao = new ChatRoomDAO();
 		ChatVO vo = new ChatVO();
 		ArrayList<ChatVO> list = new ArrayList<ChatVO>();
 		
-		list = dao.selectChatList();
+		list = dao.selectChatMsgs();
 		request.setAttribute("list", list);
 		
-		String viewPage = "chat/chatList.jsp";
+		String viewPage = "chat/chatRoom.jsp";
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
