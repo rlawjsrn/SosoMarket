@@ -1,4 +1,4 @@
-package chat;
+package com.tbk.prj.chat;
 
 public class ChatVO {
 
@@ -6,14 +6,16 @@ public class ChatVO {
 	private String chat_id;
 	private String product_id;
 	private String buyer_id;
-	private String generation_date;
 
 //	채팅메세지
 	private String chat_message_id;
 	private String chat_message;
 	private char read_or_not;
-	private String generationo_date;
+	private String generation_date;
 	private String member_id;
+	
+//	상품
+	private String product_name;
 
 	public String getChat_id() {
 		return chat_id;
@@ -71,14 +73,6 @@ public class ChatVO {
 		this.read_or_not = read_or_not;
 	}
 
-	public String getGenerationo_date() {
-		return generationo_date;
-	}
-
-	public void setGenerationo_date(String generationo_date) {
-		this.generationo_date = generationo_date;
-	}
-
 	public String getMember_id() {
 		return member_id;
 	}
@@ -87,4 +81,13 @@ public class ChatVO {
 		this.member_id = member_id;
 	}
 
+	public String getProduct_name() {
+		return product_name;
+	}
+
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+
+	
 }
