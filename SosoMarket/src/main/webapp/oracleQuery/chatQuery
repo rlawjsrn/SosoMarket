@@ -1,0 +1,18 @@
+-- 채팅 리스트 조회
+select c.chat_id, p.product_name, m.chat_message, m.generation_date
+from chat c
+     inner join product p on c.product_id = p.product_id
+     inner join (SELECT chat_id, chat_message, read_or_not, generation_date
+                 FROM chat_message
+                 WHERE (chat_id, generation_date) IN (SELECT chat_id, MAX(generation_date)
+                                                      FROM chat_message
+                                                      GROUP BY chat_id)) m
+                 on c.chat_id = m.chat_id
+where p.member_id = 'test3'
+   or c.buyer_id = 'test3';
+   
+-- 채팅방 메시지 조회
+select member_id, chat_message, generation_date
+from chat_message
+where chat_id = 'ch00005'
+order by generation_date;

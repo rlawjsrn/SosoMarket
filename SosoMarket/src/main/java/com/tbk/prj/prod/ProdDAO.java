@@ -22,7 +22,7 @@ public class ProdDAO extends DAO {
 				vo.setProdId(rs.getString("prodId")); // 상품 아이디
 				vo.setProdName(rs.getString("prodName")); // 상품명
 				vo.setProdPrice(rs.getInt("prodPrice")); // 판매가액
-				vo.setProdPhotoId(rs.getString("prodPhotoId")); // 상품사진아이디
+				vo.setProdPhotoPath(rs.getString("prodPhotoPath")); // 상품사진아이디
 
 				list.add(vo);
 				System.out.println("vo:" + vo);
@@ -33,9 +33,17 @@ public class ProdDAO extends DAO {
 			disconnect();
 		}
 		return list;
-
 	}
+
 // 상품 등록
+	public ProdVO insertProd(String category, String prodId, String prodName, int prodPrice, String prodDscrp, String placeTrans,
+			String prodPhotoPath) {
+		connect();
+		List<ProdVO> list;
+		
+		ProdVO vo = new ProdVO();
+		return vo;
+	}
 
 // 상품 수정
 
