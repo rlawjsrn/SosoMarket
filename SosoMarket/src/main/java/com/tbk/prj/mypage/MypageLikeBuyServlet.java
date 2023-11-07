@@ -1,18 +1,19 @@
 package com.tbk.prj.mypage;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet implementation class MypageLikeList
  */
-@WebServlet("/MypageDelH.do")
+@WebServlet("/MypageBuyList.do")
 public class MypageLikeBuyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -43,7 +44,6 @@ public class MypageLikeBuyServlet extends HttpServlet {
 		// RequestDispatcher는 클라이언트로부터 최초에 들어온 요청을 JSP/Servlet 내에서 원하는 자원으로 요청을 넘기는 역할 수행
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
-		
 	}
 
 	/**

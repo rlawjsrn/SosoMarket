@@ -77,4 +77,12 @@ public class MypageLikeVO {
 		this.productPrice = productPrice;
 	}
 
+	public String getBuyId() {
+		return buyId;
+	}
+
+	public void setBuyId(String buyId) {
+		this.buyId = buyId;
+	}
+
 }

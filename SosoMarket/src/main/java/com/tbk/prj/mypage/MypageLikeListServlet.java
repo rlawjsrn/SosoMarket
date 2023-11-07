@@ -38,6 +38,7 @@ public class MypageLikeListServlet extends HttpServlet {
 		// dao 페이지에서 전체목록
 		list = dao.selectList();
 		System.out.println(list);
+		System.out.println("제발 열려라!!");
 		request.setAttribute("list", list);
 		// 목록을 보여줄 페이지
 		String viewPage = "mypage/myLikeList.jsp";
