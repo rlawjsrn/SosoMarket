@@ -6,17 +6,18 @@ import java.util.ArrayList;
 import common.DAO;
 
 public class ChatRoomDAO extends DAO {
-
+	
 	private final String ChatMsgsList = "select member_id, chat_message, generation_date\r\n"
-			+ "from chat_message\r\n" + "where chat_id = 'ch00005'\r\n" + "order by generation_date";
+			+ "from chat_message\r\n" + "where chat_id = ?\r\n" + "order by generation_date";
 
-	public ArrayList<ChatVO> selectChatMsgs() {
+	public ArrayList<ChatVO> selectChatMsgs(String chat_id) {
 		ArrayList<ChatVO> list = new ArrayList<ChatVO>();
 		ChatVO vo;
 
 		try {
 			connect();
 			psmt = conn.prepareStatement(ChatMsgsList);
+			psmt.setString(1, chat_id);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				vo = new ChatVO();

@@ -20,6 +20,27 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="resources/css/style-chat.css?after">
 
+<script>
+	$(document).on('click', '.call-room', function(e) {
+		e.preventDefault(); // 기본 동작 방지
+
+		var chatRoomUrl = $(this).attr('href');
+
+		// Ajax를 이용해 ChatRoom.do 호출
+		$.ajax({
+			url : chatRoomUrl,
+			method : 'POST',
+			success : function(data) {
+				// 성공 시 div.message에 결과를 넣음
+				$('.mesgs').html(data);
+			},
+			error : function(error) {
+				console.error('Error:', error);
+			}
+		});
+	});
+</script>
+
 </head>
 <body>
 
@@ -56,20 +77,22 @@
 
 						<!-- 채팅리스트 추가 -->
 						<c:forEach var="vo" items="${list }">
-							<div class="chat_list">
-								<div class="chat_people">
-									<div class="chat_img">
-										<img src="https://ptetutorials.com/images/user-profile.png"
-											alt="sunil">
-									</div>
-									<div class="chat_ib">
-										<h5>
-											${vo.product_name } <span class="chat_date">${vo.generation_date }</span>
-										</h5>
-										<p>${vo.chat_message }</p>
+							<a class="call-room" href="/SosoMarket/ChatRoom.do?chat_id=${vo.chat_id }">
+								<div class="chat_list">
+									<div class="chat_people">
+										<div class="chat_img">
+											<img src="https://ptetutorials.com/images/user-profile.png"
+												alt="sunil">
+										</div>
+										<div class="chat_ib">
+											<h5>
+												${vo.product_name } <span class="chat_date">${vo.generation_date }</span>
+											</h5>
+											<p>${vo.chat_message }</p>
+										</div>
 									</div>
 								</div>
-							</div>
+							</a>
 						</c:forEach>
 
 					</div>

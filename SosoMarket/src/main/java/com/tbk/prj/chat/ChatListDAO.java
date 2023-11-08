@@ -19,7 +19,6 @@ public class ChatListDAO extends DAO {
 			+ "                 on c.chat_id = m.chat_id\r\n" + "where p.member_id = 'test3'\r\n"
 			+ "   or c.buyer_id = 'test3'";
 
-//	띠바 진짜 하나도 모르겠다
 	public ArrayList<ChatVO> selectChatList() {
 		ArrayList<ChatVO> list = new ArrayList<ChatVO>();
 		ChatVO vo;
@@ -35,7 +34,6 @@ public class ChatListDAO extends DAO {
 				vo.setChat_message(rs.getString("chat_message"));
 				vo.setGeneration_date(rs.getString("generation_date").substring(2, 16));
 				// vo 에다가 하나씩 담는 과정.
-				// ㄴ 왜 담는데? 사실 알고 싶지 않음.
 				list.add(vo);
 			}
 		} catch (SQLException e) {
