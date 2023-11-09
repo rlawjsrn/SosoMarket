@@ -92,21 +92,23 @@ public class CommunityDAO extends DAO {
     }
 
     // Retrieve all posts
+    private final String CommunityPostList= "SELECT * FROM community ORDER BY generation_date DESC";
+    
     public ArrayList<CommunityVO> getAllPosts() {
-        ArrayList<CommunityVO> posts = new ArrayList<>();
+        ArrayList<CommunityVO> posts = new ArrayList<CommunityVO>();
+       CommunityVO post;
         try {
             connect();
-            String sql = "SELECT * FROM community ORDER BY generationDate DESC";
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
+           psmt=conn.prepareStatement(CommunityPostList);
+            rs = psmt.executeQuery();
             while (rs.next()) {
-                CommunityVO post = new CommunityVO();
+            	post=new CommunityVO(); 
                 post.setPostId(rs.getString("post_id"));
                 post.setPostTitle(rs.getString("post_title"));
                 post.setMemberId(rs.getString("member_id"));
                 post.setPostDetail(rs.getString("post_detail"));
                 post.setPostViews(rs.getInt("post_views"));
-                post.setGenerationDate(rs.getTimestamp("generationDate"));
+                post.setGenerationDate(rs.getDate("generation_date"));
                 posts.add(post);
             }
         } catch (SQLException e) {
@@ -116,6 +118,42 @@ public class CommunityDAO extends DAO {
         }
         return posts;
     }
+    
+    
+ // Search posts by keyword in both title and detail
+    public ArrayList<CommunityVO> searchPostsByTitle(String searchQuery) {
+        ArrayList<CommunityVO> searchResults = new ArrayList<CommunityVO>();
+        try {
+            connect();
+            String sql = "SELECT * FROM community WHERE post_title LIKE ? OR post_detail LIKE ?  OR post_id LIKE ?  OR generation_date LIKE ?  OR member_id LIKE ?";
+            psmt = conn.prepareStatement(sql);
+            String keyword = "%" + searchQuery + "%";
+            psmt.setString(1, keyword);
+            psmt.setString(2, keyword);
+            psmt.setString(3, keyword);
+            psmt.setString(4, keyword);
+            psmt.setString(5, keyword);
+
+            
+            rs = psmt.executeQuery();
+            while (rs.next()) {
+                CommunityVO post = new CommunityVO();
+                post.setPostId(rs.getString("post_id"));
+                post.setPostTitle(rs.getString("post_title"));
+                post.setMemberId(rs.getString("member_id"));
+                post.setPostDetail(rs.getString("post_detail"));
+                post.setPostViews(rs.getInt("post_views"));
+                post.setGenerationDate(rs.getDate("generation_date"));
+                searchResults.add(post);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return searchResults;
+    }
+
 
     // Retrieve posts with pagination
     public ArrayList<CommunityVO> getPostsWithPagination(int page, int postsPerPage) {

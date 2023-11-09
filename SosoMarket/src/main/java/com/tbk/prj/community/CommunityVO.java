@@ -7,7 +7,7 @@ import java.util.Date;
 public class CommunityVO {
     private String postId;
     private String postTitle;
-    private String member_id; 
+    private String memberId; 
     private String postDetail;
     private int postViews;
     private Date generationDate;
@@ -34,12 +34,12 @@ public class CommunityVO {
 
 
     public String getMemberId() {
-        return member_id;
+        return memberId;
     }
 
 
-    public void setMemberId(String member_id) {
-        this.member_id = member_id;
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
     }
 
 
