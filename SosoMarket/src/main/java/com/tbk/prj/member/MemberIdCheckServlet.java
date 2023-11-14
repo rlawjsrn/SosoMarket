@@ -7,19 +7,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class MemberLogInServlet
+ * Servlet implementation class MemberServlet
  */
-@WebServlet("/LogIn.do")
-public class MemberLogInServlet extends HttpServlet {
+@WebServlet("/MemberIdCheckServlet")
+public class MemberIdCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberLogInServlet() {
+    public MemberIdCheckServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,22 +31,10 @@ public class MemberLogInServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		String memberId = request.getParameter("memberId");
-		String password = request.getParameter("password");
-		
-		MemberVO vo = new MemberDAO().loginmember(memberId, password);
-		
-		// 로그인 성공
-        if (vo != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("memberId", vo.getMemberId());
-            session.setAttribute("nickname", vo.getNickname());
-            response.sendRedirect("index.jsp");
-        } // 로그인 실패
-        else { 
-            request.getSession().setAttribute("messageContent", "아이디와 비밀번호를 확인해주세요.");
-            response.sendRedirect("/SosoMarket/LoginMove.do");
-        }
-		
+
+		int result = new MemberDAO().idCheck(memberId);
+
+		response.getWriter().write(String.valueOf(result));
 	}
 
 	/**

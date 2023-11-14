@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -27,18 +29,25 @@
 	<link type="text/css" rel="stylesheet" href="resources/css/style.css?after" />
 
 </head>
-<script>
-    // 서버에서 memberId 가져오기
-    fetch('/getSessionData') // 세션 데이터를 가져오는 URL
-        .then(response => response.json())
-        .then(data => {
-            const memberId = data.memberId;
-            document.getElementById('userId').innerText = `사용자 아이디: ${memberId}`;
-        })
-        .catch(error => {
-            console.error('데이터를 가져오는 중 에러 발생:', error);
-        });
+<script type="text/javascript">
+	
 </script>
+
+<%
+		String memberId = null;
+		if (session.getAttribute("memberId") != null) {
+			memberId = (String) session.getAttribute("memberId");
+		}
+		
+		if (memberId != null) {
+		%>
+		<script>
+	        
+		</script>
+		<%
+		}
+		
+	%>
 
 <body>
 	<!-- HEADER -->
@@ -49,10 +58,20 @@
 				<ul class="header-links pull-left">
 					<li><a href="#"><i class="fa fa-map-marker"></i> 회사 인증하기</a></li>
 				</ul>
-				<ul class="header-links pull-right">
-					<li><a href="/SosoMarket/LoginMove.do"><i class="fa fa-user-o"></i> 회원가입/로그인</a></li>
-					<li><p id="userId"></p></li>
-				</ul>
+				
+				 <% if (memberId == null) { %>
+                    <ul class="header-links pull-right">
+                        <li><a href="/SosoMarket/LoginMove.do"><i class="fa fa-user-o"></i> 회원가입/로그인</a></li>
+                    </ul>
+                <% } else { %>
+                    <ul class="header-links pull-right" >
+                        <li>
+                            <a id="memberId" href="#"><i class="fa fa-user-o"></i> <%= memberId %></a>
+                            <a href="/SosoMarket/Logout.do"> /로그아웃</a>
+                        </li>
+                    </ul>
+                <% } %>
+				
 			</div>
 		</div>
 		<!-- /TOP HEADER -->
@@ -191,9 +210,18 @@
 	<script src="js/nouislider.min.js"></script>
 	<script src="js/jquery.zoom.min.js"></script>
 	<script src="js/main.js"></script>
-	
 
 
+	<script>
+        // 자바스크립트로 memberId 값에 따라 링크 보이기/숨기기
+        var memberId = "<%=memberId%>";
+
+		if (memberId) {
+			document.getElementById('loginLink').style.display = 'none';
+			document.getElementById('loggedIn').style.display = 'block';
+			document.getElementById('memberIdSpan').innerText = memberId;
+		}
+	</script>
 
 </body>
 
