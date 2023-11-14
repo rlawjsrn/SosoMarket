@@ -21,29 +21,6 @@
 </style>
 </head>
 <body>
-	<jsp:include page="../resources/header.html"></jsp:include>
-	<%-- 이전꺼 막아놓음
- 	<table border="1">
-		<!-- sd -->
-		<tr>
-			<th width="50">상품 아이디</th>
-			<th width="150">상품 사진</th>
-			<th width="200">상품 이름</th>
-			<th width="150">상품 상태</th>
-			<th width="150">상품 가격</th>
-		</tr>
-		<c:forEach var="vo" items="${list}">
-			<tr class="row">
-				<td align="center">${vo.productInterestId }</td>
-				<td align="center">${vo.productPhotoId }</td>
-				<td align="center">${vo.productName }</td>
-				<td align="center">${vo.productStatus }</td>
-				<td align="center">${vo.productPrice }</td>
-			</tr>
-		</c:forEach>
-	</table> --%>
-
-
 
 	<!-- nav 부트스트랩 -->
 	<div class="container mb-5">
@@ -79,7 +56,6 @@
 							<tbody>
 								<c:forEach var="vo" items="${list}">
 									<c:if test="${vo.productStatus eq 0}">	<!-- product_status = 0 -> 판매중 -->
-
 										<tr>
 											<td class="product-thumbnail"><img
 												src="${vo.productPhotoId }" alt="Image" class="img-fluid">
@@ -180,19 +156,19 @@
 
 
 	<script>
-	
+	/* 판매중 토글 */
 	const togEvent1 = (e) => {
 		document.getElementById("tabCon1").style.display = "block";
 		document.getElementById("tabCon2").style.display = "none";
 		document.getElementById("tabCon3").style.display = "none";
 	}
-	
+	/* 거래완료 토글 */
 	const togEvent2 = (e) => {
 		document.getElementById("tabCon2").style.display = "block";
 		document.getElementById("tabCon1").style.display = "none";
 		document.getElementById("tabCon3").style.display = "none";
 	}
-	
+	/* 예약중 토글 */
 	const togEvent3 = (e) => {
 		document.getElementById("tabCon3").style.display = "block";
 		document.getElementById("tabCon1").style.display = "none";
@@ -200,6 +176,5 @@
 	}
 
 	</script>
-	<jsp:include page="../resources/footer.html"></jsp:include>
 </body>
 </html>

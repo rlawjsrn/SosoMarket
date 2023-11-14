@@ -7,29 +7,29 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-<link type="text/css" rel="stylesheet"
-	href="resources/css/animate.min.css?after" />
-<link type="text/css" rel="stylesheet"
-	href="resources/css/bootstrap.min.css?after" />
-<link rel="stylesheet" href="resources/css/style-mypage.css?after">
-<link href="resources/css/glightbox.min.css?after"
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,600,600i,700,700i|Satisfy|Comic+Neue:300,300i,400,400i,700,700i"
 	rel="stylesheet">
-<link href="resources/css/swiper-bundle.min.css?after" rel="stylesheet">
-
-<script>
-	$(document).on('click', '.nav-link', function(e) {
+<!-- Template Main CSS File -->
+<link href="resources/Mycss/styleMypage.css?after" rel="stylesheet">
+<!-- Vendor CSS Files -->
+<link href="resources/Mycss/bootstrapMypage.min.css?after"
+	rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	// act 클래스를 클릭 시, 해당 href를 tab-1에 불러오기
+	$(document).on('click', '.act', function(e) {
 		e.preventDefault(); // 기본 동작 방지
 
-		var pageUrl = $(this).attr('href');
-
-		// Ajax를 이용해 ChatRoom.do 호출
+		var LikeList = $(this).attr('href');
+		// Ajax를 이용해 LikeList 호출
 		$.ajax({
-			url : pageUrl,
+			url : LikeList,
 			method : 'POST',
 			success : function(data) {
-				// 성공 시 div.message에 결과를 넣음
-				$('.page-con').html(data);
+				// 성공시 tab-1에 해당하는 .do 띄우기
+				$('#tab-1').html(data);
 			},
 			error : function(error) {
 				console.error('Error:', error);
@@ -40,53 +40,55 @@
 </head>
 
 
-
 <body>
-	<!-- 헤더 -->
 	<jsp:include page="../resources/header.html"></jsp:include>
+	<!-- 부트스트랩 -->
 
-	<!-- 마이페이지 -->
-	<section id="mypages" class="mypages">
+	<section id="specials" class="specials">
 		<div class="container">
-
 			<div class="section-title">
 				<h2>
-					마이<span>마켓</span>
+					<span>${vo.nickname}</span>의 마이페이지
 				</h2>
-				<p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis
-					est adipisci expedita at voluptas atque vitae autem.</p>
 			</div>
-
 			<div class="row">
 				<div class="col-lg-3">
-					<ul class="nav nav-tabs flex-column mypage-ul">
-						<li class="nav-item"><a class="nav-link active show"
-							data-bs-toggle="tab" href="#tab-1">나의 프로필</a></li>
-						<li class="nav-item"><a class="nav-link" id="ttab1"
-							data-bs-toggle="tab" href="/SosoMarket/MypageLikeList.do">나의
-								관심목록</a></li>
-						<li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
+					<ul class="nav nav-tabs flex-column">
+						<li class="nav-item"><a class="nav-link act active show"
+							data-bs-toggle="tab" href="/SosoMarket/MyPageInfo.do">나의 프로필</a></li>
+						<li class="nav-item"><a class="nav-link act"
+							href="/SosoMarket/MypageLikeList.do">나의 관심목록</a></li>
+						<li class="nav-item"><a class="nav-link act"
+							data-bs-toggle="tab" id="tabb2"
 							href="/SosoMarket/MypageBuyList.do">나의 구매내역</a></li>
-						<li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
-							href="/SosoMarket/MypageSellList.do">나의 판매내역</a></li>
-						<li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
-							href="#tab-5">나의 회사생활</a></li>
+						<li class="nav-item"><a class="nav-link act"
+							data-bs-toggle="tab" href="/SosoMarket/MypageSellList.do">나의
+								판매내역</a></li>
+						<li class="nav-item"><a class="nav-link act"
+							data-bs-toggle="tab" href="#tab-5">나의 회사생활</a></li>
 					</ul>
 				</div>
 				<div class="col-lg-9 mt-4 mt-lg-0">
 					<div class="tab-content">
-						<!-- 비어 있음 -->
+						<div class="tab-pane active show" id="tab-1">
+							<div class="row">
+							<!-- ajax 들어올 공간 -->
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 
 		</div>
 	</section>
-	<!-- End mypages Section -->
-
-	<script src="resources/js/bootstrap.bundle.min.js?after"></script>
-
-	<!-- 푸터 -->
+	<!-- End Specials Section -->
 	<jsp:include page="../resources/footer.html"></jsp:include>
+	<!-- Vendor JS Files -->
+	<!-- <script src="resources/Myjs/bootstrapMypage.bundle.min.js?after"></script> -->
+	<script src="resources/Myjs/glightbox.min.js?after"></script>
+	<script src="resources/Myjs/isotope.pkgd.min.js?after"></script>
+
+	<!-- Template Main JS File -->
+	<!-- 	<script src="resources/js/main.js?after"></script> -->
 </body>
 </html>
