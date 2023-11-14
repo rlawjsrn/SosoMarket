@@ -38,12 +38,8 @@ public class ProdSelectCtgrListServlet extends HttpServlet {
 		String stOption = request.getParameter("sortOption"); // 정렬 기준 값
 		String qtOption = request.getParameter("quantityOption"); // 정렬 갯수 값
 		String[] selectedCategories = request.getParameter("selectedCategories").split(","); // 선택한 카테고리 값
-		int priceMin = Integer.parseInt(request.getParameter("priceMin"));
-		int priceMax = Integer.parseInt(request.getParameter("priceMax"));
-		
-		
-		
-		System.out.println("최소가격: " + request.getParameter("priceMin"));
+		int priceMin = Integer.parseInt(request.getParameter("priceMin"));	// 최소 가격 값
+		int priceMax = Integer.parseInt(request.getParameter("priceMax"));  // 최대 가격 값
 
 		list = dao.selectFiltering(stOption, qtOption, selectedCategories, priceMin, priceMax);
 		request.setAttribute("list", list);
@@ -57,7 +53,6 @@ public class ProdSelectCtgrListServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

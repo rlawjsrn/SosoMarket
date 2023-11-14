@@ -66,7 +66,7 @@
 							<c:forEach var="vo" items="${ctgrList }">
 								<div class="input-checkbox">
 									<input type="checkbox" id="category-<%=cnt1++%>"
-										value="${vo.category }" onchange="filterProducts()"> <label
+										value="${vo.categoryId }" onchange="filterProducts()"> <label
 										for="category-<%=cnt2++%>"> <span></span>
 										${vo.category } <small>(${vo.cntCtgr }) </small>
 									</label>

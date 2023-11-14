@@ -193,14 +193,16 @@ public class ProdDAO extends DAO {
 	public ArrayList<ProdVO> getCategoryList() {
 		connect();
 		ArrayList<ProdVO> list = new ArrayList<>();
-		String sql = "SELECT COUNT(p.product_id) AS prodCnt, c.category_name\r\n" + "FROM product p\r\n"
-				+ "JOIN category c ON p.product_id LIKE c.category_id || '%'\r\n" + "GROUP BY c.category_name";
+		String sql = "SELECT c.category_id, COUNT(p.product_id) as prodCnt, c.category_name\r\n"
+				+ "FROM product p, category c\r\n" + "WHERE SUBSTR(p.product_id, 1, 2) = c.category_id\r\n"
+				+ "GROUP BY  c.category_id, SUBSTR(p.product_id, 1, 2), c.category_name";
 		try {
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 
 			while (rs.next()) {
 				ProdVO vo = new ProdVO();
+				vo.setCategoryId(rs.getString("category_id"));
 				vo.setCategory(rs.getString("category_name")); // 카테고리명
 				vo.setCntCtgr(rs.getInt("prodCnt")); // 카테고리별 상품 갯수
 

@@ -2,6 +2,7 @@ package com.tbk.prj.prod;
 
 public class ProdVO {
 	String prodId; // 상품아이디
+	String categoryId; // 카테고리 아이디
 	String category; // 카테고리
 	int cntCtgr; // 카테고리 수
 	String prodName; // 상품명
@@ -12,7 +13,6 @@ public class ProdVO {
 	String placeTrans; // 거래희망장소
 	String prodPhotoId; // 상품사진아이디
 	String prodPhotoName;// 상품사진경로
-//	송다희 추가
 	String memberId; // 회원아이디
 	int memberCount; // 랭킹 매기는 카운트
 
@@ -102,6 +102,16 @@ public class ProdVO {
 
 	public void setProdPhotoName(String prodPhotoName) {
 		this.prodPhotoName = prodPhotoName;
+	}
+
+	
+	
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public String getCategory() {
