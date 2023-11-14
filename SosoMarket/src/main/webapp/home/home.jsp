@@ -74,7 +74,7 @@
 						</ul>
 						<h2 class="text-uppercase">사내에서 이걸 사네?</h2>
 						<p>야 너두 할 수 있어</p>
-						<a class="primary-btn cta-btn" href="#">상품 등록하러 가기</a>
+						<a class="primary-btn cta-btn" href="/SosoMarket/ProdInsertPage.do">상품 등록하러 가기</a>
 					</div>
 				</div>
 			</div>

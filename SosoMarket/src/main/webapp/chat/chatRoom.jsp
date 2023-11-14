@@ -6,122 +6,65 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>소소마켓</title>
-
-<!-- 채팅화면 style -->
-<link type="text/css" rel="stylesheet"
-	href="resources/css/bootstrap.min.css?after" />
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" href="resources/css/style-chat.css?after">
-
 </head>
 
-<!-- 나중에 삭제할 부분 -->
 <body>
-	<!-- chat container -->
-	<div class="chat-container">
-		<div class="messaging">
-			<div class="inbox_msg">
 
-				<!-- 채팅 리스트 -->
-				<div class="inbox_people">
-					<div class="headind_srch">
-						<div class="recent_heading">
-							<h4>소소챗</h4>
-						</div>
-					</div>
-					<div class="inbox_chat">
-						<div class="chat_list active_chat">
-							<div class="chat_people">
-								<div class="chat_img">
-									<img src="https://ptetutorials.com/images/user-profile.png"
-										alt="sunil">
-								</div>
-								<div class="chat_ib">
-									<h5>
-										Sunil Rajput <span class="chat_date">Dec 25</span>
-									</h5>
-									<p>Test, which is a new approach to have all solutions
-										astrology under one roof.</p>
-								</div>
-							</div>
-						</div>
-
-						<!-- 채팅리스트 추가 -->
-						<c:forEach var="vo" items="${list }">
-							<div class="chat_list">
-								<div class="chat_people">
-									<div class="chat_img">
-										<img src="https://ptetutorials.com/images/user-profile.png"
-											alt="sunil">
-									</div>
-									<div class="chat_ib">
-										<h5>
-											${vo.product_name } <span class="chat_date">${vo.generation_date }</span>
-										</h5>
-										<p>${vo.chat_message }</p>
-									</div>
-								</div>
-							</div>
-						</c:forEach>
-
-					</div>
-				</div>
-
-				<!-- 채팅창 -->
-				<div class="mesgs">
-					<!-- 비어있음 -->
-				</div>
-			</div>
+	<div class="msg_info">
+		<!-- 상품 사진 -->
+		<div class="prod_img">
+			<img src="" alt="">
 		</div>
+		<!-- 상품 이름/상태/가격 -->
+		<div class="prod_txt">
+			<p class="prod_name">
+				상품 이름 <span class="prod_stat">상품 상태</span>
+			</p>
+			<p class="prod_pric">00,000원</p>
+		</div>
+		<!-- 상태 변경 버튼 -->
+		<div class="prod_stat_sel">
+			<ul class="prod_stat_ul">
+				<li class="prod_stat_li"><a href="#">판매</a></li>
+				<li class="prod_stat_li"><a href="#">예약</a></li>
+			</ul>
+		</div>
+		<!-- 거래후기 -->
+		<!-- 			<div class="user_scr">
+				<a href="#">거래 후기 남기기</a>
+			</div> -->
 	</div>
 
-</body>
-
-<body>
 	<!-- 채팅창 내부 (수정 중!!!) -->
 	<div class="msg_history">
 		<c:forEach var="vo" items="${list }">
-			<!-- <c:if test="${vo. eq 1 }"> -->
-		</c:forEach>
 
-		<c:forEach var="vo" items="${list}">
-			<c:if test="${vo.productStatus eq 1}">
-				<!-- product_status = 1 -> 거래완료 -->
-				<tr>
-					<td class="product-thumbnail"><img src="${vo.productPhotoId }"
-						alt="Image" class="img-fluid"></td>
-					<td class="product-name">
-						<h2 class="h5 text-black">${vo.productName }</h2>
-					</td>
-					<td>${vo.productPrice }</td>
-					<td>거래완료</td>
-					<td>${vo.generationDate }</td>
-				</tr>
-			</c:if>
-		</c:forEach>
+			<c:choose>
+				<c:when test="${vo.member_id eq 'test3' }">
+					<div class="outgoing_msg">
+						<div class="sent_msg">
+							<p>${vo.chat_message }</p>
+							<span class="time_date">${vo.generation_date }</span>
+						</div>
+					</div>
+				</c:when>
 
-		<div class="incoming_msg">
-			<div class="incoming_msg_img">
-				<img src="https://ptetutorials.com/images/user-profile.png"
-					alt="sunil">
-			</div>
-			<div class="received_msg">
-				<div class="received_withd_msg">
-					<p>상대방채팅</p>
-					<span class="time_date"> 11:01 AM | June 9</span>
-				</div>
-			</div>
-		</div>
-		<div class="outgoing_msg">
-			<div class="sent_msg">
-				<p>본인채팅</p>
-				<span class="time_date"> 11:01 AM | June 9</span>
-			</div>
-		</div>
+				<c:otherwise>
+					<div class="incoming_msg">
+						<div class="incoming_msg_img">
+							<img src="https://ptetutorials.com/images/user-profile.png"
+								alt="sunil">
+						</div>
+						<div class="received_msg">
+							<div class="received_withd_msg">
+								<p>${vo.chat_message }</p>
+								<span class="time_date">${vo.generation_date }</span>
+							</div>
+						</div>
+					</div>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
 	</div>
 	<div class="type_msg">
 		<div class="input_msg_write">
@@ -131,5 +74,6 @@
 			</button>
 		</div>
 	</div>
+
 </body>
 </html>

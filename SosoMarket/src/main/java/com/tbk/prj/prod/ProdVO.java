@@ -1,14 +1,17 @@
 package com.tbk.prj.prod;
 
 public class ProdVO {
-	String prodId; // 상품아이디
+	String prodId; 	 // 상품아이디
+	String category; // 카테고리
+	int cntCtgr;     // 카테고리 수
 	String prodName; // 상품명
 	String prodStatus; // 상품상태
-	int prodPrice; // 판매가액
+	String prodPrice; // 판매가액
 	int prodViews; // 조회수
 	String prodDscrp; // 상품설명
 	String placeTrans; // 거래희망장소
-	String prodPhotoPath;// 상품사진경로
+	String prodPhotoId; // 상품사진아이디
+	String prodPhotoName;// 상품사진경로
 
 	public String getProdId() {
 		return prodId;
@@ -34,11 +37,11 @@ public class ProdVO {
 		this.prodStatus = prodStatus;
 	}
 
-	public int getProdPrice() {
+	public String getProdPrice() {
 		return prodPrice;
 	}
 
-	public void setProdPrice(int prodPrice) {
+	public void setProdPrice(String prodPrice) {
 		this.prodPrice = prodPrice;
 	}
 
@@ -66,18 +69,42 @@ public class ProdVO {
 		this.placeTrans = placeTrans;
 	}
 
-	public String getProdPhotoPath() {
-		return prodPhotoPath;
+	public String getProdPhotoId() {
+		return prodPhotoId;
 	}
 
-	public void setProdPhotoPath(String prodPhotoPath) {
-		this.prodPhotoPath = prodPhotoPath;
+	public void setProdPhotoId(String prodPhotoId) {
+		this.prodPhotoId = prodPhotoId;
+	}
+
+	public String getProdPhotoName() {
+		return prodPhotoName;
+	}
+
+	public void setProdPhotoName(String prodPhotoName) {
+		this.prodPhotoName = prodPhotoName;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
+	public int getCntCtgr() {
+		return cntCtgr;
+	}
+
+	public void setCntCtgr(int cntCtgr) {
+		this.cntCtgr = cntCtgr;
 	}
 
 	@Override
 	public String toString() {
 		return "ProdVO [prodId=" + prodId + ", prodName=" + prodName + ", prodStatus=" + prodStatus + ", prodPrice="
 				+ prodPrice + ", prodViews=" + prodViews + ", prodDescription=" + prodDscrp + ", placeTrans="
-				+ placeTrans + ", prodPhotoPath=" + prodPhotoPath + "]";
+				+ placeTrans + ", prodPhotoId=" + prodPhotoId + ", category=" + category +", cntCtgr=" + cntCtgr +"]";
 	}
 }
