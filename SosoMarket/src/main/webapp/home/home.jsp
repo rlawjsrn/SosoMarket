@@ -37,7 +37,8 @@
 </head>
 
 <body>
-	<jsp:include page="/resources/header.html" />
+
+	<jsp:include page="/resources/header.jsp" />
 	<!-- HOT DEAL SECTION -->
 	<div id="hot-deal" class="section">
 		<!-- container -->

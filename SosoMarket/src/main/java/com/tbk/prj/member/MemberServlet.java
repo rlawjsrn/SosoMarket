@@ -38,20 +38,13 @@ public class MemberServlet extends HttpServlet {
 		String emailVrf = request.getParameter("emailVrf");
 		String nickname = request.getParameter("nickname");
 		int ratingScore = 0;
-		if(memberId == null || memberId.equals("")||password == null || password.equals("")||
-		  password2 == null || password2.equals("")||memberRole == null || memberRole.equals("")||
-		  phoneNumber == null || phoneNumber.equals("")|| emailVrf == null || emailVrf.equals("")||
-		  nickname == null || nickname.equals("")){
-			request.getSession().setAttribute("messageType", "오류 메세지");
-			request.getSession().setAttribute("messageContent", "모든 내용을 입력하세요.");
-			response.sendRedirect("member/signin.jsp");
-			return;
-		}
+		String email = request.getParameter("email");
+		
 		// 비밀번호 일치 확인
 		if(!password.equals(password2)){
 					request.getSession().setAttribute("messageType", "오류 메세지");
 					request.getSession().setAttribute("messageContent", "비밀번호가 서로 일치하지 않습니다.");
-					response.sendRedirect("member/signin.jsp");
+					response.sendRedirect("/SosoMarket/Signin.do");
 					return;
 				}
 		
@@ -63,16 +56,17 @@ public class MemberServlet extends HttpServlet {
 		vo.setEmailVrf(emailVrf);
 		vo.setNickname(nickname);
 		vo.setRatingScore(ratingScore);
+		vo.setEmail(email);
 		int result = new MemberDAO().insertMember(vo);
 		if(result == 1) {
 			request.getSession().setAttribute("messageType", "성공 메세지");
 			request.getSession().setAttribute("messageContent", "회원가입에 성공했습니다.");
-			response.sendRedirect("member/signin.jsp");
+			response.sendRedirect("/SosoMarket/LoginMove.do");
 			return;
 		}else {
 			request.getSession().setAttribute("messageType", "오류 메세지");
-			request.getSession().setAttribute("messageContent", "이미 존재하는 회원입니다.");
-			response.sendRedirect("member/signin.jsp");
+			request.getSession().setAttribute("messageContent", "다시 해보세요");
+			response.sendRedirect("/SosoMarket/Signin.do");
 		}
 	}
 
