@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<a href="/SosoMarket/CommunityPostList.do">test</a>
 </body>
 </html>

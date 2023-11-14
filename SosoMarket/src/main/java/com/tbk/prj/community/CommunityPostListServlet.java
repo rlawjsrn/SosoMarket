@@ -1,4 +1,4 @@
-package com.tbk.prj.chat;
+package com.tbk.prj.community;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,45 +11,43 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ChatRoomServlet
+ * Servlet implementation class CommunityPostListServlet
  */
-
-@WebServlet("/ChatRoom.do")
-public class ChatRoomServlet extends HttpServlet {
+@WebServlet("/CommunityPostList.do")
+public class CommunityPostListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChatRoomServlet() {
+    public CommunityPostListServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		ChatRoomDAO dao = new ChatRoomDAO();
-		ChatVO vo = new ChatVO();
-		ArrayList<ChatVO> list = new ArrayList<ChatVO>();
+		request.setCharacterEncoding("utf-8"); 
+		CommunityDAO dao= new CommunityDAO(); 
+		CommunityVO vo = new CommunityVO(); 
+		ArrayList<CommunityVO> posts=new ArrayList<CommunityVO>(); 
 		
-		String chat_id = request.getParameter("chat_id");
-		list = dao.selectChatMsgs(chat_id);
-		request.setAttribute("list", list);
+		posts=dao.getAllPosts(); 
+		System.out.println(posts); //for check
+		request.setAttribute("posts", posts); 
 		
-		String viewPage = "chat/chatRoom.jsp";
+		String viewPage="community/CommunityPostList.jsp"; 
+		RequestDispatcher dispatcher= request.getRequestDispatcher(viewPage);
+		dispatcher.forward(request,response); 
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-		dispatcher.forward(request, response);
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
