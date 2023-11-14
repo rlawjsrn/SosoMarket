@@ -188,4 +188,52 @@ public class MemberDAO extends DAO {
 		        disconnect();
 		    }
 		    return null;
-		}}
+		}
+//		송다희 수정
+//		마이페이지 - 닉네임 수정 
+		public int updateNic(MemberVO vo) {
+			int n = 0;
+			try {
+				connect();
+				sql = "UPDATE member set nickname = ?, phone_number = ? where member_id = 'test1'";
+				psmt = conn.prepareStatement(sql);
+				psmt.setString(1, vo.getNickname());
+				psmt.setString(2, vo.getPhoneNumber());
+//				psmt.setString(2, vo.getMemberId());
+				n = psmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();                                                               
+			} finally {
+				disconnect();
+			}
+			return n;
+		}
+		
+//		마이페이지 - 회워정보 띄우기(한 건 조회)
+		public MemberVO memberOne(MemberVO vo) {
+			try {
+				connect();
+				sql = "select member_id, REGEXP_REPLACE(phone_number, '(.{3})(.+)(.{4})', '\\1-\\2-\\3') tel_no2 , email_vrf, nickname, email, rating_score\r\n"
+						+ "from member\r\n"
+						+ "where member_id = 'test1'";
+				psmt = conn.prepareStatement(sql);
+//				psmt.setInt(1, vo.getBoardNo());
+				rs = psmt.executeQuery();
+				if(rs.next()) {
+					vo.setMemberId(rs.getString("member_id"));
+					vo.setPhoneNumber(rs.getString("tel_no2"));
+					vo.setEmailVrf(rs.getString("email_vrf"));
+					vo.setNickname(rs.getString("nickname"));
+					vo.setEmail(rs.getString("email"));
+					vo.setRatingScore(rs.getInt("rating_score"));
+					// while 안 쓰는 건 어차피 값이 하나라 확인만 하면 됨.
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				disconnect();
+			}
+			return vo;
+		}
+}
+
