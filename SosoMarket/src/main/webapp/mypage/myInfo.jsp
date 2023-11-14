@@ -19,7 +19,7 @@ Vendor CSS Files
 </head>
 
 <body>
-	<!-- 부트스트랩 -->
+	<!-- 부트스트랩 이이 -->
 
 	<section id="specials" class="specials">
 		<div class="container">
