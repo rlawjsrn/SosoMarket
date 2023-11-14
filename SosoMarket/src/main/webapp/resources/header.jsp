@@ -192,7 +192,7 @@
 			<div id="responsive-nav">
 				<!-- NAV -->
 				<ul class="main-nav nav navbar-nav">
-					<li><a href="#">소소거래</a></li>
+					<li><a href="/SosoMarket/ProdList.do">소소거래</a></li>
 					<li><a href="#">사내이야기</a></li>
 				</ul>
 				<!-- /NAV -->

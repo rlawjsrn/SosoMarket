@@ -14,10 +14,11 @@ AND SUBSTR(p.product_id,1,2) = c.category_id\r\n" + "AND ROWNUM <= 3
 AND SUBSTR(pp.product_photo_name,7,6) = 'fl0001';
 
 //// 카테고리별 갯수 조회 쿼리 (prodList.jsp)
-SELECT COUNT(p.product_id) as prodCnt, c.category_name
+SELECT c.category_id, COUNT(p.product_id) as prodCnt, c.category_name
 FROM product p, category c
 WHERE SUBSTR(p.product_id, 1, 2) = c.category_id
-GROUP BY SUBSTR(p.product_id, 1, 2), c.category_name;
+GROUP BY  c.category_id, SUBSTR(p.product_id, 1, 2), c.category_name;
+
 
 SELECT COUNT(p.product_id) AS prodCnt, c.category_name
 FROM product p

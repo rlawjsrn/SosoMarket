@@ -1,9 +1,10 @@
 package com.tbk.prj.prod;
 
 public class ProdVO {
-	String prodId; 	 // 상품아이디
+	String prodId; // 상품아이디
+	String categoryId; // 카테고리 아이디
 	String category; // 카테고리
-	int cntCtgr;     // 카테고리 수
+	int cntCtgr; // 카테고리 수
 	String prodName; // 상품명
 	String prodStatus; // 상품상태
 	String prodPrice; // 판매가액
@@ -85,6 +86,16 @@ public class ProdVO {
 		this.prodPhotoName = prodPhotoName;
 	}
 
+	
+	
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+
 	public String getCategory() {
 		return category;
 	}
@@ -92,7 +103,7 @@ public class ProdVO {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	
+
 	public int getCntCtgr() {
 		return cntCtgr;
 	}
@@ -105,6 +116,6 @@ public class ProdVO {
 	public String toString() {
 		return "ProdVO [prodId=" + prodId + ", prodName=" + prodName + ", prodStatus=" + prodStatus + ", prodPrice="
 				+ prodPrice + ", prodViews=" + prodViews + ", prodDescription=" + prodDscrp + ", placeTrans="
-				+ placeTrans + ", prodPhotoId=" + prodPhotoId + ", category=" + category +", cntCtgr=" + cntCtgr +"]";
+				+ placeTrans + ", prodPhotoId=" + prodPhotoId + ", category=" + category + ", cntCtgr=" + cntCtgr + "]";
 	}
 }
