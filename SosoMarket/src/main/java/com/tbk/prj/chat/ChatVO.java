@@ -13,9 +13,16 @@ public class ChatVO {
 	private char read_or_not;
 	private String generation_date;
 	private String member_id;
-	
-//	상품
+
+	// 상품
 	private String product_name;
+	private char product_status;
+	private int product_price;
+
+//	회원
+	private String nickname;
+	private String buyer_nickname;
+	private int rating_score;
 
 	public String getChat_id() {
 		return chat_id;
@@ -89,5 +96,44 @@ public class ChatVO {
 		this.product_name = product_name;
 	}
 
-	
+	public char getProduct_status() {
+		return product_status;
+	}
+
+	public void setProduct_status(char product_status) {
+		this.product_status = product_status;
+	}
+
+	public int getProduct_price() {
+		return product_price;
+	}
+
+	public void setProduct_price(int product_price) {
+		this.product_price = product_price;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getBuyer_nickname() {
+		return buyer_nickname;
+	}
+
+	public void setBuyer_nickname(String buyer_nickname) {
+		this.buyer_nickname = buyer_nickname;
+	}
+
+	public int getRating_score() {
+		return rating_score;
+	}
+
+	public void setRating_score(int rating_score) {
+		this.rating_score = rating_score;
+	}
+
 }

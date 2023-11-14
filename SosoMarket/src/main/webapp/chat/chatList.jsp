@@ -23,8 +23,10 @@
 <script>
 	$(document).on('click', '.call-room', function(e) {
 		e.preventDefault(); // 기본 동작 방지
-
+		
 		var chatRoomUrl = $(this).attr('href');
+		var clickedList = $(this).find('.chat_list');
+		$('.chat_list').removeClass('active_chat');
 
 		// Ajax를 이용해 ChatRoom.do 호출
 		$.ajax({
@@ -33,6 +35,7 @@
 			success : function(data) {
 				// 성공 시 div.message에 결과를 넣음
 				$('.mesgs').html(data);
+				clickedList.addClass('active_chat');
 			},
 			error : function(error) {
 				console.error('Error:', error);
@@ -60,20 +63,6 @@
 						</div>
 					</div>
 					<div class="inbox_chat">
-						<div class="chat_list active_chat">
-							<div class="chat_people">
-								<div class="chat_img">
-									<img src="https://ptetutorials.com/images/user-profile.png"
-										alt="sunil">
-								</div>
-								<div class="chat_ib">
-									<h5>
-										테스트용<span class="chat_date">--------</span>
-									</h5>
-									<p>테스트</p>
-								</div>
-							</div>
-						</div>
 
 						<!-- 채팅리스트 추가 -->
 						<c:forEach var="vo" items="${list }">
@@ -86,7 +75,15 @@
 										</div>
 										<div class="chat_ib">
 											<h5>
-												${vo.product_name } <span class="chat_date">${vo.generation_date }</span>
+												<c:choose>
+													<c:when test="${vo.member_id eq 'test3' }">
+														${vo.buyer_nickname }	
+													</c:when>
+													<c:otherwise>
+														${vo.nickname }
+													</c:otherwise>
+												</c:choose>
+												<span class="chat_date">${vo.generation_date }</span>
 											</h5>
 											<p>${vo.chat_message }</p>
 										</div>

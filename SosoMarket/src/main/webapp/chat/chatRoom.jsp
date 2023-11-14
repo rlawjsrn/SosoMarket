@@ -10,6 +10,31 @@
 
 <body>
 
+	<div class="msg_info">
+		<!-- 상품 사진 -->
+		<div class="prod_img">
+			<img src="" alt="">
+		</div>
+		<!-- 상품 이름/상태/가격 -->
+		<div class="prod_txt">
+			<p class="prod_name">
+				상품 이름 <span class="prod_stat">상품 상태</span>
+			</p>
+			<p class="prod_pric">00,000원</p>
+		</div>
+		<!-- 상태 변경 버튼 -->
+		<div class="prod_stat_sel">
+			<ul class="prod_stat_ul">
+				<li class="prod_stat_li"><a href="#">판매</a></li>
+				<li class="prod_stat_li"><a href="#">예약</a></li>
+			</ul>
+		</div>
+		<!-- 거래후기 -->
+		<!-- 			<div class="user_scr">
+				<a href="#">거래 후기 남기기</a>
+			</div> -->
+	</div>
+
 	<!-- 채팅창 내부 (수정 중!!!) -->
 	<div class="msg_history">
 		<c:forEach var="vo" items="${list }">

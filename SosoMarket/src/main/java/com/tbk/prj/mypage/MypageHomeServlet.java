@@ -21,7 +21,7 @@ public class MypageHomeServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("home.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("mypage/mypage.jsp");
 		dispatcher.forward(request, response);
 	}
 
