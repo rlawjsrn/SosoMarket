@@ -8,7 +8,7 @@ import common.DAO;
 public class MemberDAO extends DAO {
 
 	String sql;
-	
+
 	public int idCheck(String memberId) {
 		connect();
 		psmt = null;
@@ -18,28 +18,28 @@ public class MemberDAO extends DAO {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, memberId);
 			rs = psmt.executeQuery();
-			if(rs.next()||memberId.equals("")) {
+			if (rs.next() || memberId.equals("")) {
 				return 0; // 이미 존재하는 회원
-			}else {
+			} else {
 				return 1; // 가입 가능한 회원
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
-		}finally {
+		} finally {
 			disconnect();
 		}
-		return -1;  // 데이터 베이스 오류
+		return -1; // 데이터 베이스 오류
 	}
 
 	// 회원의 전체 조회
-	public ArrayList<MemberVO> getMemberList(){
+	public ArrayList<MemberVO> getMemberList() {
 		ArrayList<MemberVO> memberlist = new ArrayList<MemberVO>();
 		sql = "select * from member";
 		try {
 			connect();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
-			while(rs.next()) {
+			while (rs.next()) {
 				MemberVO vo = new MemberVO();
 				vo.setMemberId(rs.getString("member_id"));
 				vo.setPassword(rs.getString("password"));
@@ -49,65 +49,112 @@ public class MemberDAO extends DAO {
 				vo.setNickname(rs.getString("nickname"));
 				vo.setRatingScore(rs.getInt("rating_score"));
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return memberlist;
+
+	}
+
+	// 회원 가입
+	public int insertMember(MemberVO vo) {
+		connect();
+		psmt = null;
+		rs = null;
+		sql = "INSERT INTO MEMBER(member_id, password, member_role, phone_number, email_vrf, nickname, rating_score) VALUES(?,?,?,?,?,?,?)";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getMemberId());
+			psmt.setString(2, vo.getPassword());
+			psmt.setString(3, vo.getMemberRole());
+			psmt.setString(4, vo.getPhoneNumber());
+			psmt.setString(5, vo.getEmailVrf());
+			psmt.setString(6, vo.getNickname());
+			psmt.setInt(7, vo.getRatingScore());
+			return psmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return -1; // 데이터 베이스 오류
+	}
+
+	// 로그인
+	public MemberVO loginmember(String memberId, String password) {
+		connect();
+		psmt = null;
+		rs = null;
+		sql = "SELECT member_id, password FROM MEMBER WHERE member_id = ? AND password";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, memberId);
+			psmt.setString(2, password);
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				MemberVO vo = new MemberVO();
+				vo.setMemberId(rs.getString("member_id"));
+				vo.setPassword(rs.getString("password"));
+				return vo;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			disconnect();
+		}
+		return null;
+
+	}
+
+//	송다희 수정
+//	마이페이지 - 닉네임 수정 
+	public int updateNic(MemberVO vo) {
+		int n = 0;
+		try {
+			connect();
+			sql = "UPDATE member set nickname = ?, phone_number = ? where member_id = 'test1'";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getNickname());
+			psmt.setString(2, vo.getPhoneNumber());
+//			psmt.setString(2, vo.getMemberId());
+			n = psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();                                                               
+		} finally {
+			disconnect();
+		}
+		return n;
+	}
+	
+//	마이페이지 - 회워정보 띄우기(한 건 조회)
+	public MemberVO memberOne(MemberVO vo) {
+		try {
+			connect();
+			sql = "select member_id, REGEXP_REPLACE(phone_number, '(.{3})(.+)(.{4})', '\\1-\\2-\\3') tel_no2 , email_vrf, nickname, email, rating_score\r\n"
+					+ "from member\r\n"
+					+ "where member_id = 'test1'";
+			psmt = conn.prepareStatement(sql);
+//			psmt.setInt(1, vo.getBoardNo());
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				vo.setMemberId(rs.getString("member_id"));
+				vo.setPhoneNumber(rs.getString("tel_no2"));
+				vo.setEmailVrf(rs.getString("email_vrf"));
+				vo.setNickname(rs.getString("nickname"));
+				vo.setEmail(rs.getString("email"));
+				vo.setRatingScore(rs.getInt("rating_score"));
+				// while 안 쓰는 건 어차피 값이 하나라 확인만 하면 됨.
+			}
+		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
 			disconnect();
 		}
-		return memberlist;
-		
+		return vo;
 	}
-	
-	//회원 가입
-		public int insertMember(MemberVO vo) {
-			connect();
-			psmt = null;
-			rs = null;
-			sql = "INSERT INTO MEMBER(member_id, password, member_role, phone_number, email_vrf, nickname, rating_score) VALUES(?,?,?,?,?,?,?)";
-			try {
-				psmt = conn.prepareStatement(sql);
-				psmt.setString(1, vo.getMemberId());
-				psmt.setString(2, vo.getPassword());
-				psmt.setString(3, vo.getMemberRole());
-				psmt.setString(4, vo.getPhoneNumber());
-				psmt.setString(5, vo.getEmailVrf());
-				psmt.setString(6, vo.getNickname());
-				psmt.setInt(7, vo.getRatingScore());
-				return psmt.executeUpdate();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}finally {
-				disconnect();
-			}
-			return -1;  // 데이터 베이스 오류
-		}
-		
-	// 로그인
-		public MemberVO loginmember(String memberId, String password) {
-			connect();
-			psmt = null;
-			rs = null;
-			sql = "SELECT member_id, password FROM MEMBER WHERE member_id = ? AND password";
-			try {
-				psmt = conn.prepareStatement(sql);
-				psmt.setString(1, memberId);
-				psmt.setString(2, password);
-				rs = psmt.executeQuery();
-				
-				if(rs.next()) {
-					MemberVO vo = new MemberVO();
-					vo.setMemberId(rs.getString("member_id"));
-					vo.setPassword(rs.getString("password"));
-					return vo;
-				}
-			}catch (Exception e) {
-				// TODO: handle exception
-			}finally {
-				disconnect();
-			}
-			return null;
-
-		}
 }

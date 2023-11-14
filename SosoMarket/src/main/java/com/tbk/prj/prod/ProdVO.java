@@ -9,6 +9,25 @@ public class ProdVO {
 	String prodDscrp; // 상품설명
 	String placeTrans; // 거래희망장소
 	String prodPhotoPath;// 상품사진경로
+// 송다희 추가
+	String memberId; // 멤버아이디
+	int memberCount; // 상위 조회 컬럼
+
+	public int getMemberCount() {
+		return memberCount;
+	}
+
+	public void setMemberCount(int memberCount) {
+		this.memberCount = memberCount;
+	}
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
 
 	public String getProdId() {
 		return prodId;
