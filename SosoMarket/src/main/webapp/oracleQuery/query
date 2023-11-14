@@ -57,3 +57,56 @@ AND b.member_id = 'test2'
 AND pp.product_photo_id IN (SELECT max(product_photo_id)
                             FROM product_photo
                             GROUP BY substr(product_photo_name,1,6));
+                            
+// 찜 취소
+delete from product_interest where product_interest_id = ?
+
+// 멤버
+// 회원정보(한건 조회)
+select member_id, REGEXP_REPLACE(phone_number, '(.{3})(.+)(.{4})', '\\1-\\2-\\3') tel_no2 , email_vrf, nickname, email, rating_score
+from member
+where member_id = 'test1'
+
+// 회원정보 수정
+UPDATE member set nickname = ?, phone_number = ? where member_id = 'test1'"
+
+
+// 관리자~
+// 회원 삭제
+delete from member where member_id = 'test1';
+
+// 상품 많이 올린 회원 상위 3명
+SELECT *
+FROM (SELECT member_id, count(member_id)
+      FROM product
+      WHERE product_status = 0
+      GROUP BY member_id
+      ORDER BY count(member_id) DESC)
+WHERE ROWNUM <= 3;
+
+// 상품 많이 판매한 회원 3명
+SELECT *
+FROM (SELECT member_id, count(member_id) member_count
+      FROM product
+      WHERE product_status = 1
+      GROUP BY member_id
+      ORDER BY member_count DESC)
+WHERE ROWNUM <= 3;
+
+// 승진률이 높은 상위 회원 3명
+SELECT *
+FROM (SELECT member_id, rating_score
+      FROM member
+      WHERE member_role = 'N'
+      ORDER BY rating_score DESC)
+WHERE ROWNUM <= 3;
+
+// 이달의 판매왕(3명)
+SELECT *
+FROM (SELECT member_id, count(member_id) as member_count 
+      FROM product
+      WHERE product_status = 1
+      AND TO_CHAR(generation_date, 'MM') = TO_CHAR(sysdate, 'MM')
+      GROUP BY member_id
+      ORDER BY member_count DESC)
+WHERE ROWNUM <= 3

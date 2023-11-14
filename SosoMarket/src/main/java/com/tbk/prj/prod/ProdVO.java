@@ -13,6 +13,24 @@ public class ProdVO {
 	String placeTrans; // 거래희망장소
 	String prodPhotoId; // 상품사진아이디
 	String prodPhotoName;// 상품사진경로
+	String memberId; // 회원아이디
+	int memberCount; // 랭킹 매기는 카운트
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
+	public int getMemberCount() {
+		return memberCount;
+	}
+
+	public void setMemberCount(int memberCount) {
+		this.memberCount = memberCount;
+	}
 
 	public String getProdId() {
 		return prodId;

@@ -16,9 +16,6 @@
 <link href="css2/style.css?after" rel="stylesheet">
 </head>
 <body>
-	<jsp:include page="../resources/header.html"></jsp:include>
-
-
 	<!-- 다른 부트스트랩 -->
 	<div class="untree_co-section before-footer-section">
 		<div class="container">
@@ -56,6 +53,5 @@
 			</div>
 		</div>
 	</div>
-	<jsp:include page="../resources/footer.html"></jsp:include>
 </body>
 </html>
