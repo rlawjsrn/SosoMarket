@@ -30,9 +30,13 @@ public class CommunitySearchServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
         String searchQuery = request.getParameter("search");
+        searchQuery=searchQuery.trim();
         System.out.println("Search Query: " + searchQuery);
 
-
+        String postOrderNumber = request.getParameter("postOrderNumber");
+        request.setAttribute("postOrderNumber", postOrderNumber);
+        System.out.println(postOrderNumber);
+        
         if (searchQuery != null && !searchQuery.isEmpty()) {
             CommunityDAO dao = new CommunityDAO();
             ArrayList<CommunityVO> searchResults = dao.searchPostsByTitle(searchQuery);
@@ -41,20 +45,19 @@ public class CommunitySearchServlet extends HttpServlet {
             String viewPage = "community/CommunitySearchResults.jsp"; // Use the correct JSP page
             RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
             dispatcher.forward(request, response);
-        } else {
+        }
+        else {
             // If search query is empty or not provided, display all posts
             CommunityDAO dao = new CommunityDAO();
             ArrayList<CommunityVO> posts = dao.getAllPosts();
             request.setAttribute("posts", posts);
-
+            
             String viewPage = "community/CommunityPostList.jsp";
+            
             RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
             dispatcher.forward(request, response);
         }
 
-        String viewPage = "community/CommunityPostList.jsp";
-        RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-        dispatcher.forward(request, response);
     }	
 
 	/**
