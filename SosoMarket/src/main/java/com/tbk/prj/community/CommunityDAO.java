@@ -1,97 +1,14 @@
 package com.tbk.prj.community;
 
-import common.DAO;
-
+import java.util.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import common.DAO;
+
 public class CommunityDAO extends DAO {
-    // Create a new post
-    public int createPost(CommunityVO post) {
-        int result = 0;
-        try {
-            connect();
-            String sql = "INSERT INTO community(post_id, post_title, member_id, post_detail, post_views, generationDate) VALUES(?, ?, ?, ?, ?, ?)";
-            psmt = conn.prepareStatement(sql);
-            psmt.setString(1, post.getPostId());
-            psmt.setString(2, post.getPostTitle());
-            psmt.setString(3, post.getMemberId());
-            psmt.setString(4, post.getPostDetail());
-            psmt.setInt(5, post.getPostViews());
-            psmt.setTimestamp(6, new java.sql.Timestamp(post.getGenerationDate().getTime()));
-            result = psmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            disconnect();
-        }
-        return result;
-    }
-
-    // Retrieve a post by its post_id
-    public CommunityVO getPostById(String postId) {
-        CommunityVO post = null;
-        try {
-            connect();
-            String sql = "SELECT * FROM community WHERE post_id=?";
-            psmt = conn.prepareStatement(sql);
-            psmt.setString(1, postId);
-            rs = psmt.executeQuery();
-            if (rs.next()) {
-                post = new CommunityVO();
-                post.setPostId(rs.getString("post_id"));
-                post.setPostTitle(rs.getString("post_title"));
-                post.setMemberId(rs.getString("member_id"));
-                post.setPostDetail(rs.getString("post_detail"));
-                post.setPostViews(rs.getInt("post_views"));
-                post.setGenerationDate(rs.getTimestamp("generationDate"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            disconnect();
-        }
-        return post;
-    }
-
-    // Update an existing post
-    public int updatePost(CommunityVO post) {
-        int result = 0;
-        try {
-            connect();
-            String sql = "UPDATE community SET post_title=?, post_detail=?, post_views=? WHERE post_id=?";
-            psmt = conn.prepareStatement(sql);
-            psmt.setString(1, post.getPostTitle());
-            psmt.setString(2, post.getPostDetail());
-            psmt.setInt(3, post.getPostViews());
-            psmt.setString(4, post.getPostId());
-            result = psmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            disconnect();
-        }
-        return result;
-    }
-
-    // Delete a post by its post_id
-    public int deletePost(String postId) {
-        int result = 0;
-        try {
-            connect();
-            String sql = "DELETE FROM community WHERE post_id=?";
-            psmt = conn.prepareStatement(sql);
-            psmt.setString(1, postId);
-            result = psmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            disconnect();
-        }
-        return result;
-    }
-
-    // Retrieve all posts
+	// Retrieve all posts
     private final String CommunityPostList= "SELECT * FROM community ORDER BY generation_date DESC";
     
     public ArrayList<CommunityVO> getAllPosts() {
@@ -121,12 +38,18 @@ public class CommunityDAO extends DAO {
     
     
  // Search posts by keyword in both title and detail
+    private final String CommunitySearchResults="SELECT * FROM community WHERE " +
+            "post_title LIKE ? OR " +
+            "post_detail LIKE ? OR " +
+            "post_id LIKE ? OR " +
+            "(TO_CHAR(generation_date, 'YYYY-MM-DD') LIKE ?) OR " +
+            "member_id LIKE ?";
+    
     public ArrayList<CommunityVO> searchPostsByTitle(String searchQuery) {
         ArrayList<CommunityVO> searchResults = new ArrayList<CommunityVO>();
         try {
             connect();
-            String sql = "SELECT * FROM community WHERE post_title LIKE ? OR post_detail LIKE ?  OR post_id LIKE ?  OR generation_date LIKE ?  OR member_id LIKE ?";
-            psmt = conn.prepareStatement(sql);
+            psmt = conn.prepareStatement(CommunitySearchResults);
             String keyword = "%" + searchQuery + "%";
             psmt.setString(1, keyword);
             psmt.setString(2, keyword);
@@ -153,8 +76,109 @@ public class CommunityDAO extends DAO {
         }
         return searchResults;
     }
+    
+    // Create a new post
+    public boolean createPost(CommunityVO post) {
+        try {
+            connect();
+
+            // SQL statement to insert a new post using the sequence for post_id
+            String sql = "INSERT INTO community (post_id, post_title, post_detail, member_id, generation_date, post_views) " +
+                    "VALUES ('co' || LPAD(postSeq.nextval, 4, '0'), ?, ?, ?, TO_DATE(?, 'YYYY-MM-DD'), 0)";
+
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, post.getPostTitle());
+            psmt.setString(2, post.getPostDetail());
+            psmt.setString(3, post.getMemberId());
+            psmt.setString(4, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            psmt.executeUpdate();
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return false;
+    }
+     
+    //Checking if a user is authenticated before allowing them to create posts.
+    //Associating posts with the member who created them.
+    //Handling user sessions and ensuring that user information is associated with the posts they create.
+    //Checking if a user is authenticated before allowing them to create posts.
+    //Associating posts with the member who created them.
+    //Handling user sessions and ensuring that user information is associated with the posts they create.
 
 
+    // Retrieve a post by its post_id
+    public CommunityVO getPostById(String postId) {
+        CommunityVO post = null;
+        try {
+            connect();
+            String sql = "SELECT * FROM community WHERE post_id=?";
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, postId);
+            rs = psmt.executeQuery();
+            if (rs.next()) {
+                post = new CommunityVO();
+                post.setPostId(rs.getString("post_id"));
+                post.setPostTitle(rs.getString("post_title"));
+                post.setMemberId(rs.getString("member_id"));
+                post.setPostDetail(rs.getString("post_detail"));
+                post.setPostViews(rs.getInt("post_views"));
+                post.setGenerationDate(rs.getDate("generation_date"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return post;
+    }
+
+ // Update a post
+    public boolean updatePost(CommunityVO post) {
+        try {
+            connect();
+
+            String sql = "UPDATE community SET post_title=?, post_detail=? WHERE post_id=?";
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, post.getPostTitle());
+            psmt.setString(2, post.getPostDetail());
+            psmt.setString(3, post.getPostId());
+
+            int rowsAffected = psmt.executeUpdate();
+
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return false;
+    }
+
+    // Delete a post
+    public boolean deletePost(String postId) {
+        try {
+            connect();
+
+            String sql = "DELETE FROM community WHERE post_id=?";
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, postId);
+
+            int rowsAffected = psmt.executeUpdate();
+
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return false;
+    }
+
+    
     // Retrieve posts with pagination
     public ArrayList<CommunityVO> getPostsWithPagination(int page, int postsPerPage) {
         ArrayList<CommunityVO> posts = new ArrayList<>();

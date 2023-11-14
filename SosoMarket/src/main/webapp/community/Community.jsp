@@ -8,5 +8,6 @@
 </head>
 <body>
 <a href="/SosoMarket/CommunityPostList.do">test</a>
+
 </body>
 </html>

@@ -145,4 +145,44 @@
     <url-pattern>/CommunityRealTimeSearchServlet</url-pattern>
 
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CommunityCreatePostServlet</display-name>
+    <servlet-name>CommunityCreatePostServlet</servlet-name>
+    <servlet-class>com.tbk.prj.community.CommunityCreatePostServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CommunityCreatePostServlet</servlet-name>
+    <url-pattern>/CommunityCreatePostServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CommunityPostDetailServlet</display-name>
+    <servlet-name>CommunityPostDetailServlet</servlet-name>
+    <servlet-class>com.tbk.prj.community.CommunityPostDetailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CommunityPostDetailServlet</servlet-name>
+    <url-pattern>/CommunityPostDetailServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CommunityPostUpdateServlet</display-name>
+    <servlet-name>CommunityPostUpdateServlet</servlet-name>
+    <servlet-class>com.tbk.prj.community.CommunityPostUpdateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CommunityPostUpdateServlet</servlet-name>
+    <url-pattern>/CommunityPostUpdateServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CommunityDeletePostServlet</display-name>
+    <servlet-name>CommunityDeletePostServlet</servlet-name>
+    <servlet-class>com.tbk.prj.community.CommunityDeletePostServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CommunityDeletePostServlet</servlet-name>
+    <url-pattern>/CommunityDeletePostServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
