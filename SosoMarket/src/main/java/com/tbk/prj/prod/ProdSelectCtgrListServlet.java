@@ -41,7 +41,7 @@ public class ProdSelectCtgrListServlet extends HttpServlet {
 		int priceMin = Integer.parseInt(request.getParameter("priceMin"));
 		int priceMax = Integer.parseInt(request.getParameter("priceMax"));
 		
-		if()
+		
 		
 		System.out.println("최소가격: " + request.getParameter("priceMin"));
 
