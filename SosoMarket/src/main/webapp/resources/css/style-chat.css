@@ -274,7 +274,15 @@ img {
 	color: #989898;
 }
 
-.prod_info>div {
+/*.prod_txt span.stat_sell {
+	color: blue !important;
+}
+
+.prod_txt span.stat_res {
+	color: green;
+}*/
+
+.prod_info > div {
 	float: left;
 }
 

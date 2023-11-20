@@ -48,7 +48,7 @@
 <body>
 
 	<!-- 헤더 연결 -->
-	<jsp:include page="../resources/header.html"></jsp:include>
+	<jsp:include page="../resources/header.jsp"></jsp:include>
 
 	<!-- chat container -->
 	<div class="chat-container">
@@ -66,7 +66,7 @@
 
 						<!-- 채팅리스트 추가 -->
 						<c:forEach var="vo" items="${list }">
-							<a class="call-room" href="/SosoMarket/ChatRoom.do?chat_id=${vo.chat_id }">
+							<a class="call-room" href="/SosoMarket/ChatRoom.do?chat_id=${vo.chat_id }&product_id=${vo.product_id }">
 								<div class="chat_list">
 									<div class="chat_people">
 										<div class="chat_img">

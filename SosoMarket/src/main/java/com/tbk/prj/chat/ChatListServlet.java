@@ -34,7 +34,9 @@ public class ChatListServlet extends HttpServlet {
 		ChatVO vo = new ChatVO();
 		ArrayList<ChatVO> list = new ArrayList<ChatVO>();
 		
-		list = dao.selectChatList();
+		vo.setMember_id(request.getParameter("member_id"));
+		
+		list = dao.selectChatList(vo);
 		request.setAttribute("list", list);
 		
 		String viewPage = "chat/chatList.jsp";

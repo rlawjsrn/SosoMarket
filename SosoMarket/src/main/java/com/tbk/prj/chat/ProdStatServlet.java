@@ -1,7 +1,6 @@
 package com.tbk.prj.chat;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,46 +10,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ChatRoomServlet
+ * Servlet implementation class ProdStatServlet
  */
-
-@WebServlet("/ChatRoom.do")
-public class ChatRoomServlet extends HttpServlet {
+@WebServlet("/ProdStat.do")
+public class ProdStatServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChatRoomServlet() {
+    public ProdStatServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		
-		// 상품 정보
-		ChatRoomProdDAO prodDao = new ChatRoomProdDAO();
+		System.out.println("ProdStat.do!");
+		System.out.println(request.getParameter("product_status"));
+		
+		ProdStatDAO dao = new ProdStatDAO();
 		ChatVO prodVo = new ChatVO();
 		
-		String product_id = request.getParameter("product_id");
-		prodVo = prodDao.selectProdInfo(product_id);
+		System.out.println(request.getParameter("product_status").charAt(1));
+		
+		prodVo.setProduct_id(request.getParameter("product_id"));
+		prodVo.setProduct_status(request.getParameter("product_status").charAt(1) + "");
+		int result = dao.updateProdStat(prodVo);
 		request.setAttribute("prodVo", prodVo);
 		
-		// 채팅메세지
-		ChatRoomDAO dao = new ChatRoomDAO();
-		ChatVO vo = new ChatVO();
-		ArrayList<ChatVO> list = new ArrayList<ChatVO>();
-		
-		String chat_id = request.getParameter("chat_id");
-		list = dao.selectChatMsgs(chat_id);
-		request.setAttribute("list", list);
-		
-		String viewPage = "chat/chatRoom.jsp";
-		
+		String viewPage = "chat/chatList.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}
@@ -59,7 +52,6 @@ public class ChatRoomServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
