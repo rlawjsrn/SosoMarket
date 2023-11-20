@@ -212,7 +212,7 @@ if (memberId != null) {
 				<!-- NAV -->
 				<ul class="main-nav nav navbar-nav">
 					<li><a href="/SosoMarket/ProdList.do">소소거래</a></li>
-					<li><a href="#">사내이야기</a></li>
+					<li><a href="/SosoMarket/CommunityPostList.do">사내이야기</a></li>
 					<c:if test="${memberId eq 'admin'}">
 						<li><a href="/SosoMarket/AdminMain.do">관리자페이지</a></li>
 					</c:if>

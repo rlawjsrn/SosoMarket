@@ -37,9 +37,13 @@ public class CommunitySearchServlet extends HttpServlet {
         request.setAttribute("postOrderNumber", postOrderNumber);
         System.out.println(postOrderNumber);
         
+        String sortOption = request.getParameter("sortOption");
+        request.setAttribute("sortOption", sortOption != null ? sortOption : "1");
+        System.out.println("Sort Option: " + sortOption);
+
         if (searchQuery != null && !searchQuery.isEmpty()) {
             CommunityDAO dao = new CommunityDAO();
-            ArrayList<CommunityVO> searchResults = dao.searchPostsByTitle(searchQuery);
+            ArrayList<CommunityVO> searchResults = dao.searchPostsByTitle(searchQuery, sortOption);
             request.setAttribute("searchResults", searchResults);
 
             String viewPage = "community/CommunitySearchResults.jsp"; // Use the correct JSP page
@@ -49,7 +53,8 @@ public class CommunitySearchServlet extends HttpServlet {
         else {
             // If search query is empty or not provided, display all posts
             CommunityDAO dao = new CommunityDAO();
-            ArrayList<CommunityVO> posts = dao.getAllPosts();
+//            ArrayList<CommunityVO> posts = dao.getAllPosts();
+            	ArrayList<CommunityVO> posts = dao.getAllPostsSorted(sortOption);
             request.setAttribute("posts", posts);
             
             String viewPage = "community/CommunityPostList.jsp";

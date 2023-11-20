@@ -30,27 +30,35 @@ public class CommunityPostUpdateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
+
 		String postId = request.getParameter("postId");
 		String postTitle = request.getParameter("postTitle");
 		String postDetail = request.getParameter("postDetail");
 
-		CommunityVO post = new CommunityVO();
-		post.setPostId(postId);
-		post.setPostTitle(postTitle);
-		post.setPostDetail(postDetail);
+		System.out.println("Received parameters - postId: " + postId);
+		if (postTitle != null && postDetail != null) {
 
-		CommunityDAO dao = new CommunityDAO();
-		boolean success = dao.updatePost(post);
-		
-		if(success) { 
-			System.out.println("게시글 수정 성공  "); 
-			String viewPage="community/CommunityPostDetail.jsp"; 
-			RequestDispatcher dispatcher= request.getRequestDispatcher(viewPage);
-			dispatcher.forward(request,response); 
-		}else { 
-			System.out.println("게시글 수정 실패 "); 
+			CommunityVO post = new CommunityVO();
+			post.setPostId(postId);
+			post.setPostTitle(postTitle);
+			post.setPostDetail(postDetail);
+
+			CommunityDAO dao = new CommunityDAO();
+
+			System.out.println("Updating post with ID: " + postId);
+			boolean postUpdated = dao.updatePost(post);
+			System.out.println("Post updated: " + postUpdated);
+			if (postUpdated) {
+				System.out.println("ok");
+			    response.sendRedirect("/SosoMarket/CommunityPostDetail.do?postId=" + postId);
+			
+			} else {
+				System.out.println(" no ok");
+			    response.sendRedirect("/SosoMarket/CommunityPostDetail.do?postId=" + postId);
+			}
 		}
- 
 	}
 
 	/**
