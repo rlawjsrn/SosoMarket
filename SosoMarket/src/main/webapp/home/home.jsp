@@ -37,7 +37,21 @@
 </head>
 
 <body>
+	<script>
+	// 로그인 여부 체크 함수
+		function checkLoginAndRedirect() {
+			var memberId = '<%=(String)session.getAttribute("memberId")%>';
 
+			if (memberId === null || memberId === '') {
+				// 로그인이 필요한 경우, 얼럿창을 띄우고 로그인 페이지로 리다이렉트
+				alert("로그인이 필요합니다.");
+				location.href = "/SosoMarket/LoginMove.do"; // 로그인 페이지 URL로 변경
+			} else {
+				// 로그인이 되어 있으면 상품 등록 페이지로 이동
+				location.href = "/SosoMarket/ProdInsertPage.do"; // 상품 등록 페이지 URL로 변경
+			}
+		}
+	</script>
 	<jsp:include page="/resources/header.jsp" />
 	<!-- HOT DEAL SECTION -->
 	<div id="hot-deal" class="section">
@@ -75,7 +89,8 @@
 						</ul>
 						<h2 class="text-uppercase">사내에서 이걸 사네?</h2>
 						<p>야 너두 할 수 있어</p>
-						<a class="primary-btn cta-btn" href="/SosoMarket/ProdInsertPage.do">상품 등록하러 가기</a>
+						<a class="primary-btn cta-btn"
+							onclick="checkLoginAndRedirect()">상품 등록하러 가기</a>
 					</div>
 				</div>
 			</div>
