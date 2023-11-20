@@ -12,12 +12,14 @@ public class ProdVO {
 	String prodPrice; // 판매가액
 	int prodViews; // 조회수
 	String prodDscrp; // 상품설명
+	String prodInterestId; // 관심 상품(찜)
 	String placeTrans; // 거래희망장소
 	String prodPhotoId; // 상품사진아이디
 	String prodPhotoName;// 상품사진경로
-	Date prodGenerationDate;
-	String memberId; // 회원아이디
+	Date prodGenerationDate; // 상품 등록일자
+	String memberId; // 회원 아이디
 	int memberCount; // 랭킹 매기는 카운트
+	String categoryName;
 
 	public String getMemberId() {
 		return memberId;
@@ -82,6 +84,22 @@ public class ProdVO {
 	public void setProdDscrp(String prodDscrp) {
 		this.prodDscrp = prodDscrp;
 	}
+	
+	public Date getProdGenerationDate() {
+		return prodGenerationDate;
+	}
+
+	public void setProdGenerationDate(Date prodGenerationDate) {
+		this.prodGenerationDate = prodGenerationDate;
+	}
+
+	public String getProdInterestId() {
+		return prodInterestId;
+	}
+
+	public void setProdInterestId(String prodInterestId) {
+		this.prodInterestId = prodInterestId;
+	}
 
 	public String getPlaceTrans() {
 		return placeTrans;
@@ -139,11 +157,27 @@ public class ProdVO {
 	public void setCntCtgr(int cntCtgr) {
 		this.cntCtgr = cntCtgr;
 	}
+	
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+	
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
 
 	@Override
 	public String toString() {
-		return "ProdVO [prodId=" + prodId + ", prodName=" + prodName + ", prodStatus=" + prodStatus + ", prodPrice="
-				+ prodPrice + ", prodViews=" + prodViews + ", prodDescription=" + prodDscrp + ", placeTrans="
-				+ placeTrans + ", prodPhotoId=" + prodPhotoId + ", category=" + category + ", cntCtgr=" + cntCtgr + "]";
-	}
+	    return "ProdVO [prodId=" + prodId + ", prodName=" + prodName + ", prodStatus=" + prodStatus + ", prodPrice="
+	          + prodPrice + ", prodViews=" + prodViews + ", prodDescription=" + prodDscrp + ", placeTrans="
+	          + placeTrans + ", prodPhotoId=" + prodPhotoId + ", category=" + category + ", cntCtgr=" + cntCtgr + "]";
+	   }
 }
