@@ -37,8 +37,10 @@ public class MemberServlet extends HttpServlet {
 		String phoneNumber = request.getParameter("phoneNumber");
 		String emailVrf = request.getParameter("emailVrf");
 		String nickname = request.getParameter("nickname");
-		int ratingScore = 0;
+		int ratingScore = 20;
 		String email = request.getParameter("email");
+		
+		System.out.println("이메일인증"+emailVrf);
 		
 		// 비밀번호 일치 확인
 		if(!password.equals(password2)){
@@ -58,12 +60,12 @@ public class MemberServlet extends HttpServlet {
 		vo.setRatingScore(ratingScore);
 		vo.setEmail(email);
 		int result = new MemberDAO().insertMember(vo);
-		if(result == 1) {
+		if(result == 1) {  // 회원가입 성공
 			request.getSession().setAttribute("messageType", "성공 메세지");
 			request.getSession().setAttribute("messageContent", "회원가입에 성공했습니다.");
 			response.sendRedirect("/SosoMarket/LoginMove.do");
 			return;
-		}else {
+		}else {            // 회원가입 실패
 			request.getSession().setAttribute("messageType", "오류 메세지");
 			request.getSession().setAttribute("messageContent", "다시 해보세요");
 			response.sendRedirect("/SosoMarket/Signin.do");
