@@ -232,8 +232,7 @@ if (memberId != null) {
 
 	<script>
         // 자바스크립트로 memberId 값에 따라 링크 보이기/숨기기
-        var memberId = "<%=memberId%>
-		";
+        var memberId = "<%=memberId%>";
 
 		if (memberId) {
 			document.getElementById('loginLink').style.display = 'none';

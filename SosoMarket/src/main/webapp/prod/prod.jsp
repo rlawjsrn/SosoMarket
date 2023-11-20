@@ -7,6 +7,7 @@
 <title>상품 등록 페이지</title>
 </head>
 <body>
+<%String memberId = (String)session.getAttribute("memberId"); %>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script>
 		// 이미지 미리보기
@@ -63,7 +64,7 @@
 			return true;
 		}
 	</script>
-	<jsp:include page="../resources/header.html" />
+	<jsp:include page="../resources/header.jsp" />
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb" class="section">
 		<!-- container -->
@@ -98,6 +99,7 @@
 						<!-- Billing Details -->
 						<div class="billing-details">
 							<div class="form-group">
+							<div><%=memberId %></div>
 								<select class="input-select" name="category">
 									<option value="" selected="selected">카테고리</option>
 									<option value="dd">디지털기기</option>
@@ -145,15 +147,15 @@
 						</div>
 					</div>
 					<div>
-						<img id="preview1" src="" alt="image" style="width: 100px" />
+						<img id="preview1" src="" alt="image" style="width: 200px" />
 					</div>
 					<div>
 						<img id="preview2" src="" alt="image"
-							style="width: 100px; display: none;" />
+							style="width: 200px; display: none;" />
 					</div>
 					<div>
 						<img id="preview3" src="" alt="image"
-							style="width: 100px; display: none;" />
+							style="width: 200px; display: none;" />
 					</div>
 				</div>
 				<!-- /row -->

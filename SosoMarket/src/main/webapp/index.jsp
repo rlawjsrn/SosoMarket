@@ -2,3 +2,4 @@
 	pageEncoding="UTF-8"%>
 
 <jsp:forward page="/Home.do"/>
+<!-- 소소마켓 -->

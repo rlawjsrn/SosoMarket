@@ -17,7 +17,7 @@ public class HomeDAO extends DAO{
 		+ "From product p, product_photo pp, category c"  
 		+ "Where substr(pp.product_photo_name,1,6) = p.product_id"
 		+ "And substr(p.product_id,1,2) = c.category_id"
-		+ "And substr(pp.product_photo_name,7,6) = fl0001"
+		+ "And substr(pp.product_photo_name,7,6) = 'fl0001'"
 		+ "And rownum <= 8 order by substr(p.product_id,3,4) desc";
 		
 		try {
@@ -27,8 +27,8 @@ public class HomeDAO extends DAO{
 				ProdVO vo = new ProdVO();
 				vo.setProdId(rs.getString("prodId"));
 				vo.setProdName(rs.getString("prodName"));
-				vo.setProdPrice(rs.getInt("prodPrice"));
-				vo.setProdPhotoPath(rs.getString("prodPhotoName"));
+				vo.setProdPrice(rs.getString("prodPrice"));
+				vo.setProdPhotoName(rs.getString("prodPhotoName"));
 				
 				list.add(vo);
 				System.out.println("vo:" + vo);

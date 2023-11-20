@@ -1,5 +1,7 @@
 package com.tbk.prj.prod;
 
+import java.util.Date;
+
 public class ProdVO {
 	String prodId; // 상품아이디
 	String categoryId; // 카테고리 아이디
@@ -13,6 +15,7 @@ public class ProdVO {
 	String placeTrans; // 거래희망장소
 	String prodPhotoId; // 상품사진아이디
 	String prodPhotoName;// 상품사진경로
+	Date prodGenerationDate;
 	String memberId; // 회원아이디
 	int memberCount; // 랭킹 매기는 카운트
 
@@ -105,7 +108,14 @@ public class ProdVO {
 	}
 
 	
-	
+	public Date getProdGenerationDate() {
+		return prodGenerationDate;
+	}
+
+	public void setProdGenerationDate(Date prodGenerationDate) {
+		this.prodGenerationDate = prodGenerationDate;
+	}
+
 	public String getCategoryId() {
 		return categoryId;
 	}
