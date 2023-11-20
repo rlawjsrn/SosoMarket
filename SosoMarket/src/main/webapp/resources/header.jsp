@@ -124,7 +124,11 @@ if (memberId != null) {
 						<div class="header-ctn">
 							<!-- Wishlist -->
 							<div>
-								<a href="#"> <i class="fa fa-heart-o"></i> <span>소소톡</span>
+							
+								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"
+									href="/SosoMarket/ChatList.do?member_id=<%=memberId %>">
+									<i class="fa fa-comment-o"></i>
+									<span>소소톡</span>
 									<div class="qty">2</div>
 								</a>
 							</div>

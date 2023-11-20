@@ -18,15 +18,27 @@
 		<!-- 상품 이름/상태/가격 -->
 		<div class="prod_txt">
 			<p class="prod_name">
-				상품 이름 <span class="prod_stat">상품 상태</span>
+				${prodVo.product_name }
+				<!-- 상품 상태 -->
+				<c:choose>
+					<c:when test="${prodVo.product_status eq '0'}">
+						<span style="color: #4685D0;">판매중</span>
+					</c:when>
+					<c:when test="${prodVo.product_status eq '1'}">
+						<span>판매완료</span>
+					</c:when>
+					<c:when test="${prodVo.product_status eq '2'}">
+						<span style="color: #42D5a8;">예약중</span>
+					</c:when>
+				</c:choose>
 			</p>
-			<p class="prod_pric">00,000원</p>
+			<p class="prod_pric">${prodVo.product_price }원</p>
 		</div>
 		<!-- 상태 변경 버튼 -->
 		<div class="prod_stat_sel">
 			<ul class="prod_stat_ul">
-				<li class="prod_stat_li"><a href="#">판매</a></li>
-				<li class="prod_stat_li"><a href="#">예약</a></li>
+				<li class="prod_stat_li"><a href="/SosoMarket/ProdStat.do?product_status='1'&product_id=${prodVo.product_id }">판매</a></li>
+				<li class="prod_stat_li"><a href="/SosoMarket/ProdStat.do?product_status='2'&product_id=${prodVo.product_id }">예약</a></li>
 			</ul>
 		</div>
 		<!-- 거래후기 -->

@@ -12,8 +12,9 @@ from chat c
 where p.member_id = 'test3'
    or c.buyer_id = 'test3';
 
--- 채팅 리스트 조회 (닉네임 추가)
-select c.chat_id, c.buyer_id, mc.nickname as buyer_nickname, p.member_id, mp.nickname, p.product_name, m.chat_message, m.generation_date
+
+-- 채팅 리스트 조회 (닉네임, 상품아이디 추가)
+select c.chat_id, c.buyer_id, mc.nickname as buyer_nickname, p.member_id, mp.nickname, p.product_id, p.product_name, m.chat_message, m.generation_date
 from chat c
      inner join product p on c.product_id = p.product_id
      inner join (SELECT chat_id, chat_message, read_or_not, generation_date
@@ -27,14 +28,28 @@ from chat c
 where p.member_id = 'test3'
    or c.buyer_id = 'test3';
 
-ㅇ
+
 -- 채팅방 메시지 조회
 select member_id, chat_message, generation_date
 from chat_message
 where chat_id = 'ch00005'
 order by generation_date;
 
+
 -- 채팅창 상품 정보 조회
-select product_id, product_name, product_status, product_price
+select product_id, product_name, product_status,
+       to_char(product_price, 'FM999,999,999,999') as product_price
 from product
+where product_id = ?;
+
+
+-- 상품 상태 업데이트 : 판매완료
+update product
+set product_status = '1'
+where product_id = ?;
+
+
+-- 상품 상태 업데이트 : 예약중
+update product
+set product_status = '2'
 where product_id = ?;

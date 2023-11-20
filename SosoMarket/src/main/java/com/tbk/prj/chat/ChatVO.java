@@ -10,14 +10,14 @@ public class ChatVO {
 //	채팅메세지
 	private String chat_message_id;
 	private String chat_message;
-	private char read_or_not;
+	private String read_or_not;
 	private String generation_date;
 	private String member_id;
 
 	// 상품
 	private String product_name;
-	private char product_status;
-	private int product_price;
+	private String product_status;
+	private String product_price;
 
 //	회원
 	private String nickname;
@@ -72,11 +72,11 @@ public class ChatVO {
 		this.chat_message = chat_message;
 	}
 
-	public char getRead_or_not() {
+	public String getRead_or_not() {
 		return read_or_not;
 	}
 
-	public void setRead_or_not(char read_or_not) {
+	public void setRead_or_not(String read_or_not) {
 		this.read_or_not = read_or_not;
 	}
 
@@ -96,19 +96,19 @@ public class ChatVO {
 		this.product_name = product_name;
 	}
 
-	public char getProduct_status() {
+	public String getProduct_status() {
 		return product_status;
 	}
 
-	public void setProduct_status(char product_status) {
+	public void setProduct_status(String product_status) {
 		this.product_status = product_status;
 	}
 
-	public int getProduct_price() {
+	public String getProduct_price() {
 		return product_price;
 	}
 
-	public void setProduct_price(int product_price) {
+	public void setProduct_price(String product_price) {
 		this.product_price = product_price;
 	}
 
