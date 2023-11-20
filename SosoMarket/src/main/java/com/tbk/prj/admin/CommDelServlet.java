@@ -1,4 +1,4 @@
-package com.tbk.prj.member;
+package com.tbk.prj.admin;
 
 import java.io.IOException;
 
@@ -9,11 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tbk.prj.community.CommunityDAO;
+import com.tbk.prj.community.CommunityVO;
+
 /**
- * Servlet implementation class MemberUpNic
+ * Servlet implementation class CommDelServlet
  */
-@WebServlet("/MemberUp.do")
-public class MemberUpdateServlet extends HttpServlet {
+@WebServlet("/CommDel.do")
+public class CommDelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -21,21 +24,14 @@ public class MemberUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		MemberDAO dao = new MemberDAO();
-		MemberVO vo = new MemberVO();
+		CommunityDAO dao = new CommunityDAO();
+		CommunityVO vo = new CommunityVO();
 		
-//		vo.setMemberId(request.getParameter("row"));
-		vo.setNickname(request.getParameter("nickname"));
-		if(request.getParameter("phoneNumber") != null) {
-			String cleanedString = request.getParameter("phoneNumber").replaceAll("[^\\uAC00-\\uD7A3\\dA-Za-z\\s]", "");
-			System.out.println("ssss"+cleanedString);
-			vo.setPhoneNumber(cleanedString);
-		}
-		vo.setMemberId(request.getParameter("memberId"));
-		int n = dao.updateNic(vo);
-		request.setAttribute("vo", vo);
-		String viewPage = "/MyPageUpdate.do";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+		String postId = request.getParameter("postId");
+		
+		boolean n = dao.deletePost(postId);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("gentelella-master/production/memComm.jsp");
 		dispatcher.forward(request, response);
 	}
 

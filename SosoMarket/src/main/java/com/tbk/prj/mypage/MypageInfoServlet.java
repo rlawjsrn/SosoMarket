@@ -26,7 +26,7 @@ public class MypageInfoServlet extends HttpServlet {
 		
 		MemberDAO dao = new MemberDAO();
 		MemberVO vo = new MemberVO();
-
+		vo.setMemberId(request.getParameter("memberId"));
 		vo = dao.memberOne(vo);
 		request.setAttribute("vo", vo);
 		

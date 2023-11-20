@@ -68,7 +68,7 @@ Vendor CSS Files
 									</c:choose>
 									<hr>
 									<button class="primary-btn"
-										onclick="location.href='/SosoMarket/MyPageUpdate.do'">
+										onclick="location.href='/SosoMarket/MyPageUpdate.do?memberId=${vo.memberId}'">
 										프로필 수정</button>
 								</div>
 								<c:choose>

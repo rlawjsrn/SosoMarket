@@ -2,7 +2,9 @@ package com.tbk.prj.admin;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
+import com.google.gson.JsonArray;
 import com.tbk.prj.member.MemberVO;
 import com.tbk.prj.prod.ProdVO;
 
@@ -42,6 +44,33 @@ public class AdminDAO extends DAO{
 								+ "      GROUP BY member_id\r\n"
 								+ "      ORDER BY member_count DESC)\r\n"
 								+ "WHERE ROWNUM <= 3";
+
+// 전체 회원 카운트
+	private String memCount = "select count(member_id) as member_count\r\n"
+							+ "from member";
+	
+// 전체 상품 카운트
+	private String prodCount = "select count(product_id) as prod_count\r\n"
+								+ "from product";
+	
+// 오늘 판매된 상품 카운트
+	private String todayProd = "select count(product_id) as today_count\r\n"
+								+ "from product\r\n"
+								+ "where TO_CHAR(generation_date, 'yy/mm/dd') = TO_CHAR(sysdate, 'yy/mm/dd')\r\n"
+								+ "and product_status = 1";
+
+//	전체 판매완료 카운트
+	private String doneProd = "select count(product_id) as prod_count\r\n"
+							+ "from product\r\n"
+							+ "where product_status = 1";
+	
+//  카테고리 차트
+	private String charList = "SELECT c.category_id, COUNT(p.product_id) as prodCnt, c.category_name\r\n"
+							+ "FROM product p, category c \r\n"
+							+ "WHERE SUBSTR(p.product_id, 1, 2) = c.category_id\r\n"
+							+ "GROUP BY  c.category_id, SUBSTR(p.product_id, 1, 2), c.category_name";
+	
+	
 //	전체 회원 조회
 	public ArrayList<MemberVO> memberSelect(){
 		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
@@ -154,4 +183,97 @@ public class AdminDAO extends DAO{
 		return list;
 	}
 	
+// 전체 회원 카운트
+	public MemberVO memCount(MemberVO vo) {
+		try {
+			connect();
+			psmt = conn.prepareStatement(memCount);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				vo.setMemberCount(rs.getInt("member_count"));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		return vo;
+	}
+	
+// 전체 상품 카운트
+	public ProdVO prodCount(ProdVO vo) {
+		try {
+			connect();
+			psmt = conn.prepareStatement(prodCount);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				vo.setProdCount(rs.getInt("prod_count"));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		return vo;
+	}	
+	
+// 오늘 거래된 상품 카운트
+	public ProdVO todayProd(ProdVO vo) {
+		try {
+			connect();
+			psmt = conn.prepareStatement(todayProd);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				vo.setTodayCount(rs.getInt("today_count"));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		return vo;
+	}
+	
+// 전체 상품에서 거래 완료된 상품 카운트
+	public ProdVO doneProd(ProdVO vo) {
+		try {
+			connect();
+			psmt = conn.prepareStatement(doneProd);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				vo.setTodayCount(rs.getInt("prod_count"));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		return vo;
+	}	
+
+	
+// 카테고리 분류별 차트(json으로 값 넘기기)
+	public JsonArray categoryChart() {
+		JsonArray jsonArray = new JsonArray();
+		JsonArray colNameArray = new JsonArray(); // 컬 타이틀 설정
+		colNameArray.add("카테고리");
+		colNameArray.add("수량");
+		try {
+			connect();
+			psmt = conn.prepareStatement(charList);
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				JsonArray rowArray = new JsonArray();
+				rowArray.add(rs.getString("category_name"));
+				rowArray.add(rs.getInt("prodCnt"));
+				jsonArray.add(rowArray);
+			}
+		}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				disconnect();
+			}
+			return jsonArray;
+		}
+
 }

@@ -240,11 +240,11 @@ public class MemberDAO extends DAO {
 			int n = 0;
 			try {
 				connect();
-				sql = "UPDATE member set nickname = ?, phone_number = ? where member_id = 'test1'";
+				sql = "UPDATE member set nickname = ?, phone_number = ? where member_id = ?";
 				psmt = conn.prepareStatement(sql);
 				psmt.setString(1, vo.getNickname());
 				psmt.setString(2, vo.getPhoneNumber());
-//				psmt.setString(2, vo.getMemberId());
+				psmt.setString(3, vo.getMemberId());
 				n = psmt.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();                                                               
@@ -260,9 +260,9 @@ public class MemberDAO extends DAO {
 				connect();
 				sql = "select member_id, REGEXP_REPLACE(phone_number, '(.{3})(.+)(.{4})', '\\1-\\2-\\3') tel_no2 , email_vrf, nickname, email, rating_score\r\n"
 						+ "from member\r\n"
-						+ "where member_id = 'test1'";
+						+ "where member_id = ?";
 				psmt = conn.prepareStatement(sql);
-//				psmt.setInt(1, vo.getBoardNo());
+				psmt.setString(1, vo.getMemberId());
 				rs = psmt.executeQuery();
 				if(rs.next()) {
 					vo.setMemberId(rs.getString("member_id"));

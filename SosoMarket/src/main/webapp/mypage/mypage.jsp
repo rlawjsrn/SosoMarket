@@ -37,11 +37,18 @@
 		});
 	});
 </script>
+<script>
+
+<%
+String memberId = (String)session.getAttribute("memberId");
+
+%>
+</script>
 </head>
 
 
 <body>
-	<jsp:include page="../resources/header.html"></jsp:include>
+	<jsp:include page="../resources/header.jsp"></jsp:include>
 	<!-- 부트스트랩 -->
 
 	<section id="specials" class="specials">
@@ -65,7 +72,7 @@
 							data-bs-toggle="tab" href="/SosoMarket/MypageSellList.do">나의
 								판매내역</a></li>
 						<li class="nav-item"><a class="nav-link act"
-							data-bs-toggle="tab" href="#tab-5">나의 회사생활</a></li>
+							data-bs-toggle="tab" href="/SosoMarket/MypageCom.do">나의 회사생활</a></li>
 					</ul>
 				</div>
 				<div class="col-lg-9 mt-4 mt-lg-0">

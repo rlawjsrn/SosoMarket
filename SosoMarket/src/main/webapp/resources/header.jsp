@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -132,7 +133,7 @@ if (memberId != null) {
 							<!-- Cart -->
 							<div class="dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown"
-									aria-expanded="true" href="/SosoMarket/MyPageHome.do"> <i
+									aria-expanded="true" href="/SosoMarket/MyPageHome.do?memberId=<%=memberId %>"> <i
 									class="fa fa-shopping-cart"></i> <span>마이마켓</span>
 									<div class="qty">3</div>
 								</a>
@@ -212,6 +213,9 @@ if (memberId != null) {
 				<ul class="main-nav nav navbar-nav">
 					<li><a href="/SosoMarket/ProdList.do">소소거래</a></li>
 					<li><a href="#">사내이야기</a></li>
+					<c:if test="${memberId eq 'admin'}">
+						<li><a href="/SosoMarket/AdminMain.do">관리자페이지</a></li>
+					</c:if>
 				</ul>
 				<!-- /NAV -->
 			</div>

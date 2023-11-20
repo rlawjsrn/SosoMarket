@@ -16,10 +16,17 @@ const phoneAutoHyphen = (target) => {
      return phoneNumber.replace(/-/g, '');
  }
 </script>
+<script>
+
+<%
+String memberId = (String)session.getAttribute("memberId");
+
+%>
+</script>
 </head>
 
 <body>
-	<jsp:include page="../resources/header.html"></jsp:include>
+	<jsp:include page="../resources/header.jsp"></jsp:include>
 
 	<!-- SECTION -->
 	<div class="section">
@@ -34,7 +41,7 @@ const phoneAutoHyphen = (target) => {
 						<div class="section-title">
 							<h3 class="title">${vo.memberId }님의회원정보</h3>
 						</div>
-						<form action="/SosoMarket/MemberUp.do" method="post">
+						<form action="/SosoMarket/MemberUp.do?memberId=${vo.memberId }" method="post">
 							<div class="form-group">
 								닉네임<input class="input" type="text" name="nickname"
 									id="nickname" value="${vo.nickname }">
@@ -61,7 +68,7 @@ const phoneAutoHyphen = (target) => {
 						</form>
 						<br>
 						<button class="primary-btn"
-							onclick="location.href='/SosoMarket/MyPageHome.do'">돌아가기</button>
+							onclick="location.href='/SosoMarket/MyPageHome.do?memberId=${vo.memberId}'">돌아가기</button>
 					</div>
 				</div>
 			</div>
