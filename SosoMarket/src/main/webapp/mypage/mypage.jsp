@@ -79,7 +79,7 @@ String memberId = (String)session.getAttribute("memberId");
 					<div class="tab-content">
 						<div class="tab-pane active show" id="tab-1">
 							<div class="row">
-							<!-- ajax 들어올 공간 -->
+								<!-- ajax 들어올 공간 -->
 							</div>
 						</div>
 					</div>

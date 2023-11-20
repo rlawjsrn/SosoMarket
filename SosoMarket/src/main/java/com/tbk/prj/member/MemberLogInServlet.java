@@ -1,6 +1,7 @@
 package com.tbk.prj.member;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,8 +37,27 @@ public class MemberLogInServlet extends HttpServlet {
 		System.out.println(memberId);
 		System.out.println(password);
 		
-		MemberVO vo = new MemberDAO().loginmember(memberId, password);
-		
+		MemberVO vo;
+//		
+//		ArrayList<String> testID = new ArrayList<>();
+//		testID.add("test1");
+//		testID.add("test2");
+//		testID.add("test3");
+//		testID.add("test4");
+//		testID.add("test5");
+//		testID.add("admin");
+//		
+//		
+//		if (testID.contains(memberId)) {
+//			System.out.println("더미로그인");
+//			System.out.println(memberId+" "+password);
+//		    vo = new MemberDAO().testLoginmember(memberId, password);
+//		} else {
+//			System.out.println("그냥 로그인");
+//			System.out.println(memberId+" "+password);
+//		    vo = new MemberDAO().loginmember(memberId, password);
+//		}
+		vo = new MemberDAO().loginmember(memberId, password);
 		// 로그인 성공
         if (vo != null) {
             HttpSession session = request.getSession();

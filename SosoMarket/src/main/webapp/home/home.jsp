@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -33,11 +34,30 @@
 
 <!-- Custom stlylesheet -->
 <link type="text/css" rel="stylesheet" href="resources/css/style.css" />
-
+<style>
+ .product-img{
+ 	width: 200px;
+ 	height: 200px;
+ }
+</style>
 </head>
 
 <body>
+	<script>
+	// 로그인 여부 체크 함수
+		function checkLoginAndRedirect() {
+			var memberId = '<%=(String)session.getAttribute("memberId")%>';
 
+			if (memberId === null || memberId === '') {
+				// 로그인이 필요한 경우, 얼럿창을 띄우고 로그인 페이지로 리다이렉트
+				alert("로그인이 필요합니다.");
+				location.href = "/SosoMarket/LoginMove.do"; // 로그인 페이지 URL로 변경
+			} else {
+				// 로그인이 되어 있으면 상품 등록 페이지로 이동
+				location.href = "/SosoMarket/ProdInsertPage.do"; // 상품 등록 페이지 URL로 변경
+			}
+		}
+	</script>
 	<jsp:include page="/resources/header.jsp" />
 	<!-- HOT DEAL SECTION -->
 	<div id="hot-deal" class="section">
@@ -75,7 +95,8 @@
 						</ul>
 						<h2 class="text-uppercase">사내에서 이걸 사네?</h2>
 						<p>야 너두 할 수 있어</p>
-						<a class="primary-btn cta-btn" href="/SosoMarket/ProdInsertPage.do">상품 등록하러 가기</a>
+						<a class="primary-btn cta-btn"
+							onclick="checkLoginAndRedirect()">상품 등록하러 가기</a>
 					</div>
 				</div>
 			</div>
@@ -178,21 +199,19 @@
 							<div id="tab1" class="tab-pane active">
 								<div class="products-slick" data-nav="#slick-nav-1">
 									<!-- product -->
+									<c:forEach var = "product" items ="${list}">
 									<div class="product">
 										<div class="product-img">
-											<img src="./img/product01.png" alt="">
-											<div class="product-label">
-												<span class="sale">-30%</span> <span class="new">NEW</span>
-											</div>
+											<img src="./upload/${product.prodPhotoName}.png?after" alt="">
 										</div>
 										<div class="product-body">
-											<p class="product-category">Category</p>
+											<p class="product-category">${product.categoryName}</p>
 											<h3 class="product-name">
-												<a href="#">product name goes here</a>
+												<a style="align-content: center" href="#">${product.prodName}</a>
 											</h3>
 											<h4 class="product-price">
-												$980.00
-												<del class="product-old-price">$990.00</del>
+												${product.prodPrice}
+
 											</h4>
 
 											<div class="product-btns">
@@ -211,113 +230,8 @@
 										</div>
 
 									</div>
+									</c:forEach>
 									<!-- /product -->
-
-									<!-- product -->
-									<div class="product">
-										<div class="product-img">
-											<img src="./img/product02.png" alt="">
-											<div class="product-label">
-												<span class="new">NEW</span>
-											</div>
-										</div>
-										<div class="product-body">
-											<p class="product-category">Category</p>
-											<h3 class="product-name">
-												<a href="#">product name goes here</a>
-											</h3>
-											<h4 class="product-price">
-												$980.00
-												<del class="product-old-price">$990.00</del>
-											</h4>
-
-											<div class="product-btns">
-												<button class="add-to-wishlist">
-													<i class="fa fa-heart-o"></i><span class="tooltipp">찜하기</span>
-												</button>
-												<button class="add-to-compare">
-													<i class="fa fa-exchange"></i><span class="tooltipp">소소톡
-														보내기</span>
-												</button>
-												<button class="quick-view">
-													<i class="fa fa-eye"></i><span class="tooltipp">상세
-														보기</span>
-												</button>
-											</div>
-										</div>
-
-									</div>
-									<!-- /product -->
-
-									<!-- product -->
-									<div class="product">
-										<div class="product-img">
-											<img src="./img/product03.png" alt="">
-											<div class="product-label">
-												<span class="sale">-30%</span>
-											</div>
-										</div>
-										<div class="product-body">
-											<p class="product-category">Category</p>
-											<h3 class="product-name">
-												<a href="#">product name goes here</a>
-											</h3>
-											<h4 class="product-price">
-												$980.00
-												<del class="product-old-price">$990.00</del>
-											</h4>
-
-											<div class="product-btns">
-												<button class="add-to-wishlist">
-													<i class="fa fa-heart-o"></i><span class="tooltipp">찜하기</span>
-												</button>
-												<button class="add-to-compare">
-													<i class="fa fa-exchange"></i><span class="tooltipp">소소톡
-														보내기</span>
-												</button>
-												<button class="quick-view">
-													<i class="fa fa-eye"></i><span class="tooltipp">상세
-														보기</span>
-												</button>
-											</div>
-										</div>
-
-									</div>
-									<!-- /product -->
-
-									<!-- product -->
-									<div class="product">
-										<div class="product-img">
-											<img src="./img/product04.png" alt="">
-										</div>
-										<div class="product-body">
-											<p class="product-category">Category</p>
-											<h3 class="product-name">
-												<a href="#">product name goes here</a>
-											</h3>
-											<h4 class="product-price">
-												$980.00
-												<del class="product-old-price">$990.00</del>
-											</h4>
-
-											<div class="product-btns">
-												<button class="add-to-wishlist">
-													<i class="fa fa-heart-o"></i><span class="tooltipp">찜하기</span>
-												</button>
-												<button class="add-to-compare">
-													<i class="fa fa-exchange"></i><span class="tooltipp">소소톡
-														보내기</span>
-												</button>
-												<button class="quick-view">
-													<i class="fa fa-eye"></i><span class="tooltipp">상세
-														보기</span>
-												</button>
-											</div>
-										</div>
-
-									</div>
-									<!-- /product -->
-
 								</div>
 								<div id="slick-nav-1" class="products-slick-nav"></div>
 							</div>
@@ -327,162 +241,6 @@
 				</div>
 				<!-- Products tab & slick -->
 
-				<!-- Products tab & slick -->
-				<div class="col-md-12">
-					<div class="row">
-						<div class="products-tabs">
-							<!-- tab -->
-							<div id="tab2" class="tab-pane fade in active">
-								<div class="products-slick" data-nav="#slick-nav-2">
-									<!-- product -->
-									<div class="product">
-										<div class="product-img">
-											<img src="./img/product06.png" alt="">
-											<div class="product-label">
-												<span class="sale">-30%</span> <span class="new">NEW</span>
-											</div>
-										</div>
-										<div class="product-body">
-											<p class="product-category">Category</p>
-											<h3 class="product-name">
-												<a href="#">product name goes here</a>
-											</h3>
-											<h4 class="product-price">
-												$980.00
-												<del class="product-old-price">$990.00</del>
-											</h4>
-
-											<div class="product-btns">
-												<button class="add-to-wishlist">
-													<i class="fa fa-heart-o"></i><span class="tooltipp">찜하기</span>
-												</button>
-												<button class="add-to-compare">
-													<i class="fa fa-exchange"></i><span class="tooltipp">소소톡
-														보내기</span>
-												</button>
-												<button class="quick-view">
-													<i class="fa fa-eye"></i><span class="tooltipp">상세
-														보기</span>
-												</button>
-											</div>
-										</div>
-
-									</div>
-									<!-- /product -->
-
-									<!-- product -->
-									<div class="product">
-										<div class="product-img">
-											<img src="./img/product07.png" alt="">
-											<div class="product-label">
-												<span class="new">NEW</span>
-											</div>
-										</div>
-										<div class="product-body">
-											<p class="product-category">Category</p>
-											<h3 class="product-name">
-												<a href="#">product name goes here</a>
-											</h3>
-											<h4 class="product-price">
-												$980.00
-												<del class="product-old-price">$990.00</del>
-											</h4>
-
-											<div class="product-btns">
-												<button class="add-to-wishlist">
-													<i class="fa fa-heart-o"></i><span class="tooltipp">찜하기</span>
-												</button>
-												<button class="add-to-compare">
-													<i class="fa fa-exchange"></i><span class="tooltipp">소소톡
-														보내기</span>
-												</button>
-												<button class="quick-view">
-													<i class="fa fa-eye"></i><span class="tooltipp">상세
-														보기</span>
-												</button>
-											</div>
-										</div>
-
-									</div>
-									<!-- /product -->
-
-									<!-- product -->
-									<div class="product">
-										<div class="product-img">
-											<img src="./img/product08.png" alt="">
-											<div class="product-label">
-												<span class="sale">-30%</span>
-											</div>
-										</div>
-										<div class="product-body">
-											<p class="product-category">Category</p>
-											<h3 class="product-name">
-												<a href="#">product name goes here</a>
-											</h3>
-											<h4 class="product-price">
-												$980.00
-												<del class="product-old-price">$990.00</del>
-											</h4>
-
-											<div class="product-btns">
-												<button class="add-to-wishlist">
-													<i class="fa fa-heart-o"></i><span class="tooltipp">찜하기</span>
-												</button>
-												<button class="add-to-compare">
-													<i class="fa fa-exchange"></i><span class="tooltipp">소소톡
-														보내기</span>
-												</button>
-												<button class="quick-view">
-													<i class="fa fa-eye"></i><span class="tooltipp">상세
-														보기</span>
-												</button>
-											</div>
-										</div>
-
-									</div>
-									<!-- /product -->
-
-									<!-- product -->
-									<div class="product">
-										<div class="product-img">
-											<img src="./img/product09.png" alt="">
-										</div>
-										<div class="product-body">
-											<p class="product-category">Category</p>
-											<h3 class="product-name">
-												<a href="#">product name goes here</a>
-											</h3>
-											<h4 class="product-price">
-												$980.00
-												<del class="product-old-price">$990.00</del>
-											</h4>
-
-											<div class="product-btns">
-												<button class="add-to-wishlist">
-													<i class="fa fa-heart-o"></i><span class="tooltipp">찜하기</span>
-												</button>
-												<button class="add-to-compare">
-													<i class="fa fa-exchange"></i><span class="tooltipp">소소톡
-														보내기</span>
-												</button>
-												<button class="quick-view">
-													<i class="fa fa-eye"></i><span class="tooltipp">상세
-														보기</span>
-												</button>
-											</div>
-										</div>
-
-									</div>
-									<!-- /product -->
-
-								</div>
-								<div id="slick-nav-2" class="products-slick-nav"></div>
-							</div>
-							<!-- /tab -->
-						</div>
-					</div>
-				</div>
-				<!-- /Products tab & slick -->
 
 			</div>
 			<!-- /row -->

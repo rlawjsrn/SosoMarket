@@ -185,6 +185,75 @@ public class ProdDAO extends DAO {
 		return null;
 	}
 
+// 상품 한 건 조회(상품정보)
+	public ProdVO prodOneList(String prodId) {
+		ProdVO vo = null;
+		try {
+			connect();
+			String sql = "SELECT p.product_id, c.category_name, p.product_name, p.product_status, TO_CHAR(p.product_price, 'FM999,999,999,999') as product_price, p.product_views, p.product_description, p.generation_date, p.place_transaction, p.member_id\r\n"
+					+ "FROM product p, category c\r\n" + "WHERE SUBSTR(p.product_id,1,2) = c.category_id\r\n"
+					+ "AND product_id = ?";
+
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, prodId);
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				System.out.println("if문까지 들어왔니?");
+				vo = new ProdVO();
+				vo.setProdId(rs.getString("product_id"));
+				vo.setCategory(rs.getString("category_name"));
+				vo.setProdName(rs.getString("product_name"));
+
+				if (rs.getString("product_status").equals("0")) {
+					vo.setProdStatus("판매중");
+				} else if (rs.getString("product_status").equals("1")) {
+					vo.setProdStatus("거래완료");
+				} else {
+					vo.setProdStatus("예약중");
+				}
+				vo.setProdPrice(rs.getString("product_price"));
+				vo.setProdViews(rs.getInt("product_views"));
+				vo.setProdDscrp(rs.getString("product_description"));
+				vo.setProdGenerationDate(rs.getDate("generation_date"));
+				vo.setPlaceTrans(rs.getString("place_transaction"));
+				vo.setMemberId(rs.getString("member_id"));
+				System.out.println("한 건 조회 VO: " + vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return vo;
+	}
+
+// 상품 한 건 조회(상품 사진)
+	public ArrayList<ProdVO> prodOnePhotoList(String prodId) {
+		ArrayList<ProdVO> list = new ArrayList<>();
+		try {
+			connect();
+			String sql = "SELECT pp.product_photo_name\r\n" + "FROM product_photo pp, product p\r\n"
+					+ "WHERE substr(pp.product_photo_name,1,6) = p.product_id\r\n" + "AND p.product_id=?";
+
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, prodId);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				ProdVO vo = new ProdVO();
+				vo.setProdPhotoName(rs.getString("product_photo_name"));
+				list.add(vo);
+				System.out.println("사진 조회: " + list);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+	}
+
 // 상품 수정
 
 // 상품 삭제
@@ -217,43 +286,88 @@ public class ProdDAO extends DAO {
 	}
 
 // 상품 전체 조회 필터링
-	public ArrayList<ProdVO> selectFiltering(String stOption, String qtOption, String[] category, int priceMin,
+	// 상품 전체 조회 필터링
+	public ArrayList<ProdVO> selectFiltering(String stOption, String qtOption, String[] categories, int priceMin,
 			int priceMax) {
 		connect();
+		System.out.println("정렬조건: " + stOption + "정렬갯수: " + qtOption + "카테고리: " + categories + "최저가: " + priceMin
+				+ "최고가: " + priceMax);
 		ArrayList<ProdVO> list = new ArrayList<>();
-		String sql = "SELECT  p.product_id, c.category_name, p.product_name, TO_CHAR(p.product_price, 'FM999,999,999,999') as product_price, pp.product_photo_id\r\n"
-				+ "FROM product p, product_photo pp, category c\r\n"
-				+ "WHERE SUBSTR(pp.product_photo_name,1,6) = p.product_id\r\n"
-				+ "AND SUBSTR(p.product_id,1,2) = c.category_id\r\n"
-				+ "AND SUBSTR(pp.product_photo_name,7,6) = 'fl0001' ";
-		// 선택한 카테고리
-		if (category != null) {
-			for (int i = 0; i < category.length; i++) {
-				sql += "AND SUBSTR(p.product_id,1,2) = ? ";
-			}
+		StringBuilder sql = new StringBuilder(
+				"SELECT p.product_id, c.category_name, p.product_name, TO_CHAR(p.product_price, 'FM999,999,999,999') as product_price, pp.product_photo_id\r\n"
+						+ "FROM (SELECT product_id, product_name, product_price FROM product ");
+
+		// 쿼리에 정렬 옵션 추가
+		if ("0".equals(stOption)) { // 조회 많은 순
+			sql.append("ORDER BY product_views DESC ");
+		} else if ("1".equals(stOption)) { // 최근 등록 순
+			sql.append("ORDER BY generation_date DESC ");
 		}
 
-//		psmt.setString(, );
+		sql.append(
+				") p, product_photo pp, category c\r\n" + "WHERE SUBSTR(pp.product_photo_name,1,6) = p.product_id\r\n"
+						+ "AND SUBSTR(p.product_id,1,2) = c.category_id\r\n"
+						+ "AND SUBSTR(pp.product_photo_name,7,6) = 'fl0001' ");
 
-		// 선택한 가격 범위
-		sql += "AND p.product_price BETWEEN ? AND ? ";
+		// 선택한 카테고리
+		if (categories != null && categories.length > 0) {
+			sql.append("AND (");
+			for (int i = 0; i < categories.length; i++) {
+				sql.append("SUBSTR(p.product_id,1,2) = ?");
+				if (i < categories.length - 1) {
+					sql.append(" OR ");
+				}
+			}
+			sql.append(") ");
+		}
 
-		// 선택한 상품 갯수
-		sql += "AND ROWNUM <= ? ";
+		// 가격 범위
+		if (priceMin != 0 && priceMax != 0) {
+			sql.append("AND p.product_price BETWEEN ? AND ?");
+		} else if (priceMin != 0 && priceMax == 0) {
+			sql.append("AND p.product_price >= ?");
+		} else if (priceMin == 0 && priceMax != 0) {
+			sql.append("AND p.product_price <= ?");
+		}
 
-		// 선택한 정렬 조건
-		sql += "ORDER BY ?";
+		// 행 제한
+		if ("0".equals(qtOption)) {
+			sql.append(" AND ROWNUM <= 20");
+		} else if ("1".equals(qtOption)) {
+			sql.append(" AND ROWNUM <= 50");
+		}
+
+		System.out.println("쿼리 보여줘: " + sql);
 
 		try {
-			psmt = conn.prepareStatement(sql);
+			psmt = conn.prepareStatement(sql.toString());
+
+			int paramIndex = 1;
+
+			// 선택한 카테고리
+			if (categories != null && categories.length > 0) {
+				for (String category : categories) {
+					psmt.setString(paramIndex++, category);
+				}
+			}
+
+			// 가격 범위
+			if (priceMin != 0 || priceMax != 0) {
+				if (priceMin != 0) {
+					psmt.setInt(paramIndex++, priceMin);
+				}
+				if (priceMax != 0) {
+					psmt.setInt(paramIndex++, priceMax);
+				}
+			}
+
 			rs = psmt.executeQuery();
-
-			sql += "AND substr(p.product_id,1,2) = ? \r\n";
-
 			while (rs.next()) {
 				ProdVO vo = new ProdVO();
+
+				vo.setProdId(rs.getString("product_id")); // 상품 아이디
 				vo.setCategory(rs.getString("category_name")); // 카테고리명
-				vo.setCntCtgr(rs.getInt("prodCnt")); // 카테고리별 상품 갯수
+				vo.setProdName(rs.getString("product_name")); // 상품명
 
 				list.add(vo);
 			}
@@ -264,4 +378,5 @@ public class ProdDAO extends DAO {
 		}
 		return list;
 	}
+
 }
