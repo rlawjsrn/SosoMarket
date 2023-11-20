@@ -38,16 +38,18 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="header-search">
+						<!-- search form  -->
 						<form action="CommunitySearch.do" method="post"
-							class="d-flex align-items-baseline">
-							<select class="input-select">
-								<option value="0">전체</option>
+							class="d-flex align-items-baseline" id="searchForm">
+							<select id="sortOption" name="sortOption" class="input-select">
 								<option value="1">최신순</option>
-								<option value="1">인기순</option>
+								<option value="2">오래된순 </option>
+								<option value="3">인기순</option>
 							</select> <input type="text" id="search" name="search" class="input"
-								placeholder="필요한 게시글을 검색하세요!" /> <input type="submit"
-								value="검색" class="search-btn" />
+								placeholder="필요한 상품을 검색하세요!"> <input type="submit"
+								value="검색" class="search-btn">
 						</form>
+						<!-- /search form  -->
 					</div>
 				</div>
 				<div class=" text-right">

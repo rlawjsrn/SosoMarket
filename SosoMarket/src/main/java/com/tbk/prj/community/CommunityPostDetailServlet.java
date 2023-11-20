@@ -38,12 +38,16 @@ public class CommunityPostDetailServlet extends HttpServlet {
             // Retrieve the post details using the DAO
             CommunityDAO dao = new CommunityDAO();
             CommunityVO post = dao.getPostById(postId);
-
+            
+            // Retrieve comments for the post 
+            ArrayList<CommVO> comments = dao.getCommentsByPostId(postId);
+            
             // Check if the post details are found
             if (post != null) {
                 // Set the post details as an attribute in the request
                 request.setAttribute("post", post);
-
+                request.setAttribute("comments", comments); 
+                
                 // Forward the request to the CommunityPostDetail.jsp
                 String viewPage="community/CommunityPostDetail.jsp"; 
         		RequestDispatcher dispatcher= request.getRequestDispatcher(viewPage);

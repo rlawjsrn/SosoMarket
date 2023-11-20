@@ -211,7 +211,7 @@ if (memberId != null) {
 				<!-- NAV -->
 				<ul class="main-nav nav navbar-nav">
 					<li><a href="/SosoMarket/ProdList.do">소소거래</a></li>
-					<li><a href="#">사내이야기</a></li>
+					<li><a href="/SosoMarket/CommunityPostList.do">사내이야기</a></li>
 				</ul>
 				<!-- /NAV -->
 			</div>

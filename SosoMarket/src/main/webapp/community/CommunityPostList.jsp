@@ -49,11 +49,11 @@
 
 						<!-- search form  -->
 						<form action="CommunitySearch.do" method="post"
-							class="d-flex align-items-baseline">
-							<select class="input-select">
-								<option value="0">전체</option>
+							class="d-flex align-items-baseline" id="searchForm">
+							<select id="sortOption" name="sortOption" class="input-select">
 								<option value="1">최신순</option>
-								<option value="1">인기순</option>
+								<option value="2">오래된순 </option>
+								<option value="3">인기순</option>
 							</select> <input type="text" id="search" name="search" class="input"
 								placeholder="필요한 상품을 검색하세요!"> <input type="submit"
 								value="검색" class="search-btn">
@@ -69,13 +69,14 @@
 				</div>
 			</div>
 
-			<div class="posts-container">
+			<div  class="posts-container">
 				<c:set var="totalPosts" value="${fn:length(posts)}" />
 
+				
 				<div>
 					<span class="num"> 번호</span> <span class="title"> 게시글 제목 </span>
 				</div>
-
+				
 				<c:forEach var="post" items="${posts}" varStatus="loopStatus">
 					<c:set var="postOrderNumber"
 						value="${totalPosts - loopStatus.index}" />
@@ -120,55 +121,45 @@
 	<jsp:include page="../resources/footer.html" />
 
 	<script>
-		// Get the input element and the posts container
-		var searchInput = document.getElementById('search');
+	// Get the input element and the posts container
+    var searchInput = document.getElementById('search');
 
-		// Add an event listener to the input field
-		searchInput.addEventListener('input', function() {
-			var searchText = searchInput.value.toLowerCase().trim();
+    // Add an event listener to the input field for real-time search
+    $('#search').on('input', function () {
+        var searchText = $(this).val().toLowerCase().trim();
 
-			// Get all encapsulate divs
-			var encapsulates = document.querySelectorAll('.encapsulate');
+        // Get all encapsulate divs
+        var encapsulates = $('.encapsulate');
 
-			// Loop through the encapsulate divs and hide/show based on search input
-			encapsulates.forEach(function(encapsulate) {
-				var postContainer = encapsulate
-						.querySelector('.post-container');
-				var postTextContent = postContainer.textContent.toLowerCase();
+        // Loop through the encapsulate divs and hide/show based on search input
+        encapsulates.each(function () {
+            var postContainer = $(this).find('.post-container');
+            var postTextContent = postContainer.text().toLowerCase();
 
-				if (postTextContent.includes(searchText)) {
-					encapsulate.style.display = '';
-				} else {
-					encapsulate.style.display = 'none';
-				}
-			});
+            if (postTextContent.includes(searchText)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+
+		$(document).ready(function () {
+		    // Loop through each post-container
+		    $('.post-container').each(function () {
+		        var postDetail = $(this).find('.post-detail');
+		        var postId = $(this).data('post-id');
+		        var content = postDetail.html();
+
+		        // Check if "Read more" link already exists
+		        if (postDetail.find('.read-more-link').length === 0) {
+		            // Truncate the content and append "Read more" link
+		            postDetail.html(content.substring(0, 300) + '...  ' +
+		                '<a href="/SosoMarket/CommunityPostDetail.do?postId=' +
+		                postId + '" class="read-more-link">Read more</a>');
+		        }
+		    });
 		});
-
-	
-		$(document)
-				.ready(
-						function() {
-							// Loop through each post-container
-							$('.post-container')
-									.each(
-											function() {
-												var postDetail = $(this).find(
-														'.post-detail');
-												var postId = $(this).data(
-														'post-id');
-												var content = postDetail.html();
-
-												// Truncate the content
-												postDetail
-														.html(content
-																.substring(0,
-																		300)
-																+ '...  '
-																+ '<a href="/SosoMarket/CommunityPostDetail.do?postId='
-																+ postId
-																+ '" class="read-more-link">Read more</a>');
-											});
-						});
 
 		$(document)
 				.ready(

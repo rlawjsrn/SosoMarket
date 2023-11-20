@@ -1,25 +1,26 @@
 package com.tbk.prj.community;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
- * Servlet implementation class CommunityDeletePostServlet
+ * Servlet implementation class CommunityEditPostFormServlet
  */
-@WebServlet("/CommunityDeletePost.do")
-public class CommunityDeletePostServlet extends HttpServlet {
+@WebServlet("/CommunityEditPostForm.do")
+public class CommunityEditPostFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CommunityDeletePostServlet() {
+    public CommunityEditPostFormServlet() {
         super();
     }
 
@@ -27,21 +28,21 @@ public class CommunityDeletePostServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		  request.setCharacterEncoding("utf-8");
-			response.setCharacterEncoding("UTF-8");
+		// Retrieve postId from the request parameter
+        String postId = request.getParameter("postId");
 
-	        String postId = request.getParameter("postId");
+        // Use CommunityDAO to get post details
+        CommunityDAO dao = new CommunityDAO();
+        CommunityVO post = dao.getPostById(postId);
 
-	        CommunityDAO dao = new CommunityDAO();
-	        boolean postDeleted = dao.deletePost(postId);
-	        if (postDeleted) {
-				System.out.println("Delete success!");
-			} else {
-				System.out.println("Delete fail!");
+        // Set post details as attributes
+        request.setAttribute("post", post);
 
-			}
-	    
-	}
+        // Forward the request to EditPostForm.jsp
+        RequestDispatcher dispatcher = request.getRequestDispatcher("community/CommunityEditPostForm.jsp");
+        dispatcher.forward(request, response);	
+        
+        }
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

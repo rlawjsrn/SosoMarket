@@ -9,14 +9,14 @@ import common.DAO;
 
 public class CommunityDAO extends DAO {
 	// Retrieve all posts
-    private final String CommunityPostList= "SELECT * FROM community ORDER BY generation_date DESC";
+    private final String CommunityPostList1= "SELECT * FROM community ORDER BY generation_date DESC";
     
     public ArrayList<CommunityVO> getAllPosts() {
         ArrayList<CommunityVO> posts = new ArrayList<CommunityVO>();
        CommunityVO post;
         try {
             connect();
-           psmt=conn.prepareStatement(CommunityPostList);
+           psmt=conn.prepareStatement(CommunityPostList1);
             rs = psmt.executeQuery();
             while (rs.next()) {
             	post=new CommunityVO(); 
@@ -36,51 +36,105 @@ public class CommunityDAO extends DAO {
         return posts;
     }
     
-    
- // Search posts by keyword in both title and detail
-    private final String CommunitySearchResults="SELECT * FROM community WHERE " +
-            "post_title LIKE ? OR " +
-            "post_detail LIKE ? OR " +
-            "post_id LIKE ? OR " +
-            "(TO_CHAR(generation_date, 'YYYY-MM-DD') LIKE ?) OR " +
-            "member_id LIKE ?";
-    
-    public ArrayList<CommunityVO> searchPostsByTitle(String searchQuery) {
-        ArrayList<CommunityVO> searchResults = new ArrayList<CommunityVO>();
-        try {
-            connect();
-            psmt = conn.prepareStatement(CommunitySearchResults);
-            String keyword = "%" + searchQuery + "%";
-            psmt.setString(1, keyword);
-            psmt.setString(2, keyword);
-            psmt.setString(3, keyword);
-            psmt.setString(4, keyword);
-            psmt.setString(5, keyword);
+	private final String CommunityPostList = "SELECT * FROM community ORDER BY generation_date DESC";
 
-            
-            rs = psmt.executeQuery();
-            while (rs.next()) {
-                CommunityVO post = new CommunityVO();
-                post.setPostId(rs.getString("post_id"));
-                post.setPostTitle(rs.getString("post_title"));
-                post.setMemberId(rs.getString("member_id"));
-                post.setPostDetail(rs.getString("post_detail"));
-                post.setPostViews(rs.getInt("post_views"));
-                post.setGenerationDate(rs.getDate("generation_date"));
-                searchResults.add(post);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            disconnect();
-        }
-        return searchResults;
-    }
+	// Modify the method to accept a sortOption parameter
+	public ArrayList<CommunityVO> getAllPostsSorted(String sortOption) {
+	    ArrayList<CommunityVO> posts = new ArrayList<CommunityVO>();
+	    CommunityVO post;
+	    try {
+	        connect();
+	        // Adjust the SQL query based on the sortOption
+	        String sql = CommunityPostList;
+	        if ("1".equals(sortOption)) {
+	            sql = "SELECT * FROM community ORDER BY generation_date ASC";
+	        } else if ("2".equals(sortOption)) {
+	            sql = "SELECT * FROM community ORDER BY post_views DESC";
+	        }
+	        System.out.println("Generated SQL: " + sql); // Debugging statement
+
+	        psmt = conn.prepareStatement(sql);
+	        rs = psmt.executeQuery();
+	        while (rs.next()) {
+	            post = new CommunityVO();
+	            post.setPostId(rs.getString("post_id"));
+	            post.setPostTitle(rs.getString("post_title"));
+	            post.setMemberId(rs.getString("member_id"));
+	            post.setPostDetail(rs.getString("post_detail"));
+	            post.setPostViews(rs.getInt("post_views"));
+	            post.setGenerationDate(rs.getDate("generation_date"));
+	            posts.add(post);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        disconnect();
+	    }
+	    return posts;
+	}
+
+		
+	private final String CommunitySearchResults = "SELECT * FROM community WHERE " +
+	        "post_title LIKE ? OR " +
+	        "post_detail LIKE ? OR " +
+	        "post_id LIKE ? OR " +
+	        "(TO_CHAR(generation_date, 'YYYY-MM-DD') = ?) OR " +
+	        "member_id LIKE ?";
+
+	// Modify the method to accept a sortOption parameter
+	public ArrayList<CommunityVO> searchPostsByTitle(String searchQuery, String sortOption) {
+	    ArrayList<CommunityVO> searchResults = new ArrayList<CommunityVO>();
+	    try {
+	        connect();
+	        // Adjust the SQL query based on the sortOption
+	        String sql = CommunitySearchResults;
+	        if ("1".equals(sortOption)) {
+	            sql += " ORDER BY generation_date DESC";
+	        } else if ("2".equals(sortOption)) {
+	            sql += " ORDER BY generation_date ASC";
+	        } else if ("3".equals(sortOption)) {
+	            sql += " ORDER BY post_views DESC";
+	        }
+
+	        psmt = conn.prepareStatement(sql);
+	        String keyword = "%" + searchQuery + "%";
+	        psmt.setString(1, keyword);
+	        psmt.setString(2, keyword);
+	        psmt.setString(3, keyword);
+	        psmt.setString(4, keyword);
+	        psmt.setString(5, keyword);
+
+	        rs = psmt.executeQuery();
+	        while (rs.next()) {
+	            CommunityVO post = new CommunityVO();
+	            post.setPostId(rs.getString("post_id"));
+	            post.setPostTitle(rs.getString("post_title"));
+	            post.setMemberId(rs.getString("member_id"));
+	            post.setPostDetail(rs.getString("post_detail"));
+	            post.setPostViews(rs.getInt("post_views"));
+	            post.setGenerationDate(rs.getDate("generation_date"));
+	            searchResults.add(post);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        disconnect();
+	    }
+	    return searchResults;
+	}
+
+	
     
     // Create a new post
-    public boolean createPost(CommunityVO post) {
+    public CommunityVO createPost(CommunityVO post) {
         try {
             connect();
+            if (post.getPostDetail().length() > 1000) {
+                // Handle the case where post detail is too long
+            	System.out.println("longer than 1000");
+                return null;
+            }
+
 
             // SQL statement to insert a new post using the sequence for post_id
             String sql = "INSERT INTO community (post_id, post_title, post_detail, member_id, generation_date, post_views) " +
@@ -93,13 +147,13 @@ public class CommunityDAO extends DAO {
             psmt.setString(4, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
             psmt.executeUpdate();
 
-            return true;
+            return post;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             disconnect();
         }
-        return false;
+        return null;
     }
      
     //Checking if a user is authenticated before allowing them to create posts.
@@ -176,6 +230,58 @@ public class CommunityDAO extends DAO {
             disconnect();
         }
         return false;
+    }
+    
+ // Retrieve all comments for a post
+    private final String CommentsByPostIdQuery = "SELECT * FROM comm WHERE post_id=? ORDER BY generation_date DESC";
+
+    public ArrayList<CommVO> getCommentsByPostId(String postId) {
+        ArrayList<CommVO> comments = new ArrayList<>();
+        CommVO comment;
+        try {
+            connect();
+            psmt = conn.prepareStatement(CommentsByPostIdQuery);
+            psmt.setString(1, postId);
+            rs = psmt.executeQuery();
+            while (rs.next()) {
+                comment = new CommVO();
+                comment.setPostId(rs.getString("post_id"));
+                comment.setMemberId(rs.getString("member_id"));
+                comment.setGenerationDate(rs.getDate("generation_date"));
+                comment.setCommentDetail(rs.getString("comment_detail"));
+                comments.add(comment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return comments;
+    }
+
+    // Create a new comment
+    public CommVO createComment(CommVO comment) {
+        try {
+            connect();
+
+            // SQL statement to insert a new comment
+            String sql = "INSERT INTO comm (post_id, member_id, generation_date, comment_detail) " +
+                    "VALUES (?, ?, TO_DATE(?, 'YYYY-MM-DD'), ?)";
+
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, comment.getPostId());
+            psmt.setString(2, comment.getMemberId());
+            psmt.setString(3, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            psmt.setString(4, comment.getCommentDetail());
+            psmt.executeUpdate();
+
+            return comment;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return null;
     }
 
     
