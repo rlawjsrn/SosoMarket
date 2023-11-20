@@ -37,13 +37,31 @@ public class ProdSelectCtgrListServlet extends HttpServlet {
 		// 클라이언트로부터 전송된 데이터 받기
 		String stOption = request.getParameter("sortOption"); // 정렬 기준 값
 		String qtOption = request.getParameter("quantityOption"); // 정렬 갯수 값
-		String[] selectedCategories = request.getParameter("selectedCategories").split(","); // 선택한 카테고리 값
-		int priceMin = Integer.parseInt(request.getParameter("priceMin"));
-		int priceMax = Integer.parseInt(request.getParameter("priceMax"));
-		
-		
-		
-		System.out.println("최소가격: " + request.getParameter("priceMin"));
+		String[] selectedCategories;
+
+		// priceMin, priceMax 값 확인 및 초기화
+		int priceMin = 0;
+		int priceMax = 0;
+
+		String priceMinParam = request.getParameter("priceMin");
+		String priceMaxParam = request.getParameter("priceMax");
+
+		if (priceMinParam != null && !priceMinParam.isEmpty()) {
+			priceMin = Integer.parseInt(priceMinParam);
+		}
+
+		if (priceMaxParam != null && !priceMaxParam.isEmpty()) {
+			priceMax = Integer.parseInt(priceMaxParam);
+		}
+
+		if (request.getParameter("selectedCategories") == null) {
+			selectedCategories = null;
+		} else {
+			selectedCategories = request.getParameter("selectedCategories").split(",");
+		}
+
+		System.out.println(
+				"여기는 서블릿: " + stOption + " " + qtOption + " " + selectedCategories + " " + priceMin + " " + priceMax);
 
 		list = dao.selectFiltering(stOption, qtOption, selectedCategories, priceMin, priceMax);
 		request.setAttribute("list", list);
@@ -52,12 +70,10 @@ public class ProdSelectCtgrListServlet extends HttpServlet {
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("prod/prodList.jsp");
 		dispatcher.forward(request, response);
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

@@ -3,10 +3,10 @@ package com.tbk.prj.prod;
 import java.util.Date;
 
 public class ProdVO {
-	String prodId; 	 // 상품아이디
+	String prodId; // 상품아이디
 	String categoryId; // 카테고리 아이디
 	String category; // 카테고리
-	int cntCtgr;     // 카테고리 수
+	int cntCtgr; // 카테고리 수
 	String prodName; // 상품명
 	String prodStatus; // 상품상태
 	String prodPrice; // 판매가액
@@ -20,6 +20,22 @@ public class ProdVO {
 	String memberId; // 회원 아이디
 	int memberCount; // 랭킹 매기는 카운트
 	String categoryName;
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
+	public int getMemberCount() {
+		return memberCount;
+	}
+
+	public void setMemberCount(int memberCount) {
+		this.memberCount = memberCount;
+	}
 
 	public String getProdId() {
 		return prodId;
@@ -109,6 +125,23 @@ public class ProdVO {
 		this.prodPhotoName = prodPhotoName;
 	}
 
+	
+	public Date getProdGenerationDate() {
+		return prodGenerationDate;
+	}
+
+	public void setProdGenerationDate(Date prodGenerationDate) {
+		this.prodGenerationDate = prodGenerationDate;
+	}
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+
 	public String getCategory() {
 		return category;
 	}
@@ -116,7 +149,7 @@ public class ProdVO {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	
+
 	public int getCntCtgr() {
 		return cntCtgr;
 	}
@@ -141,29 +174,10 @@ public class ProdVO {
 		this.categoryName = categoryName;
 	}
 
-	public String getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
-
-	public int getMemberCount() {
-		return memberCount;
-	}
-
-	public void setMemberCount(int memberCount) {
-		this.memberCount = memberCount;
-	}
-
 	@Override
 	public String toString() {
 	    return "ProdVO [prodId=" + prodId + ", prodName=" + prodName + ", prodStatus=" + prodStatus + ", prodPrice="
 	          + prodPrice + ", prodViews=" + prodViews + ", prodDescription=" + prodDscrp + ", placeTrans="
 	          + placeTrans + ", prodPhotoId=" + prodPhotoId + ", category=" + category + ", cntCtgr=" + cntCtgr + "]";
 	   }
-	
-	
-
 }

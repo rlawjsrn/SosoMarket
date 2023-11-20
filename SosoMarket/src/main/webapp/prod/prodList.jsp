@@ -6,8 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>상품전체조회페이지</title>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-    function applyFilters() {
+
+    function applyFilters() 
+    {
     	// 정렬 기준 값
         var sortOption = document.getElementById("sortOption").value;
     	
@@ -24,28 +28,122 @@
         var priceMin = document.getElementById("price-min").value;
         var priceMax = document.getElementById("price-max").value;
 
-        // AJAX를 사용하여 서버로 데이터 전송
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "/SosoMarket/ProdCtgrList.do", true);
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
         // 데이터 전송
-        var data = "sortOption=" + sortOption + "&quantityOption=" + quantityOption + "&selectedCategories=" + selectedCategories.join(",") + "&priceMin="+ priceMin + "&priceMax=" + priceMax;
-        console.log(data);
-        xhr.send(data);
-
-        // 서버 응답 처리
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // 서버 응답에 대한 처리
-                console.log("아작스 호출 성공?");
-            }
+        var data = {
+            sortOption: sortOption,
+            quantityOption: quantityOption,
+            selectedCategories: selectedCategories.join(","),
+            priceMin: priceMin,
+            priceMax: priceMax
         };
+        
+        console.log(data);
+        
+        $.ajax({
+            url: "/SosoMarket/ProdCtgrList.do",
+            type: "POST",
+            data: {
+                sortOption: sortOption,
+                quantityOption: quantityOption,
+                selectedCategories: selectedCategories.join(","),
+                priceMin: priceMin,
+                priceMax: priceMax
+            },
+            success: function (response) {
+                // 서버에서 받아온 데이터(response)를 처리
+                alert("success");
+                console.log(response);
+
+                // 받아온 데이터를 화면에 적용
+                var productListContainer = document.getElementById("product-list-container");
+                productListContainer.innerHTML = ""; // 기존 내용 비우기
+
+                if (Array.isArray(response)) {
+                    // response가 배열인 경우
+                    response.forEach(function (voo) {
+                        var prodPhotoName = voo.prodPhotoName;
+                        var category = voo.category;
+                        var prodName = voo.prodName;
+                        var prodPrice = voo.prodPrice;
+
+                        var productHtml = `
+                            <div class="col-md-4 col-xs-6">
+                                <div class="product" id="prodId">
+                                    <div class="product-img">
+                                        <img id="prodPhotoName" src="./upload/${prodPhotoName}.png?after" alt="">
+                                    </div>
+                                    <div class="product-body">
+                                        <p class="product-category" id="category">${category}</p>
+                                        <h3 class="product-name" id="prodName">
+                                            <a href="#">${prodName}</a>
+                                        </h3>
+                                        <h4 class="product-price" id="prodPrice">${prodPrice}원</h4>
+
+                                        <div class="product-btns">
+                                            <button class="add-to-wishlist">
+                                                <i class="fa fa-heart-o"></i><span class="tooltipp">관심상품등록</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+
+                        productListContainer.innerHTML += productHtml;
+                    });
+                } else {
+                    // response가 배열이 아닌 경우
+                    console.error("Response is not an array:", response);
+                }
+
+                alert("success");
+                // 여기에서 받아온 데이터를 활용하여 원하는 동작 수행
+            },
+            error: function (error) {
+                console.error(error);
+                alert("error");
+            }
+        });
     }
+    
+    function prodOne(e) {
+		alert("요소 클릭됨");
+                // 클릭된 요소에서 prodId 값을 가져옵니다.
+                var prodIdElement = event.target.closest(".product");
+                var prodId = prodIdElement.id.replace('prodId', '');
+                console.log(prodId)
+                
+        //하트 클릭시 이벤트 발생 막기 수정하세요!!!
+
+                // prodId 값을 사용하여 PrdoOneServlet에 AJAX 호출을 수행합니다.
+                $.ajax({
+                    url: "/SosoMarket/ProdOne.do",
+                    type: "GET",
+                    data: {
+                        prodId: prodId
+                    },
+                    success: function (response) {
+                        // PrdoOneServlet에서의 응답을 처리합니다.
+                        console.log(response);
+                        // 응답을 기반으로 추가 동작을 수행합니다.
+                    },
+                    error: function (error) {
+                        console.error(error);
+                        alert("에러 발생");
+                    }
+                });
+
+                // 이벤트의 버블링을 중지합니다.
+                event.stopPropagation();
+        };
+
+
 </script>
+
 </head>
 <body>
-	<jsp:include page="../resources/header.html" />
+	<jsp:include page="../resources/header.jsp" />
 
 	<!-- SECTION -->
 	<div class="section">
@@ -66,7 +164,7 @@
 							<c:forEach var="vo" items="${ctgrList }">
 								<div class="input-checkbox">
 									<input type="checkbox" id="category-<%=cnt1++%>"
-										value="${vo.category }" onchange="filterProducts()"> <label
+										value="${vo.categoryId }"> <label
 										for="category-<%=cnt2++%>"> <span></span>
 										${vo.category } <small>(${vo.cntCtgr }) </small>
 									</label>
@@ -140,11 +238,11 @@
 					<!-- /store top filter -->
 
 					<!-- store products -->
-					<div class="row">
+					<div id="product-list-container" class="row">
 						<!-- product -->
 						<c:forEach var="voo" items="${list}">
-							<div class="col-md-4 col-xs-6">
-								<div class="product" id="prodId">
+							<div class="col-md-4 col-xs-6" onclick="location.href='/SosoMarket/ProdOne.do?prodId=${voo.prodId }'">
+								<div class="product" id="prodId${voo.prodId }">
 									<div class="product-img">
 										<img id="prodPhotoName"
 											src="./upload/${voo.prodPhotoName}.png?after" alt="">

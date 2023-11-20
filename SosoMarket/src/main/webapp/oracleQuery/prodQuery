@@ -6,18 +6,21 @@ AND SUBSTR(p.product_id,1,2) = c.category_id
 AND SUBSTR(pp.product_photo_name,7,6) = 'fl0001';
 
 //// 인기 상품 3건 조회 쿼리 (prodList.jsp)
-SELECT p.product_id, c.category_name, p.product_name, TO_CHAR(p.product_price, 'FM999,999,999,999') as product_price, pp.product_photo_id
-FROM(SELECT  product_id, product_name, product_price \r\n" + "FROM product
-ORDER BY product_views DESC ) p, product_photo pp, category c
+SELECT p.product_id,  c.category_name, p.product_name, TO_CHAR(p.product_price, 'FM999,999,999,999') as product_price, pp.product_photo_id
+FROM(SELECT  product_id, product_name, product_price
+        FROM product
+        ORDER BY product_views DESC ) p, product_photo pp, category c
 WHERE SUBSTR(pp.product_photo_name,1,6) = p.product_id
-AND SUBSTR(p.product_id,1,2) = c.category_id\r\n" + "AND ROWNUM <= 3
+AND SUBSTR(p.product_id,1,2) = c.category_id
+AND ROWNUM <= 3
 AND SUBSTR(pp.product_photo_name,7,6) = 'fl0001';
 
 //// 카테고리별 갯수 조회 쿼리 (prodList.jsp)
-SELECT COUNT(p.product_id) as prodCnt, c.category_name
+SELECT c.category_id, COUNT(p.product_id) as prodCnt, c.category_name
 FROM product p, category c
 WHERE SUBSTR(p.product_id, 1, 2) = c.category_id
-GROUP BY SUBSTR(p.product_id, 1, 2), c.category_name;
+GROUP BY  c.category_id, SUBSTR(p.product_id, 1, 2), c.category_name;
+
 
 SELECT COUNT(p.product_id) AS prodCnt, c.category_name
 FROM product p
@@ -29,6 +32,14 @@ GROUP BY c.category_name;
 //// 상품 정보 등록 쿼리
 INSERT INTO product (product_id, product_name, product_price, product_description, place_transaction, member_id)
 VALUES(CONCAT(?, LPAD(prodSeq.nextval,4,0)), ?, ?, ?, ?, ?);
+
+//// 가장 최근 등록된 상품순 조회
+SELECT p.product_id, c.category_name, p.product_name, TO_CHAR(p.product_price,'FM999,999,999,999')as product_price, pp.product_photo_id
+FROM product p, product_photo pp, category c
+WHERE SUBSTR(pp.product_photo_name,1,6) = p.product_id
+AND SUBSTR(p.product_id,1,2) = c.category_id
+AND SUBSTR(pp.product_photo_name,7,6) = 'fl0001'
+ORDER BY SUBSTR(p.product_id,3,4) DESC;
 
 //// 가장 최근 등록된 상품 아이디 조회 쿼리
 SELECT product_id 

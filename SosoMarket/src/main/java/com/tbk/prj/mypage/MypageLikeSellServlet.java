@@ -36,7 +36,7 @@ public class MypageLikeSellServlet extends HttpServlet {
 		ArrayList<MypageLikeVO> list = new ArrayList<MypageLikeVO>();
 		
 		// dao 페이지에서 전체목록
-		list = dao.selectList();
+		list = dao.sellList();
 		System.out.println(list);
 		request.setAttribute("list", list);
 		// 목록을 보여줄 페이지
