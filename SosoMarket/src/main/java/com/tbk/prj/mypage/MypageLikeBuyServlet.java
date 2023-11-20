@@ -35,10 +35,13 @@ public class MypageLikeBuyServlet extends HttpServlet {
 		MypageLikeVO vo = new MypageLikeVO();
 		ArrayList<MypageLikeVO> list = new ArrayList<MypageLikeVO>();
 		
+		vo.setMemberId(request.getParameter("memberId"));
+		
 		// dao 페이지에서 전체목록
-		list = dao.buyList();
+		list = dao.buyList(vo);
 		System.out.println(list);
 		request.setAttribute("list", list);
+		
 		// 목록을 보여줄 페이지
 		String viewPage = "mypage/myBuyList.jsp";
 		// RequestDispatcher는 클라이언트로부터 최초에 들어온 요청을 JSP/Servlet 내에서 원하는 자원으로 요청을 넘기는 역할 수행

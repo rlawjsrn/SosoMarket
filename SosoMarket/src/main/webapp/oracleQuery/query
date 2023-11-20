@@ -10,7 +10,7 @@ AND pp.product_photo_id IN (SELECT max(product_photo_id)
                             GROUP BY product_id);
 
 // 회원별 찜 목록 2차 수정
-SELECT p.product_id, pi.product_interest_id, pi.member_id, pp.product_photo_id, p.product_name, p.product_status, p.product_price
+SELECT p.product_id, pi.product_interest_id, pi.member_id, pp.product_photo_name, p.product_name, p.product_status, p.product_price
 FROM product p, product_interest pi, product_photo pp
 WHERE substr(pp.product_photo_name,1,6) = p.product_id
 AND pi.product_id = p.product_id
@@ -36,18 +36,18 @@ AND pp.product_photo_id IN (SELECT max(product_photo_id)
                             GROUP BY product_id)
                             
 // 판매내역 수정
-SELECT p.product_id, pp.product_photo_id, p.product_name, p.product_status, p.product_price, p.generation_date
+SELECT p.product_id, pp.product_photo_name, p.product_name, p.product_status, p.product_price, p.generation_date
 FROM product p, product_photo pp
 WHERE substr(pp.product_photo_name,1,6) = p.product_id
-AND p.product_status = 1
-AND p.member_id = 'test1'
+AND p.product_status = 0
+AND p.member_id = 'test4'
 AND pp.product_photo_id IN (SELECT max(product_photo_id)
                             FROM product_photo
                             GROUP BY substr(product_photo_name,1,6));
 
 
 // 구매내역
-SELECT b.buy_id, p.product_id, pp.product_photo_id, p.product_name, p.product_status, p.product_price, p.generation_date
+SELECT b.buy_id, p.product_id, pp.product_photo_name, p.product_name, p.product_status, p.product_price, p.generation_date
 FROM product p, product_photo pp, buy b, member m
 WHERE substr(pp.product_photo_name,1,6) = p.product_id
 AND b.product_id = p.product_id
@@ -69,6 +69,13 @@ where member_id = 'test1'
 
 // 회원정보 수정
 UPDATE member set nickname = ?, phone_number = ? where member_id = 'test1'"
+
+// 마이페이지 - 커뮤니티 내 글
+select *
+from community
+where member_id = ?;
+
+
 
 
 // 관리자~
@@ -110,3 +117,17 @@ FROM (SELECT member_id, count(member_id) as member_count
       GROUP BY member_id
       ORDER BY member_count DESC)
 WHERE ROWNUM <= 3
+
+// 전체 회원수
+select count(member_id)
+from member;
+
+// 전체 상품수
+select count(product_id)
+from product;
+
+// 오늘 판매된 상품수
+select count(product_id)
+from product
+where TO_CHAR(generation_date, 'yy/mm/dd') = TO_CHAR(sysdate, 'yy/mm/dd')
+and product_status = 1;

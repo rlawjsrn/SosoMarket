@@ -33,6 +33,8 @@ public class MemberLogInServlet extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		String memberId = request.getParameter("memberId");
 		String password = request.getParameter("password");
+		System.out.println(memberId);
+		System.out.println(password);
 		
 		MemberVO vo = new MemberDAO().loginmember(memberId, password);
 		

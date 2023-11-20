@@ -9,6 +9,17 @@ public class MemberVO {
 	private String nickname;
 	private int ratingScore;
 	private String email;
+//	송다희 추가
+//	멤버 전체 조회
+	private int memberCount;
+
+	public int getMemberCount() {
+		return memberCount;
+	}
+
+	public void setMemberCount(int memberCount) {
+		this.memberCount = memberCount;
+	}
 
 	public String getEmail() {
 		return email;

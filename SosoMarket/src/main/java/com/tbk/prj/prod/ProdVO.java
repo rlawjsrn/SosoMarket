@@ -15,6 +15,24 @@ public class ProdVO {
 	String prodPhotoName;// 상품사진경로
 	String memberId; // 회원아이디
 	int memberCount; // 랭킹 매기는 카운트
+	int prodCount;	// 상품 카운트
+	int todayCount; // 오늘 거래된 상품
+
+	public int getTodayCount() {
+		return todayCount;
+	}
+
+	public void setTodayCount(int todayCount) {
+		this.todayCount = todayCount;
+	}
+
+	public int getProdCount() {
+		return prodCount;
+	}
+
+	public void setProdCount(int prodCount) {
+		this.prodCount = prodCount;
+	}
 
 	public String getMemberId() {
 		return memberId;

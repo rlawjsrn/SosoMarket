@@ -7,7 +7,7 @@ public class MypageLikeVO {
 	private String productInterestId;
 	private String memberId;
 	private String productId;
-	private String productPhotoId;
+	private String productPhotoName;
 	private String productName;
 	private String productStatus;
 	private int productPrice;
@@ -45,12 +45,12 @@ public class MypageLikeVO {
 		this.productId = productId;
 	}
 
-	public String getProductPhotoId() {
-		return productPhotoId;
+	public String getProductPhotoName() {
+		return productPhotoName;
 	}
 
-	public void setProductPhotoId(String productPhotoId) {
-		this.productPhotoId = productPhotoId;
+	public void setProductPhotoName(String productPhotoName) {
+		this.productPhotoName = productPhotoName;
 	}
 
 	public String getProductName() {

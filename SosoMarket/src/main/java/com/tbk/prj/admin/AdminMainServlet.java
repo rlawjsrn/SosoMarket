@@ -1,6 +1,8 @@
-package com.tbk.prj.member;
+package com.tbk.prj.admin;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,11 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonArray;
+import com.tbk.prj.member.MemberVO;
+import com.tbk.prj.prod.ProdVO;
+
 /**
- * Servlet implementation class MemberUpNic
+ * Servlet implementation class AdminMainServlet
  */
-@WebServlet("/MemberUp.do")
-public class MemberUpdateServlet extends HttpServlet {
+@WebServlet("/AdminMain.do")
+public class AdminMainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -21,21 +27,23 @@ public class MemberUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		MemberDAO dao = new MemberDAO();
-		MemberVO vo = new MemberVO();
+		AdminDAO dao = new AdminDAO();
+		MemberVO mvo = new MemberVO();
+		ProdVO pvo = new ProdVO();
+		ProdVO ptvo = new ProdVO();
+		ProdVO pdvo = new ProdVO();
 		
-//		vo.setMemberId(request.getParameter("row"));
-		vo.setNickname(request.getParameter("nickname"));
-		if(request.getParameter("phoneNumber") != null) {
-			String cleanedString = request.getParameter("phoneNumber").replaceAll("[^\\uAC00-\\uD7A3\\dA-Za-z\\s]", "");
-			System.out.println("ssss"+cleanedString);
-			vo.setPhoneNumber(cleanedString);
-		}
-		vo.setMemberId(request.getParameter("memberId"));
-		int n = dao.updateNic(vo);
-		request.setAttribute("vo", vo);
-		String viewPage = "/MyPageUpdate.do";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+		mvo = dao.memCount(mvo);
+		pvo = dao.prodCount(pvo);
+		ptvo = dao.todayProd(ptvo);
+		pdvo = dao.doneProd(pdvo);
+		
+		request.setAttribute("mvo", mvo);
+		request.setAttribute("pvo", pvo);
+		request.setAttribute("ptvo", ptvo);
+		request.setAttribute("pdvo", pdvo);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("gentelella-master/production/adminMain.jsp");
 		dispatcher.forward(request, response);
 	}
 

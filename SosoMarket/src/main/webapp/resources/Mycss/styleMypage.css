@@ -731,14 +731,14 @@ section {
   font-size: 15px;
 }*/
 
-.specials .nav-link:hover {
+/*.specials .nav-link:hover {
   color: cornflowerblue;
 }
 
 .specials .nav-link.active {
   color: cornflowerblue;
   border-color: cornflowerblue;
-}
+}*/
 
 .specials .tab-pane.active {
   animation: fadeIn 0.5s ease-out;
@@ -759,7 +759,7 @@ section {
   margin-bottom: 0;
 }
 
-@media (max-width: 992px) {
+/*@media (max-width: 992px) {
   .specials .nav-link {
     border: 0;
     padding: 15px;
@@ -769,7 +769,7 @@ section {
     color: #fff;
     background: cornflowerblue;
   }
-}
+}*/
 
 /*--------------------------------------------------------------
 # Events
