@@ -41,8 +41,9 @@ public class ProdInsertServlet extends HttpServlet {
 		String prodPrice = multi.getParameter("prodPrice");
 		String placeTrans = multi.getParameter("place");
 		String prodDscrp = multi.getParameter("prodDscrp");
-//		String memberId = session.getAttribute("memberID");
-		String memberId = "test1"; // 수정필요
+		String memberId = multi.getParameter("memberId");
+		
+		System.out.println(memberId + "============================");
 
 		ProdDAO dao = new ProdDAO();
 		ProdVO prodVo = new ProdVO();
@@ -80,7 +81,7 @@ public class ProdInsertServlet extends HttpServlet {
 		Gson gson = new GsonBuilder().create();
 		response.getWriter().println(gson.toJson(prodVo));
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("prod/prodList.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/ProdList.do");
 		dispatcher.forward(request, response);
 
 	}
