@@ -58,15 +58,13 @@
 									<c:if test="${vo.productStatus eq 0}">	<!-- product_status = 0 -> 판매중 -->
 										<tr>
 											<td class="product-thumbnail"><img
-												src="${vo.productPhotoId }" alt="Image" class="img-fluid">
+												src="./upload/${vo.productPhotoName }.png?after" alt="Image" class="img-fluid">
 											</td>
 											<td class="product-name">
 												<h2 class="h5 text-black">${vo.productName }</h2>
 											</td>
 											<td>${vo.productPrice }</td>
-											<%-- <c:if test="${vo.productStatus eq 0}"> --%>
 											<td>판매중</td>
-											<%-- </c:if> --%>
 											<td>${vo.generationDate }</td>
 										</tr>
 									</c:if>
@@ -97,7 +95,7 @@
 									<c:if test="${vo.productStatus eq 1}">	<!-- product_status = 1 -> 거래완료 -->
 										<tr>
 											<td class="product-thumbnail"><img
-												src="${vo.productPhotoId }" alt="Image" class="img-fluid">
+												src="./upload/${vo.productPhotoName }.png?after" alt="Image" class="img-fluid">
 											</td>
 											<td class="product-name">
 												<h2 class="h5 text-black">${vo.productName }</h2>
@@ -135,7 +133,7 @@
 									<c:if test="${vo.productStatus eq 2}">	<!-- product_status = 2 -> 예약중 -->
 										<tr>
 											<td class="product-thumbnail"><img
-												src="${vo.productPhotoId }" alt="Image" class="img-fluid">
+												src="./upload/${vo.productPhotoName }.png?after" alt="Image" class="img-fluid">
 											</td>
 											<td class="product-name">
 												<h2 class="h5 text-black">${vo.productName }</h2>

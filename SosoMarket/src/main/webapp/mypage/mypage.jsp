@@ -21,8 +21,8 @@
 	// act 클래스를 클릭 시, 해당 href를 tab-1에 불러오기
 	$(document).on('click', '.act', function(e) {
 		e.preventDefault(); // 기본 동작 방지
-
-		var LikeList = $(this).attr('href');
+		var memberId = "${vo.memberId}";
+		var LikeList = $(this).attr('href') + '?memberId=' + memberId;
 		// Ajax를 이용해 LikeList 호출
 		$.ajax({
 			url : LikeList,
@@ -37,11 +37,18 @@
 		});
 	});
 </script>
+<script>
+
+<%
+String memberId = (String)session.getAttribute("memberId");
+
+%>
+</script>
 </head>
 
 
 <body>
-	<jsp:include page="../resources/header.html"></jsp:include>
+	<jsp:include page="../resources/header.jsp"></jsp:include>
 	<!-- 부트스트랩 -->
 
 	<section id="specials" class="specials">
@@ -65,14 +72,14 @@
 							data-bs-toggle="tab" href="/SosoMarket/MypageSellList.do">나의
 								판매내역</a></li>
 						<li class="nav-item"><a class="nav-link act"
-							data-bs-toggle="tab" href="#tab-5">나의 회사생활</a></li>
+							data-bs-toggle="tab" href="/SosoMarket/MypageCom.do">나의 회사생활</a></li>
 					</ul>
 				</div>
 				<div class="col-lg-9 mt-4 mt-lg-0">
 					<div class="tab-content">
 						<div class="tab-pane active show" id="tab-1">
 							<div class="row">
-							<!-- ajax 들어올 공간 -->
+								<!-- ajax 들어올 공간 -->
 							</div>
 						</div>
 					</div>
