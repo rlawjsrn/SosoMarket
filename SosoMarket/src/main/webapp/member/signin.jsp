@@ -191,7 +191,7 @@ function passwordCheckFunction() {
 
 function submitForm() {
     var form = document.getElementById('signupForm');
-    
+
     const id = form.memberId.value;
     var pw = form.password.value;
     var pw2 = form.password2.value;
@@ -199,16 +199,28 @@ function submitForm() {
     var email = form.email.value;
     const nick = form.nickname.value;
 
-    if (id === "") {
+    if (id === "" && id.length < 4 || id.length > 12) {
         alert("아이디를 입력해주세요");
         $('#memberId').focus();
         return false;
     }
+    if (id.length < 4 || id.length > 12) {
+        alert("아이디는 4~12자 이내로 입력 가능합니다.");
+        $('#memberId').focus();
+        return false;
+    }
+    
     if (pw === "") {
         alert("비밀번호를 입력해주세요");
         $('#password').focus();
         return false;
     }
+    if (pw.length < 4) {
+        alert("비밀번호는 4자 이상으로 입력해야 합니다.");
+        $('#password').focus();
+        return false;
+    }
+   
     if (pw2 === "") {
         alert("비밀번호를 확인해주세요");
         $('#password2').focus();
@@ -224,14 +236,30 @@ function submitForm() {
         $('#email').focus();
         return false;
     }
+	/*이메일 형식 검사 코드*/
+    var str=form.email.value;	   
+    var atPos = str.indexOf('@');
+    var atLastPos = str.lastIndexOf('@');
+    var dotPos = str.indexOf('.'); 
+    var spacePos = str.indexOf(' ');
+    var commaPos = str.indexOf(',');
+    var eMailSize = str.length;
+    if (atPos > 1 && atPos == atLastPos && 
+	   dotPos > 3 && spacePos == -1 && commaPos == -1 
+	   && atPos + 1 < dotPos && dotPos + 1 < eMailSize);
+    else {
+          alert('E-mail주소 형식이 잘못되었습니다.\n\r다시 입력해 주세요!');
+	      document.form.email.focus();
+		  return;
+    }
     
     if (nick === "") {
         alert("닉네임을 입력해주세요");
         $('#nickname').focus();
         return false;
     }
-    
- // 아이디와 닉네임 중복 체크
+
+    // 아이디와 닉네임 중복 체크
     var isIdAvailable = false;
     var isNicknameAvailable = false;
 
@@ -240,12 +268,13 @@ function submitForm() {
         type: 'post',
         url: '/SosoMarket/MemberIdCheckServlet',
         data: { memberId: id },
-        async: false,
         success: function (result) {
             if (result === "0") { // 이미 존재하는 회원인 경우
                 isIdAvailable = false;
+                submitAfterChecks(); // Call submit function after ID check
             } else if (result === "1") { // 가입 가능한 회원인 경우
                 isIdAvailable = true;
+                checkNickname(); // Check nickname after ID check
             }
         },
         error: function () {
@@ -254,41 +283,47 @@ function submitForm() {
         }
     });
 
-    // 닉네임 중복 체크
-    $.ajax({
-        type: 'post',
-        url: '/SosoMarket/MemberNicknameCheckServlet',
-        data: { nickname: nick },
-        async: false,
-        success: function (result) {
-            if (result === "0") { // 이미 존재하는 회원인 경우
-                isNicknameAvailable = false;
-            } else if (result === "1") { // 가입 가능한 회원인 경우
-                isNicknameAvailable = true;
+    function checkNickname() {
+        // 닉네임 중복 체크
+        $.ajax({
+            type: 'post',
+            url: '/SosoMarket/MemberNicknameCheckServlet',
+            data: { nickname: nick },
+            success: function (result) {
+                if (result === "0") { // 이미 존재하는 회원인 경우
+                    isNicknameAvailable = false;
+                } else if (result === "1") { // 가입 가능한 회원인 경우
+                    isNicknameAvailable = true;
+                }
+                // Submit the form after nickname check
+                submitAfterChecks();
+            },
+            error: function () {
+                alert("닉네임 중복 체크에 실패했습니다.");
+                return false;
             }
-        },
-        error: function () {
-            alert("닉네임 중복 체크에 실패했습니다.");
+        });
+    }
+
+    function submitAfterChecks() {
+        if (!isIdAvailable) {
+            alert("사용중인 아이디입니다.");
+            $('#memberId').focus();
             return false;
         }
-    });
-    
-    if (!isIdAvailable) {
-        alert("사용할 수 없는 아이디입니다.");
-        $('#memberId').focus();
-        return false;
+
+        if (!isNicknameAvailable) {
+            alert("사용중인 닉네임입니다.");
+            $('#nickname').focus();
+            return false;
+        }
+
+        // 모든 조건이 충족되었을 때, 폼을 제출합니다.
+        form.submit();
     }
-    
-    if (!isNicknameAvailable) {
-        alert("사용중인 닉네임입니다.");
-        $('#nickname').focus();
-        return false;
-    }
-    
-    // 모든 조건이 충족되었을 때, 폼을 제출합니다.
-    form.submit();
-    return true;
 }
+
+
 
 </script>
 
@@ -308,7 +343,7 @@ function submitForm() {
     </div>
 </div>
 
-<div class="signin">
+<div class="signin">  
     <form action="/SosoMarket/SignIn.do" method="POST" id="signupForm">
         <h2>회원가입</h2>
     
