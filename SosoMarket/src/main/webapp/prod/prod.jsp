@@ -98,8 +98,8 @@
 					<div class="col-md-7">
 						<!-- Billing Details -->
 						<div class="billing-details">
+						<input value="<%=memberId%>" name="memberId" style="display:none"/>
 							<div class="form-group">
-							<div><%=memberId %></div>
 								<select class="input-select" name="category">
 									<option value="" selected="selected">카테고리</option>
 									<option value="dd">디지털기기</option>
