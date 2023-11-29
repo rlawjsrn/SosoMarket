@@ -1,6 +1,9 @@
 package com.tbk.prj.community;
 
 import java.util.Date;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -129,12 +132,6 @@ public class CommunityDAO extends DAO {
     public CommunityVO createPost(CommunityVO post) {
         try {
             connect();
-            if (post.getPostDetail().length() > 1000) {
-                // Handle the case where post detail is too long
-            	System.out.println("longer than 1000");
-                return null;
-            }
-
 
             // SQL statement to insert a new post using the sequence for post_id
             String sql = "INSERT INTO community (post_id, post_title, post_detail, member_id, generation_date, post_views) " +
@@ -189,8 +186,10 @@ public class CommunityDAO extends DAO {
         }
         return post;
     }
+    
+   
 
- // Update a post
+    // Update a post
     public boolean updatePost(CommunityVO post) {
         try {
             connect();
@@ -210,7 +209,7 @@ public class CommunityDAO extends DAO {
             disconnect();
         }
         return false;
-    }
+    } 
 
     // Delete a post
     public boolean deletePost(String postId) {
@@ -232,8 +231,9 @@ public class CommunityDAO extends DAO {
         return false;
     }
     
+    
  // Retrieve all comments for a post
-    private final String CommentsByPostIdQuery = "SELECT * FROM comm WHERE post_id=? ORDER BY generation_date DESC";
+    private final String CommentsByPostIdQuery = "SELECT * FROM comm WHERE post_id= ? AND cmt_pos=0 ORDER BY generation_date DESC";
 
     public ArrayList<CommVO> getCommentsByPostId(String postId) {
         ArrayList<CommVO> comments = new ArrayList<>();
@@ -245,6 +245,9 @@ public class CommunityDAO extends DAO {
             rs = psmt.executeQuery();
             while (rs.next()) {
                 comment = new CommVO();
+                comment.setCommId(rs.getInt("comm_id"));
+                comment.setCmtRef(rs.getInt("cmt_ref"));
+                comment.setCmtPos(rs.getInt("cmt_pos"));
                 comment.setPostId(rs.getString("post_id"));
                 comment.setMemberId(rs.getString("member_id"));
                 comment.setGenerationDate(rs.getDate("generation_date"));
@@ -258,22 +261,117 @@ public class CommunityDAO extends DAO {
         }
         return comments;
     }
+    
+    // Retrieve replies for a comment
+    private final String RepliesByCommentIdQuery = "SELECT * FROM comm WHERE cmt_ref=? AND cmt_pos>0  ORDER BY cmt_pos ASC, generation_date ASC";
+
+    public ArrayList<CommVO> getRepliesByCommentId(int commId) {
+        ArrayList<CommVO> replies = new ArrayList<>();
+        CommVO reply;
+        try {
+            connect();
+            psmt = conn.prepareStatement(RepliesByCommentIdQuery);
+            psmt.setInt(1, commId);
+            rs = psmt.executeQuery();
+            while (rs.next()) {
+                reply = new CommVO();
+                reply.setCommId(rs.getInt("comm_id"));
+                reply.setCmtRef(rs.getInt("cmt_ref"));
+                reply.setCmtPos(rs.getInt("cmt_pos"));
+                reply.setPostId(rs.getString("post_id"));
+                reply.setMemberId(rs.getString("member_id"));
+                reply.setGenerationDate(rs.getDate("generation_date"));
+                reply.setCommentDetail(rs.getString("comment_detail"));
+                replies.add(reply);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return replies;
+    }
+
+
+    
+    
+    // Retrieve a comment by its comm_id
+    public CommVO getCommentById(int commId) {
+        CommVO comm = null;
+        try {
+            connect();
+            String sql = "SELECT * FROM comm WHERE comm_id=?";
+            psmt = conn.prepareStatement(sql);
+            psmt.setInt(1, commId);
+            rs = psmt.executeQuery();
+            if (rs.next()) {
+                comm = new CommVO();
+                comm.setCommId(rs.getInt("comm_id"));
+                comm.setCmtRef(rs.getInt("cmt_ref"));
+                comm.setCmtPos(rs.getInt("cmt_pos"));
+                comm.setMemberId(rs.getString("member_id"));
+                comm.setCommentDetail(rs.getString("comment_detail"));
+                comm.setGenerationDate(rs.getDate("generation_date"));
+                System.out.println(comm);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return comm;
+    }
+    
 
     // Create a new comment
     public CommVO createComment(CommVO comment) {
         try {
             connect();
+            
+            String sql;
+            int cmtPos;
 
+            if (comment.getCmtRef() > 0) {
+                // If comm_ref is present, it's a reply
+                String posQuery = "SELECT NVL(MAX(cmt_pos), 0) + 1 FROM comm WHERE cmt_ref = ?";
+                try (PreparedStatement posPsmt = conn.prepareStatement(posQuery)) {
+                    posPsmt.setInt(1, comment.getCmtRef());
+                    try (ResultSet resultSet = posPsmt.executeQuery()) {
+                        if (resultSet.next()) {
+                            cmtPos = resultSet.getInt(1);
+                        } else {
+                            // Handle error or set a default value
+                            cmtPos = 0;
+                        }
+                    }
+                }
+                
             // SQL statement to insert a new comment
-            String sql = "INSERT INTO comm (post_id, member_id, generation_date, comment_detail) " +
-                    "VALUES (?, ?, TO_DATE(?, 'YYYY-MM-DD'), ?)";
+             sql = "INSERT INTO comm (comm_id,cmt_ref,cmt_pos, post_id, member_id, generation_date, comment_detail) " +
+                    "VALUES (cmtSeq.nextval,?,?,?, ?, current_timestamp, ?)";
 
             psmt = conn.prepareStatement(sql);
-            psmt.setString(1, comment.getPostId());
-            psmt.setString(2, comment.getMemberId());
-            psmt.setString(3, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-            psmt.setString(4, comment.getCommentDetail());
-            psmt.executeUpdate();
+            psmt.setInt(1, comment.getCmtRef());
+            psmt.setInt(2, cmtPos);
+            psmt.setString(3, comment.getPostId());
+            psmt.setString(4, comment.getMemberId());
+            psmt.setString(5, comment.getCommentDetail());
+            System.out.println("SQL Query: " + sql);
+
+            } else {
+                // If comm_ref is null, it's a top-level comment
+                int pos = 0;
+                sql = "INSERT INTO comm (comm_id, cmt_ref, cmt_pos, post_id, member_id, generation_date, comment_detail) " +
+                        "VALUES( cmtSeq.nextval, cmtSeq.currval, ?, ?, ?, current_timestamp, ?)";
+                psmt = conn.prepareStatement(sql);
+                psmt.setInt(1, pos);
+                psmt.setString(2, comment.getPostId());
+                psmt.setString(3, comment.getMemberId());
+                psmt.setString(4, comment.getCommentDetail());
+            }
+
+            int r = psmt.executeUpdate();
+            System.out.println(r + "건 입력.");
 
             return comment;
         } catch (SQLException e) {
@@ -283,40 +381,66 @@ public class CommunityDAO extends DAO {
         }
         return null;
     }
-
     
-    // Retrieve posts with pagination
-    public ArrayList<CommunityVO> getPostsWithPagination(int page, int postsPerPage) {
-        ArrayList<CommunityVO> posts = new ArrayList<>();
+    //Update Comment 
+    public boolean updateComment(CommVO comment) {
         try {
             connect();
-            int startRow = (page - 1) * postsPerPage + 1;
-            int endRow = startRow + postsPerPage - 1;
 
-            String sql = "SELECT * FROM " +
-                    "(SELECT ROWNUM AS rnum, c.* FROM " +
-                    "(SELECT * FROM community ORDER BY generationDate DESC) c) " +
-                    "WHERE rnum BETWEEN ? AND ?";
-            psmt = conn.prepareStatement(sql);
-            psmt.setInt(1, startRow);
-            psmt.setInt(2, endRow);
-            rs = psmt.executeQuery();
+            // Update the comment_detail and generation_date
+            String updateSql = "UPDATE comm SET comment_detail=?, generation_date=current_timestamp WHERE comm_id=?";
+            psmt = conn.prepareStatement(updateSql);
+            psmt.setString(1, comment.getCommentDetail());
+            psmt.setInt(2, comment.getCommId()); 
 
-            while (rs.next()) {
-                CommunityVO post = new CommunityVO();
-                post.setPostId(rs.getString("post_id"));
-                post.setPostTitle(rs.getString("post_title"));
-                post.setMemberId(rs.getString("member_id"));
-                post.setPostDetail(rs.getString("post_detail"));
-                post.setPostViews(rs.getInt("post_views"));
-                post.setGenerationDate(rs.getTimestamp("generationDate"));
-                posts.add(post);
+            int rowsAffected = psmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Comment updated successfully");
+                return true;
+            } else {
+                System.out.println("Failed to update comment. No rows affected.");
+                return false;
             }
+            
+        } catch (SQLException e) {
+            System.out.println("Error updating comment: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Error updating comment", e);
+        } finally {
+            disconnect();
+        }
+    }
+
+ // Delete a comment
+    public boolean deleteComment(int commId,boolean isReply) {
+        try {
+            connect();
+            String deleteSql;
+
+            if (isReply) {
+                // Delete a reply
+                deleteSql = "DELETE FROM comm WHERE comm_id=?";
+            } else {
+                // Delete a top-level comment
+                deleteSql = "DELETE FROM comm WHERE cmt_ref=?";
+            }
+            System.out.println("Delete SQL: "+ deleteSql);
+            psmt = conn.prepareStatement(deleteSql);
+            psmt.setInt(1, commId);
+            
+            System.out.println("Deleting comment - comm_id: " + commId);
+
+            int rowsAffected = psmt.executeUpdate();
+
+            return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             disconnect();
         }
-        return posts;
+        return false;
     }
+
+     
 }

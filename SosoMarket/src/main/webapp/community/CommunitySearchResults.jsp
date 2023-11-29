@@ -14,7 +14,7 @@
 </head>
 <body>
 	<%-- <% String postOrderNumber = (String) request.getAttribute("postOrderNumber");%> --%>
-	<jsp:include page="../resources/header.html" />
+	<jsp:include page="../resources/header.jsp" />
 
 	<!-- breadcrumb -->
 	<div id="breadcrumb" class="section">
