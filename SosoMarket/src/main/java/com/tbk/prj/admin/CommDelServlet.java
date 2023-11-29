@@ -31,7 +31,7 @@ public class CommDelServlet extends HttpServlet {
 		
 		boolean n = dao.deletePost(postId);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("gentelella-master/production/memComm.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("admin/memComm.jsp");
 		dispatcher.forward(request, response);
 	}
 

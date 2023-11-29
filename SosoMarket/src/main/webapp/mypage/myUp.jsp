@@ -5,23 +5,71 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 const phoneAutoHyphen = (target) => {
 	 target.value = target.value
 	  .replace(/[^0-9]/g, '')
 	  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
 	}
-//핸드폰 번호에서 하이픈을 제거
- const removeHyphens = (phoneNumber) => {
-     return phoneNumber.replace(/-/g, '');
+
+ // 닉네임 체크 boolean
+ var isNicknameAvailable = false;
+ 
+ function nicknameCheckFunction(new_nick) {
+	    var nickname = $('#nickname').val();
+	    console.log(nickname);
+	    if (nickname === "") {
+	        alert("닉네임를 입력해주세요");
+	        $('#nickname').focus();
+	        return false;
+	    }
+	    $.ajax({
+	        type: 'post',
+	        url: '/SosoMarket/MemberNicknameCheckServlet',
+	        data: { nickname: nickname }, // nickname을 서버로 전송
+	        success: function (result) {
+	            if (result == 1 || nickname === new_nick) {
+	                alert("사용가능한 닉네임입니다.");
+	                isNicknameAvailable = true;
+	                console.log(isNicknameAvailable + "사용 가능");
+	                console.log(new_nick + "기존 닉네임")
+	            }else {
+	                alert("사용중인 닉네임입니다.");
+	                $('#nickname').focus();
+	                isNicknameAvailable = false
+	                console.log(isNicknameAvailable + "불가")
+	                return false;
+	            }
+	        }
+	    });
+	}
+ 
+ function submitAfterChecks(new_nick) {
+	 var nickname = $('#nickname').val();
+	 console.log("isNicknameAvailable: " + isNicknameAvailable);
+	 console.log("nickname: " + nickname);
+	 console.log("new_nick: " + new_nick);
+	 if(nickname === new_nick){
+    	 console.log(nickname + "nick submit");
+    	 console.log(new_nick + "new submit");
+    	 return true;
+     }else if(isNicknameAvailable == false) {
+         alert("사용중인 닉네임입니다.");
+         $('#nickname').focus();
+         console.log(nickname + "nick submit");
+         console.log(isNicknameAvailable);
+         return false;
+     }else if(isNicknameAvailable == true){
+    	 return true;
+     }
+     return false;
  }
 </script>
+
 <script>
 
-<%
-String memberId = (String)session.getAttribute("memberId");
-
-%>
+<% String memberId = (String)session.getAttribute("memberId");%>
 </script>
 </head>
 
@@ -45,6 +93,7 @@ String memberId = (String)session.getAttribute("memberId");
 							<div class="form-group">
 								닉네임<input class="input" type="text" name="nickname"
 									id="nickname" value="${vo.nickname }">
+								<button class="primary-btn" type="button" onclick="nicknameCheckFunction('${vo.nickname }')">중복 체크</button>
 							</div>
 							<div class="form-group">
 								폰 번호<input class="input" type="text" name="phoneNumber"
@@ -64,11 +113,11 @@ String memberId = (String)session.getAttribute("memberId");
 								승진률<input class="input" type="text" name="address"
 									value="${vo.ratingScore }" readonly="readonly">
 							</div>
-							<button class="primary-btn" type="submit">수정하기</button>
+							<button class="primary-btn" type="button" onclick="console.log('Calling submitAfterChecks'); submitAfterChecks('${vo.nickname }')">수정하기</button>
 						</form>
 						<br>
 						<button class="primary-btn"
-							onclick="location.href='/SosoMarket/MyPageHome.do?memberId=${vo.memberId}'">돌아가기</button>
+							onclick="location.href='/SosoMarket/MyPageHome.do?memberId=<%=memberId%>'">돌아가기</button>
 					</div>
 				</div>
 			</div>

@@ -43,7 +43,7 @@ public class AdminMainServlet extends HttpServlet {
 		request.setAttribute("ptvo", ptvo);
 		request.setAttribute("pdvo", pdvo);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("gentelella-master/production/adminMain.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("admin/adminMain.jsp");
 		dispatcher.forward(request, response);
 	}
 

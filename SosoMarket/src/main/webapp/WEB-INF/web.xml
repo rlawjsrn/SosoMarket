@@ -273,5 +273,80 @@
   <servlet-mapping>
     <servlet-name>CommunityInsertServlet</servlet-name>
     <url-pattern>/CommunityInsertServlet</url-pattern>
+
+
+    <display-name>ProdAdminListServlet</display-name>
+    <servlet-name>ProdAdminListServlet</servlet-name>
+    <servlet-class>com.tbk.prj.admin.ProdAdminListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProdAdminListServlet</servlet-name>
+    <url-pattern>/ProdAdminListServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminProdDelServlet</display-name>
+    <servlet-name>AdminProdDelServlet</servlet-name>
+    <servlet-class>com.tbk.prj.admin.AdminProdDelServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminProdDelServlet</servlet-name>
+    <url-pattern>/AdminProdDelServlet</url-pattern>
+
+
+    <display-name>HomeProdOneServlet</display-name>
+    <servlet-name>HomeProdOneServlet</servlet-name>
+    <servlet-class>home.HomeProdOneServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HomeProdOneServlet</servlet-name>
+    <url-pattern>/HomeProdOneServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>HomeProdPopServlet</display-name>
+    <servlet-name>HomeProdPopServlet</servlet-name>
+    <servlet-class>home.HomeProdPopServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HomeProdPopServlet</servlet-name>
+    <url-pattern>/HomeProdPopServlet</url-pattern>
+    <display-name>ProdDelServlet</display-name>
+    <servlet-name>ProdDelServlet</servlet-name>
+    <servlet-class>com.tbk.prj.prod.ProdDelServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProdDelServlet</servlet-name>
+    <url-pattern>/ProdDelServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProdModServlet</display-name>
+    <servlet-name>ProdModServlet</servlet-name>
+    <servlet-class>com.tbk.prj.prod.ProdModServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProdModServlet</servlet-name>
+    <url-pattern>/ProdModServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProdUpdateServlet</display-name>
+    <servlet-name>ProdUpdateServlet</servlet-name>
+    <servlet-class>com.tbk.prj.prod.ProdUpdateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProdUpdateServlet</servlet-name>
+    <url-pattern>/ProdUpdateServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BlankServlet</display-name>
+    <servlet-name>BlankServlet</servlet-name>
+    <servlet-class>com.tbk.prj.prod.BlankServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BlankServlet</servlet-name>
+    <url-pattern>/BlankServlet</url-pattern>
   </servlet-mapping>
 </web-app>

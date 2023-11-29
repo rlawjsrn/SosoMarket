@@ -30,18 +30,22 @@ public class ProdStatServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
-		System.out.println("ProdStat.do!");
+		System.out.println("ProdStat.do~!~!");
 		System.out.println(request.getParameter("product_status"));
 		
 		ProdStatDAO dao = new ProdStatDAO();
 		ChatVO prodVo = new ChatVO();
 		
-		System.out.println(request.getParameter("product_status").charAt(1));
+		String prodStatus = request.getParameter("product_status").charAt(1) + "";
+		System.out.println(prodStatus);
+		System.out.println(request.getParameter("product_id"));
 		
-		prodVo.setProduct_id(request.getParameter("product_id"));
-		prodVo.setProduct_status(request.getParameter("product_status").charAt(1) + "");
-		int result = dao.updateProdStat(prodVo);
-		request.setAttribute("prodVo", prodVo);
+//		prodVo.setProduct_id(request.getParameter("product_id"));
+//		prodVo.setProduct_status(request.getParameter("product_status").charAt(1) + "");
+//		int result = dao.updateProdStat(prodVo);
+//		request.setAttribute("prodVo", prodVo);
+//		
+//		if
 		
 		String viewPage = "chat/chatList.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

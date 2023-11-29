@@ -69,6 +69,14 @@ public class AdminDAO extends DAO{
 							+ "FROM product p, category c \r\n"
 							+ "WHERE SUBSTR(p.product_id, 1, 2) = c.category_id\r\n"
 							+ "GROUP BY  c.category_id, SUBSTR(p.product_id, 1, 2), c.category_name";
+
+//	상품 전체 조회
+	private String prodList = "SELECT p.product_id, c.category_name, p.product_name, TO_CHAR(p.product_price,'FM999,999,999,999')as product_price, p.member_id, p.product_views, p.product_status\r\n"
+							+ "FROM product p, category c\r\n"
+							+ "WHERE SUBSTR(p.product_id,1,2) = c.category_id";
+	
+//	상품 한 건 삭제
+	private String prodDel = "delete from product where product_id = ?";
 	
 	
 //	전체 회원 조회
@@ -241,7 +249,7 @@ public class AdminDAO extends DAO{
 			psmt = conn.prepareStatement(doneProd);
 			rs = psmt.executeQuery();
 			if(rs.next()) {
-				vo.setTodayCount(rs.getInt("prod_count"));
+				vo.setProdCount(rs.getInt("prod_count"));
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -275,5 +283,54 @@ public class AdminDAO extends DAO{
 			}
 			return jsonArray;
 		}
+	
+// 상품 전체 조회
+	public ArrayList<ProdVO> prodAdmin(){
+		ArrayList<ProdVO> list = new ArrayList<ProdVO>();
+		ProdVO vo = new ProdVO();
+		try {
+			connect();
+			psmt = conn.prepareStatement(prodList);
+			if(vo.getCategory() != null) {
+				prodList += "AND p.product_status = ?";
+				psmt.setString(1, vo.getCategory());
+				System.out.println(psmt + "필터링 확인중");
+			}
+			rs = psmt.executeQuery(); // record set을 return 함.
+			while (rs.next()) {
+				vo = new ProdVO();
+				vo.setProdId(rs.getString("product_id"));
+				vo.setCategory(rs.getString("category_name"));
+				vo.setProdName(rs.getString("product_name"));
+				vo.setProdPrice(rs.getString("product_price"));
+				vo.setMemberId(rs.getString("member_id"));
+				vo.setProdViews(rs.getInt("product_views"));
+				vo.setProdStatus(rs.getString("product_status"));
+				list.add(vo);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+	}
+	
+//	상품 삭제
+	public int delProd(ProdVO vo) {
+		int n = 0;
+		try {
+			connect();
+			psmt = conn.prepareStatement(prodDel);
+			psmt.setString(1, vo.getProdId());
+			n = psmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		return n;
+	}
 
 }

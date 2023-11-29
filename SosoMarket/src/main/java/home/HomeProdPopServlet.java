@@ -1,7 +1,8 @@
-package com.tbk.prj.admin;
+package home;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,32 +11,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.tbk.prj.community.CommunityDAO;
-import com.tbk.prj.community.CommunityVO;
+import com.tbk.prj.prod.ProdDAO;
+import com.tbk.prj.prod.ProdVO;
 
 /**
- * Servlet implementation class AdminCommServlet
+ * Servlet implementation class HomeProdPopServlet
  */
-@WebServlet("/MemComm.do")
-public class AdminCommServlet extends HttpServlet {
+@WebServlet("/HomeProdPop.do")
+public class HomeProdPopServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8"); 
-		CommunityDAO dao= new CommunityDAO(); 
-		CommunityVO vo = new CommunityVO(); 
-		ArrayList<CommunityVO> posts=new ArrayList<CommunityVO>(); 
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
 		
-		posts=dao.getAllPosts(); 
-		System.out.println(posts); //for check
-		request.setAttribute("posts", posts); 
+		List<ProdVO> list = new ArrayList<ProdVO>();
+		ProdDAO dao = new ProdDAO();
 		
-		String viewPage="admin/memComm.jsp"; 
-		RequestDispatcher dispatcher= request.getRequestDispatcher(viewPage);
-		dispatcher.forward(request,response); 
+		list = dao.getPopularProdList();
+		request.setAttribute("list", list);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("home/homePop.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	/**

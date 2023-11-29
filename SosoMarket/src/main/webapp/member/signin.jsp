@@ -369,10 +369,12 @@ function submitForm() {
         </div>
         <div class="textForm">
             <input type="text" id="email" name="email" placeholder="이메일">
-            <button type="button">인증하기</button>
+            <button type="button">인증 메일 보내기</button>
         </div>
         <div class="textForm">
             <input type="text" id="emailVrf" name="emailVrf" placeholder="이메일 인증">
+            <button type="button">인증</button>
+            <input type="hidden" name="authPass" id="authPass" value="false">
         </div>
         <div class="textForm">
             <input type="text" id="nickname" name="nickname" placeholder="닉네임">   
