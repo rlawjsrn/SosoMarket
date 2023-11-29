@@ -9,21 +9,20 @@
 <title>Insert title here</title>
 <!-- Bootstrap -->
 <link
-	href="gentelella-master/vendors/bootstrap/dist/css/bootstrap.min.css?after"
+	href="resources/Admincss/bootstrap.min.css?after"
 	rel="stylesheet">
 <!-- Font Awesome -->
 <link
-	href="gentelella-master/vendors/font-awesome/css/font-awesome.min.css?after"
-	rel="stylesheet">
-<!-- NProgress -->
-<link href="gentelella-master/vendors/nprogress/nprogress.css?after"
+	href="resources/Admincss/font-awesome.min.css?after"
 	rel="stylesheet">
 
 <!-- Custom Theme Style -->
-<link href="gentelella-master/build/css/custom.min.css?after"
+<link href="resources/Admincss/custom.min.css?after"
 	rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
 <!-- 구글 차트 -->
 <script>
     google.charts.load('current', { packages: ['corechart'] });
@@ -80,8 +79,7 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a class="site_title"><i class="fa fa-paw"></i>
-							<span>관리자</span></a>
+						<a class="site_title"><i class="fa fa-paw"></i> <span>관리자</span></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -96,39 +94,19 @@
 								<li><a><i class="fa fa-home"></i> Home <span
 										class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="/SosoMarket/AdminMain.do">메인</a></li>
-									</ul></li>
-								<li><a><i class="fa fa-edit"></i> Forms <span
-										class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="form_buttons.html">Form Buttons</a></li>
-									</ul></li>
-								<li><a><i class="fa fa-desktop"></i> UI Elements <span
-										class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="general_elements.html">General Elements</a></li>
-										<li><a href="icons.html">Icons</a></li>
-										<li><a href="glyphicons.html">Glyphicons</a></li>
-										<li><a href="widgets.html">Widgets</a></li>
-										<li><a href="calendar.html">Calendar</a></li>
+										<li><a href="/SosoMarket/AdminMain.do">관리자 메인</a></li>
 									</ul></li>
 								<li><a><i class="fa fa-table"></i> Tables <span
 										class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
 										<li><a href="/SosoMarket/AdminMember.do">회원 조회</a></li>
-										<li><a href="/SosoMarket/MemComm.do">커뮤니티 조회</a></li>
+										<li><a href="/SosoMarket/MemComm.do">회사생활 조회</a></li>
+										<li><a href="/SosoMarket/AdminProdList.do">상품 조회</a></li>
 									</ul></li>
-								<li><a><i class="fa fa-bar-chart-o"></i> Data
-										Presentation <span class="fa fa-chevron-down"></span></a>
-									<ul class="nav child_menu">
-										<li><a href="chartjs.html">Chart JS</a></li>
-										<li><a href="morisjs.html">Moris JS</a></li>
-									</ul></li>
-								<li><a><i class="fa fa-clone"></i>Layouts <span
+								<li><a><i class="fa fa-home"></i> 메인 <span
 										class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
-										<li><a href="fixed_footer.html">Fixed Footer</a></li>
+										<li><a href="/SosoMarket/HomeProd.do">메인</a></li>
 									</ul></li>
 							</ul>
 						</div>
@@ -183,7 +161,7 @@
 						</div>
 					</div>
 
-					<div class="row">
+					<!-- <div class="row">
 						<div class="col-md-12">
 							<div class="x_panel">
 								<div class="x_title">
@@ -208,58 +186,29 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 				<div class="col-md-6 col-sm-6  ">
 					<div class="x_panel">
 						<div class="x_title">
-							<h2>
-								카테고리별 비율
-							</h2>
+							<h2>카테고리별 비율</h2>
 							<div class="clearfix"></div>
 						</div>
 						<!-- 카테고리 차트 들어오는 div -->
 						<div id="column_chart_div1"></div>
 					</div>
 				</div>
-				
+
 			</div>
 			<!-- /page content -->
 
-			<!-- footer content -->
-<!-- 			<footer>
-				<div class="pull-right">
-					Gentelella - Bootstrap Admin Template by <a
-						href="https://colorlib.com">Colorlib</a>
-				</div>
-				<div class="clearfix"></div>
-			</footer> -->
-			<!-- /footer content -->
 		</div>
 	</div>
 
-	<!-- jQuery -->
-	<script src="gentelella-master/vendors/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap -->
-	<script src="gentelella-master/vendors/bootstrap/dist/js/bootstrap.bundle.min.js?after"></script>
-	<!-- NProgress -->
-	<script src="gentelella-master/vendors/nprogress/nprogress.js?after"></script>
-	<!-- Chart.js -->
-	<script src="gentelella-master/vendors/Chart.js/dist/Chart.min.js?after"></script>
-	<!-- jQuery Sparklines -->
-	<!-- Flot -->
-	<script src="gentelella-master/vendors/Flot/jquery.flot.js?after"></script>
-	<script src="gentelella-master/vendors/Flot/jquery.flot.time.js?after"></script>
-	<script src="gentelella-master/vendors/Flot/jquery.flot.stack.js?after"></script>
-	<script src="gentelella-master/vendors/Flot/jquery.flot.resize.js?after"></script>
-	<!-- Flot plugins -->
-	<script src="gentelella-master/vendors/flot.orderbars/js/jquery.flot.orderBars.js?after"></script>
-	<script src="gentelella-master/vendors/flot-spline/js/jquery.flot.spline.min.js?after"></script>
-	<script src="gentelella-master/vendors/flot.curvedlines/curvedLines.js?after"></script>
-	<!-- DateJS -->
-	<script src="gentelella-master/vendors/DateJS/build/date.js?after"></script>
-
+	<script
+		src="resources/Adminjs/bootstrap.bundle.min.js?after"></script>
 	<!-- Custom Theme Scripts -->
-	<script src="gentelella-master/build/js/custom.min.js?after"></script>
+	<script src="resources/Adminjs/custom.min.js?after"></script>
 </body>
 </html>

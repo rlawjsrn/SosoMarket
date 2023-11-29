@@ -1,13 +1,4 @@
 // 관심상품 쿼리
-// 회원별 찜 목록 수정 버전
-SELECT p.product_id, pi.product_interest_id, pi.member_id, pp.product_photo_id, p.product_name, p.product_status, p.product_price
-FROM product p, product_interest pi, product_photo pp
-WHERE pp.product_id = p.product_id
-AND pi.product_id = p.product_id
-AND pi.member_id = 'test2'
-AND pp.product_photo_id IN (SELECT max(product_photo_id)
-                            FROM product_photo
-                            GROUP BY product_id);
 
 // 회원별 찜 목록 2차 수정
 SELECT p.product_id, pi.product_interest_id, pi.member_id, pp.product_photo_name, p.product_name, p.product_status, p.product_price
@@ -25,16 +16,6 @@ from product_interest
 where product_id = 'protest1';
 
 
-// 판매내역
-SELECT p.product_id, pp.product_photo_id, p.product_name, p.product_status, p.product_price, p.generation_date
-FROM product p, product_photo pp
-WHERE pp.product_id = p.product_id
-AND p.product_status = 1
-AND p.member_id = 'test1'
-AND pp.product_photo_id IN (SELECT max(product_photo_id)
-                            FROM product_photo
-                            GROUP BY product_id)
-                            
 // 판매내역 수정
 SELECT p.product_id, pp.product_photo_name, p.product_name, p.product_status, p.product_price, p.generation_date
 FROM product p, product_photo pp
@@ -75,7 +56,20 @@ select *
 from community
 where member_id = ?;
 
+// 상품 상세
+// 찜 표시
+SELECT p.product_id, pi.member_id
+FROM product p, product_interest pi
+WHERE p.product_id = pi.product_id
+AND p.product_id = 'wc0003'
+AND pi.member_id = 'test2';
 
+찜 아이디 조회
+select pi.product_interest_id, pi.member_id, p.product_id
+from product p, product_interest pi
+where p.product_id = pi.product_id
+and p.product_id = 'dd0001'
+and pi.member_id = 'test2';
 
 
 // 관리자~
@@ -131,3 +125,8 @@ select count(product_id)
 from product
 where TO_CHAR(generation_date, 'yy/mm/dd') = TO_CHAR(sysdate, 'yy/mm/dd')
 and product_status = 1;
+
+// 판매상품 전체 조회
+SELECT p.product_id, c.category_name, p.product_name, TO_CHAR(p.product_price,'FM999,999,999,999')as product_price, p.member_id, p.product_views, p.product_status
+FROM product p, category c
+WHERE SUBSTR(p.product_id,1,2) = c.category_id;

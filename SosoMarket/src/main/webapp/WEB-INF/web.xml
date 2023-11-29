@@ -224,4 +224,24 @@
     <servlet-name>CommDelServlet</servlet-name>
     <url-pattern>/CommDelServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProdAdminListServlet</display-name>
+    <servlet-name>ProdAdminListServlet</servlet-name>
+    <servlet-class>com.tbk.prj.admin.ProdAdminListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProdAdminListServlet</servlet-name>
+    <url-pattern>/ProdAdminListServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminProdDelServlet</display-name>
+    <servlet-name>AdminProdDelServlet</servlet-name>
+    <servlet-class>com.tbk.prj.admin.AdminProdDelServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminProdDelServlet</servlet-name>
+    <url-pattern>/AdminProdDelServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

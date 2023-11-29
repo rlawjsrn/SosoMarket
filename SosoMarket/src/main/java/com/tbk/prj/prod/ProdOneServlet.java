@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tbk.prj.mypage.MypageLikeDAO;
+import com.tbk.prj.mypage.MypageLikeVO;
+
 @WebServlet("/ProdOne.do")
 public class ProdOneServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,15 +32,36 @@ public class ProdOneServlet extends HttpServlet {
 
 		System.out.println("상품아이디 찍어봐: " + prodId);
 
+//		송다희 추가
+		MypageLikeDAO mdao = new MypageLikeDAO();
+		ProdVO mvo = new ProdVO();
+		mvo.setProdId(prodId);
+		mvo.setMemberId(request.getParameter("memberId"));
+		
+		mvo = mdao.MyLike(mvo);
+		MypageLikeVO likevo = new MypageLikeVO();
+		
+		likevo.setProductInterestId(request.getParameter("row"));
+		int n = mdao.delHeart(likevo);
+//		송다희 끝
 		if (prodId != null && !prodId.isEmpty()) {
 			ProdDAO dao = new ProdDAO();
 			ProdVO vo = dao.prodOneList(prodId);
+			
 			ArrayList<ProdVO> list = new ArrayList<ProdVO>();
 			list = dao.prodOnePhotoList(prodId);
 			
 			if (vo != null) {
 				request.setAttribute("vo", vo);
 				request.setAttribute("list", list);
+				
+				
+//				송다희 추가
+				request.setAttribute("mvo", mvo);
+				request.setAttribute("likevo", likevo);
+//				송다희 끝
+				
+				
 				RequestDispatcher dispatcher = request.getRequestDispatcher("prod/prodOne.jsp");
 				dispatcher.forward(request, response);
 			} else {
