@@ -7,7 +7,9 @@
 <title>상품 등록 페이지</title>
 </head>
 <body>
-<%String memberId = (String)session.getAttribute("memberId"); %>
+	<%
+	String memberId = (String) session.getAttribute("memberId");
+	%>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script>
 		// 이미지 미리보기
@@ -87,7 +89,7 @@
 
 	<!-- SECTION -->
 	<div class="section">
-		<form action="/SosoMarket/ProdInsert.do" method="post"
+		<form method="post" action="/SosoMarket/ProdInsert.do "
 			enctype="multipart/form-data" id="prodInsertfrm"
 			onsubmit="return validateForm();">
 			<!-- container -->
@@ -98,7 +100,8 @@
 					<div class="col-md-7">
 						<!-- Billing Details -->
 						<div class="billing-details">
-						<input value="<%=memberId%>" name="memberId" style="display:none"/>
+							<input value="<%=memberId%>" name="memberId"
+								style="display: none" />
 							<div class="form-group">
 								<select class="input-select" name="category">
 									<option value="" selected="selected">카테고리</option>

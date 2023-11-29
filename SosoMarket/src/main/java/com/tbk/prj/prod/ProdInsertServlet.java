@@ -30,7 +30,9 @@ public class ProdInsertServlet extends HttpServlet {
 		System.out.println("ProdInsertServlet 실행되니???");
 
 		ServletContext context = getServletContext();
-		String saveDir = "C:\\Users\\wldls\\git\\sosomarket\\SosoMarket\\src\\main\\webapp\\upload";
+		String rootDir = getServletContext().getRealPath("/");
+		String saveDir = rootDir + "upload";
+		System.out.println(saveDir);
 		int maxSize = 1024 * 1024 * 30;
 		String encoding = "UTF-8";
 		MultipartRequest multi = new MultipartRequest(request, saveDir, maxSize, encoding,
@@ -43,8 +45,6 @@ public class ProdInsertServlet extends HttpServlet {
 		String prodDscrp = multi.getParameter("prodDscrp");
 		String memberId = multi.getParameter("memberId");
 		
-		System.out.println(memberId + "============================");
-
 		ProdDAO dao = new ProdDAO();
 		ProdVO prodVo = new ProdVO();
 		ProdVO prodIdVo = new ProdVO();
@@ -81,7 +81,9 @@ public class ProdInsertServlet extends HttpServlet {
 		Gson gson = new GsonBuilder().create();
 		response.getWriter().println(gson.toJson(prodVo));
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/ProdList.do");
+		
+		String viewPage = "/ProdList.do";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 
 	}
