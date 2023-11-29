@@ -10,7 +10,7 @@ public class CommunityVO {
     private String memberId; 
     private String postDetail;
     private int postViews;
-    private Date generationDate;
+    private String generationDate;
 
 
     public String getPostId() {
@@ -63,12 +63,12 @@ public class CommunityVO {
     }
 
 
-    public Date getGenerationDate() {
+    public String getGenerationDate() {
         return generationDate;
     }
 
 
-    public void setGenerationDate(Date generationDate) {
+    public void setGenerationDate(String generationDate) {
         this.generationDate = generationDate;
     }
 }
