@@ -2,7 +2,6 @@ package home;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,13 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tbk.prj.prod.ProdDAO;
 import com.tbk.prj.prod.ProdVO;
 
 /**
- * Servlet implementation class HomeProdServlet
+ * Servlet implementation class HomeProdOneServlet
  */
-@WebServlet("/HomeProd.do")
-public class HomeProdServlet extends HttpServlet {
+@WebServlet("/HomeProdOne.do")
+public class HomeProdOneServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -27,17 +27,27 @@ public class HomeProdServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		
-		List<ProdVO> list = new ArrayList<ProdVO>();
-		HomeDAO dao = new HomeDAO();
-		
-		list = dao.getHomeList();
-		request.setAttribute("list", list);
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("home/homeProd.jsp");
-		dispatcher.forward(request, response);
-		
-		
-//		String prodId = request.getParameter("prodId");
+		String prodId = request.getParameter("prodId");
+
+		System.out.println("상품아이디 찍어봐: " + prodId);
+
+		if (prodId != null && !prodId.isEmpty()) {
+			HomeDAO dao = new HomeDAO();
+			ProdVO vo = dao.HomeOne(prodId);
+			ArrayList<ProdVO> list = new ArrayList<ProdVO>();
+			list = dao.homeOnePhotoList(prodId);
+			
+			if (vo != null) {
+				request.setAttribute("vo", vo);
+				request.setAttribute("list", list);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("prod/prodOne.jsp"); // 제품 상제조회 페이지로 넘어가야함
+				dispatcher.forward(request, response);
+			} else {
+				response.sendRedirect("/SosoMarket/HomeProd.do"); // 메인화면으로 이동해야함
+			}
+		} else {
+			response.sendRedirect("/SosoMarket/HomeProd.do"); // 메인화면으로 이동해야함
+		}
 	}
 
 	/**

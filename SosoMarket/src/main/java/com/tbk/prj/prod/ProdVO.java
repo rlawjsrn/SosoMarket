@@ -39,6 +39,7 @@ public class ProdVO {
 		this.prodCount = prodCount;
 	}
 
+
 	public String getMemberId() {
 		return memberId;
 	}
@@ -166,7 +167,6 @@ public class ProdVO {
 	public void setCntCtgr(int cntCtgr) {
 		this.cntCtgr = cntCtgr;
 	}
-
 	public String getCategoryName() {
 		return categoryName;
 	}

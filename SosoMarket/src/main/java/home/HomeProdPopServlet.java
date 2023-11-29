@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tbk.prj.prod.ProdDAO;
 import com.tbk.prj.prod.ProdVO;
 
 /**
- * Servlet implementation class HomeProdServlet
+ * Servlet implementation class HomeProdPopServlet
  */
-@WebServlet("/HomeProd.do")
-public class HomeProdServlet extends HttpServlet {
+@WebServlet("/HomeProdPop.do")
+public class HomeProdPopServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -28,16 +29,13 @@ public class HomeProdServlet extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		
 		List<ProdVO> list = new ArrayList<ProdVO>();
-		HomeDAO dao = new HomeDAO();
+		ProdDAO dao = new ProdDAO();
 		
-		list = dao.getHomeList();
+		list = dao.getPopularProdList();
 		request.setAttribute("list", list);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("home/homeProd.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("home/homePop.jsp");
 		dispatcher.forward(request, response);
-		
-		
-//		String prodId = request.getParameter("prodId");
 	}
 
 	/**
