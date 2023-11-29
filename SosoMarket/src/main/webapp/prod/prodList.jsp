@@ -38,7 +38,7 @@
             priceMax: priceMax
         };
         
-        console.log(data);
+        console.log("데이터 찍어봐!!!!!"+ data);
         
         $.ajax({
             url: "/SosoMarket/ProdCtgrList.do",
@@ -50,9 +50,10 @@
                 priceMin: priceMin,
                 priceMax: priceMax
             },
+            dataType:"json",
             success: function (response) {
                 // 서버에서 받아온 데이터(response)를 처리
-                alert("success");
+                alert("서버에서 success");
                 console.log(response);
 
                 // 받아온 데이터를 화면에 적용
@@ -106,39 +107,6 @@
             }
         });
     }
-    
-    function prodOne(e) {
-		alert("요소 클릭됨");
-                // 클릭된 요소에서 prodId 값을 가져옵니다.
-                var prodIdElement = event.target.closest(".product");
-                var prodId = prodIdElement.id.replace('prodId', '');
-                console.log(prodId)
-                
-        //하트 클릭시 이벤트 발생 막기 수정하세요!!!
-
-                // prodId 값을 사용하여 PrdoOneServlet에 AJAX 호출을 수행합니다.
-                $.ajax({
-                    url: "/SosoMarket/ProdOne.do",
-                    type: "GET",
-                    data: {
-                        prodId: prodId
-                    },
-                    success: function (response) {
-                        // PrdoOneServlet에서의 응답을 처리합니다.
-                        console.log(response);
-                        // 응답을 기반으로 추가 동작을 수행합니다.
-                    },
-                    error: function (error) {
-                        console.error(error);
-                        alert("에러 발생");
-                    }
-                });
-
-                // 이벤트의 버블링을 중지합니다.
-                event.stopPropagation();
-        };
-
-
 </script>
 
 </head>
@@ -199,7 +167,7 @@
 						<c:forEach var="vv" items="${popList}">
 							<div class="product-widget">
 								<div class="product-img">
-									<img src="./upload/${vv.prodPhotoName}.png?after" alt="">
+									<img src="./upload/${vv.prodPhotoName}.png?after" style="width: 60px; height: 60px;" alt="">
 								</div>
 								<div class="product-body">
 									<p class="product-category">${vv.category }</p>
@@ -239,13 +207,17 @@
 
 					<!-- store products -->
 					<div id="product-list-container" class="row">
+					
+					<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!아작스 들어올 부분!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 						<!-- product -->
 						<c:forEach var="voo" items="${list}">
-							<div class="col-md-4 col-xs-6" onclick="location.href='/SosoMarket/ProdOne.do?prodId=${voo.prodId }'">
+							<div class="col-md-4 col-xs-6"
+								onclick="location.href='/SosoMarket/ProdOne.do?prodId=${voo.prodId }'">
 								<div class="product" id="prodId${voo.prodId }">
 									<div class="product-img">
 										<img id="prodPhotoName"
-											src="./upload/${voo.prodPhotoName}.png?after" alt="">
+											src="./upload/${voo.prodPhotoName}.png?after"
+											style="width: 263px; height: 263px;" alt="">
 									</div>
 									<div class="product-body">
 										<p class="product-category" id="category">${voo.category}</p>
@@ -267,7 +239,6 @@
 					</div>
 					<!-- store bottom filter -->
 					<div class="store-filter clearfix">
-						<span class="store-qty">페이징</span>
 						<ul class="store-pagination">
 							<li class="active">1</li>
 							<li><a href="#">2</a></li>

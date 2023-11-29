@@ -7,6 +7,7 @@ import java.util.List;
 
 import common.DAO;
 
+// 소소마켓
 public class ProdDAO extends DAO {
 // 상품 전체 조회
 	public ArrayList<ProdVO> getProdList() {
@@ -31,7 +32,6 @@ public class ProdDAO extends DAO {
 				vo.setProdPrice(rs.getString("product_price")); // 판매가액
 				vo.setProdPhotoName(rs.getString("product_photo_name")); // 상품사진아이디
 
-				System.out.println("사진이름 띄워봐: " + rs.getString("product_photo_name"));
 				list.add(vo);
 			}
 		} catch (SQLException e) {
@@ -91,8 +91,7 @@ public class ProdDAO extends DAO {
 			psmt.setString(5, placeTrans);
 			psmt.setString(6, memberId);
 
-			int r = psmt.executeUpdate();
-			System.out.println(r + "건 입력.");
+			psmt.executeUpdate();
 
 		} catch (
 
@@ -167,13 +166,10 @@ public class ProdDAO extends DAO {
 					psmt.setString(paramIndex++, newProductPhotoId);
 					psmt.setString(paramIndex++, prodId); // 첫 번째 ?에 prodId 값을 설정
 					psmt.setString(paramIndex++, "fl000" + (i + 1)); // 두 번째 ?에 파일 이름을 설정
-				} else {
-					System.out.println("값 없음");
 				}
 			}
 
 			int r = psmt.executeUpdate();
-			System.out.println(r + "건 입력.");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -190,7 +186,7 @@ public class ProdDAO extends DAO {
 		ProdVO vo = null;
 		try {
 			connect();
-			String sql = "SELECT p.product_id, c.category_name, p.product_name, p.product_status, TO_CHAR(p.product_price, 'FM999,999,999,999') as product_price, p.product_views, p.product_description, p.generation_date, p.place_transaction, p.member_id\r\n"
+			String sql = "SELECT p.product_id, c.category_name, p.product_name, p.product_views, p.product_status, TO_CHAR(p.product_price, 'FM999,999,999,999') as product_price, p.product_views, p.product_description, p.generation_date, p.place_transaction, p.member_id\r\n"
 					+ "FROM product p, category c\r\n" + "WHERE SUBSTR(p.product_id,1,2) = c.category_id\r\n"
 					+ "AND product_id = ?";
 
@@ -199,7 +195,6 @@ public class ProdDAO extends DAO {
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
-				System.out.println("if문까지 들어왔니?");
 				vo = new ProdVO();
 				vo.setProdId(rs.getString("product_id"));
 				vo.setCategory(rs.getString("category_name"));
@@ -218,7 +213,6 @@ public class ProdDAO extends DAO {
 				vo.setProdGenerationDate(rs.getDate("generation_date"));
 				vo.setPlaceTrans(rs.getString("place_transaction"));
 				vo.setMemberId(rs.getString("member_id"));
-				System.out.println("한 건 조회 VO: " + vo);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -244,7 +238,6 @@ public class ProdDAO extends DAO {
 				ProdVO vo = new ProdVO();
 				vo.setProdPhotoName(rs.getString("product_photo_name"));
 				list.add(vo);
-				System.out.println("사진 조회: " + list);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -254,9 +247,29 @@ public class ProdDAO extends DAO {
 		return list;
 	}
 
-// 상품 수정
+	// 조회수 업데이트
+	public int prodViewCount(String prodId) {
+		try {
+			connect();
+			String sql = "UPDATE product SET product_views = product_views + 1 WHERE product_id = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, prodId);
+			int r = psmt.executeUpdate();
+			return r;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return 0;
+	}
 
-// 상품 삭제
+// 상품 수정
+	public ProdVO updateProd(String prodId) {
+
+		return null;
+
+	}
 
 // 카테고리 목록
 	public ArrayList<ProdVO> getCategoryList() {
@@ -379,4 +392,41 @@ public class ProdDAO extends DAO {
 		return list;
 	}
 
+	// 상품 사진 삭제
+	public boolean deleteProdPhoto(String prodId) {
+		try {
+			connect();
+			System.out.println("상품사진삭제 아이디: " + prodId);
+			String sql = "DELETE FROM product_photo WHERE SUBSTR(product_photo_name, 1, 6) = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, prodId);
+
+			int r = psmt.executeUpdate();
+			return r > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return false;
+	}
+
+	// 상품 정보 삭제
+	public boolean deleteProd(String prodId) {
+		try {
+			connect();
+
+			String sql = "DELETE " + "FROM product " + "WHERE product_id = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, prodId);
+
+			int r = psmt.executeUpdate();
+			return r > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return false;
+	}
 }

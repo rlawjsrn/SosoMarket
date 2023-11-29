@@ -33,7 +33,7 @@ public class HomeDAO extends DAO {
 				vo.setProdPhotoName(rs.getString("product_photo_name"));
 
 				list.add(vo);
-				System.out.println("vo:" + vo);
+				System.out.println("메인전체화면vo:" + vo);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

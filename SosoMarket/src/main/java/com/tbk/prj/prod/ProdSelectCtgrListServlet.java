@@ -67,9 +67,9 @@ public class ProdSelectCtgrListServlet extends HttpServlet {
 		request.setAttribute("list", list);
 
 		out.println(gson.toJson(list));
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("prod/prodList.jsp");
-		dispatcher.forward(request, response);
+//
+//		RequestDispatcher dispatcher = request.getRequestDispatcher("prod/prodList.jsp");
+//		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
