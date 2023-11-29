@@ -45,33 +45,42 @@ public class HomeDAO extends DAO {
 
 	// 메인 화면 상품 상세 조회
 
-	public ProdVO homeOne(String memberId ,String prodId) {
-		ProdVO vo = new ProdVO();
-		connect();
-		String sql = "SELECT" + "p.product_id," + "p.product_name,"
-				+ "TO_CHAR(p.product_price,'FM999,999,999,999')as product_price," + "p.product_status,"
-				+ "p.product_views," + "p.product_description," + "p.generation_date," + "c.category_name,"
-				+ "pi.product_interest_id," + "member.member_id"
-				+ "FROM product p, category c, product_interest pi, member m"
-				+ "WHERE substr(p.product_id,1,2) = c.category_id" + "AND p.product_id = pi.product_id"
-				+ "AND p.member_id = m.member_id" // 변수 지정
-				+ "AND p.product_id = 'dd0001'"; // 변수 지정
+	public ProdVO HomeOne(String prodId) {
+		ProdVO vo = null;
 		try {
+			connect();
+			String sql = "SELECT p.product_id, c.category_name, p.product_name, p.product_status, TO_CHAR(p.product_price, 'FM999,999,999,999') as product_price, p.product_views, p.product_description, p.generation_date, p.place_transaction, p.member_id\r\n"
+					+ "FROM product p, category c\r\n" + "WHERE SUBSTR(p.product_id,1,2) = c.category_id\r\n"
+					+ "AND product_id = ?";
+
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, prodId);
 			rs = psmt.executeQuery();
-			vo.setProdId(rs.getString("prodId"));
-			vo.setProdName(rs.getString("prodName"));
-			vo.setProdPrice(rs.getString("prodPrice"));
-			vo.setProdStatus(rs.getString("prodStatus"));
-			vo.setProdViews(rs.getInt("prodViews"));
-			vo.setProdDscrp(rs.getString("prodDscrp"));
-			vo.setProdGenerationDate(rs.getDate("prodGenerationDate"));
-			vo.setCategoryId(rs.getString("categoryId"));
-			vo.setProdInterestId(rs.getString("prodInterestId")); 
-			vo.setMemberId(rs.getString("memberId"));
+
+			if (rs.next()) {
+				System.out.println("if문까지 들어왔니?");
+				vo = new ProdVO();
+				vo.setProdId(rs.getString("product_id"));
+				vo.setCategory(rs.getString("category_name"));
+				vo.setProdName(rs.getString("product_name"));
+
+				if (rs.getString("product_status").equals("0")) {
+					vo.setProdStatus("판매중");
+				} else if (rs.getString("product_status").equals("1")) {
+					vo.setProdStatus("거래완료");
+				} else {
+					vo.setProdStatus("예약중");
+				}
+				vo.setProdPrice(rs.getString("product_price"));
+				vo.setProdViews(rs.getInt("product_views"));
+				vo.setProdDscrp(rs.getString("product_description"));
+				vo.setProdGenerationDate(rs.getDate("generation_date"));
+				vo.setPlaceTrans(rs.getString("place_transaction"));
+				vo.setMemberId(rs.getString("member_id"));
+				System.out.println("한 건 조회 VO: " + vo);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		} finally {
 			disconnect();
 		}
@@ -80,29 +89,31 @@ public class HomeDAO extends DAO {
 
 	// product_id + product_photo_name 쿼리
 
-	public ProdVO homeFile(String prodId) {
-
-		connect();
-		String sql = "SELECT" + "p.product_id," + "ph.product_photo_name" + "FROM product p, product_photo ph"
-				+ "WHERE p.product_id = substr(ph.product_photo_name,1,6)" + "AND p.product_id = 'dd0001'"; // 변수지정
-
-		ProdVO homeFile = new ProdVO();
+	// 상품 한 건 조회(상품 사진)
+	public ArrayList<ProdVO> homeOnePhotoList(String prodId) {
+		ArrayList<ProdVO> list = new ArrayList<>();
 		try {
+			connect();
+			String sql = "SELECT pp.product_photo_name\r\n" + "FROM product_photo pp, product p\r\n"
+					+ "WHERE substr(pp.product_photo_name,1,6) = p.product_id\r\n" + "AND p.product_id=?";
+
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, prodId);
 			rs = psmt.executeQuery();
+
 			while (rs.next()) {
 				ProdVO vo = new ProdVO();
-				vo.setProdId(rs.getString("prodId"));
-				vo.setProdPhotoName(rs.getString("prodPhotoName"));
+				vo.setProdPhotoName(rs.getString("product_photo_name"));
+				list.add(vo);
+				System.out.println("사진 조회: " + list);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		} finally {
 			disconnect();
 		}
-
-		return homeFile;
-
+		return list;
 	}
+	
+
 }

@@ -224,4 +224,24 @@
     <servlet-name>CommDelServlet</servlet-name>
     <url-pattern>/CommDelServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>HomeProdOneServlet</display-name>
+    <servlet-name>HomeProdOneServlet</servlet-name>
+    <servlet-class>home.HomeProdOneServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HomeProdOneServlet</servlet-name>
+    <url-pattern>/HomeProdOneServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>HomeProdPopServlet</display-name>
+    <servlet-name>HomeProdPopServlet</servlet-name>
+    <servlet-class>home.HomeProdPopServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HomeProdPopServlet</servlet-name>
+    <url-pattern>/HomeProdPopServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

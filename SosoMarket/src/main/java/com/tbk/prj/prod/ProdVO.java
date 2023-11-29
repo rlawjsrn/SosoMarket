@@ -39,8 +39,6 @@ public class ProdVO {
 		this.prodCount = prodCount;
 	}
 
-	
-
 
 	public String getMemberId() {
 		return memberId;
@@ -146,15 +144,6 @@ public class ProdVO {
 		this.prodPhotoName = prodPhotoName;
 	}
 
-	
-	public Date getProdGenerationDate() {
-		return prodGenerationDate;
-	}
-
-	public void setProdGenerationDate(Date prodGenerationDate) {
-		this.prodGenerationDate = prodGenerationDate;
-	}
-
 	public String getCategoryId() {
 		return categoryId;
 	}
@@ -179,13 +168,6 @@ public class ProdVO {
 		this.cntCtgr = cntCtgr;
 	}
 	
-	public String getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
-	}
 	
 	public String getCategoryName() {
 		return categoryName;
