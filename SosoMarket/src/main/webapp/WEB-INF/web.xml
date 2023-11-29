@@ -227,6 +227,25 @@
   <servlet>
     <description></description>
 
+    <display-name>ProdAdminListServlet</display-name>
+    <servlet-name>ProdAdminListServlet</servlet-name>
+    <servlet-class>com.tbk.prj.admin.ProdAdminListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProdAdminListServlet</servlet-name>
+    <url-pattern>/ProdAdminListServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminProdDelServlet</display-name>
+    <servlet-name>AdminProdDelServlet</servlet-name>
+    <servlet-class>com.tbk.prj.admin.AdminProdDelServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminProdDelServlet</servlet-name>
+    <url-pattern>/AdminProdDelServlet</url-pattern>
+
+
     <display-name>HomeProdOneServlet</display-name>
     <servlet-name>HomeProdOneServlet</servlet-name>
     <servlet-class>home.HomeProdOneServlet</servlet-class>
@@ -281,5 +300,6 @@
   <servlet-mapping>
     <servlet-name>BlankServlet</servlet-name>
     <url-pattern>/BlankServlet</url-pattern>
+
   </servlet-mapping>
 </web-app>

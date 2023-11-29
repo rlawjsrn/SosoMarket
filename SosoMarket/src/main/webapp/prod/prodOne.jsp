@@ -8,6 +8,44 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>상품상세조회페이지</title>
+<script>
+	/* 관심상품 삭제 */
+	function delHeart(productInterestId) {
+		$.ajax({
+			url : '/SosoMarket/ProdDelH.do?row=' + productInterestId,
+			method : 'POST',
+			data : {
+				productInterestId : productInterestId
+			},
+			success : function(data) {
+				alert('삭제되었습니다!')
+				window.location.reload();
+			},
+			error : function(error) {
+				console.error('Error', error);
+			}
+		});
+	}
+
+	/* 관심상품 등록 */
+	function insertH(memberId, prodId) {
+		$.ajax({
+			url : '/SosoMarket/ProdInsertH.do?memberId=' + memberId  + "&prodId=" + prodId,
+			method : 'POST',
+			data : {
+				memberId : memberId,
+				prodId : prodId
+			},
+			success : function(data) {
+				alert('추가하였습니다!')
+				window.location.reload();
+			},
+			error : function(error) {
+				console.error('Error', error);
+			}
+		});
+	}
+</script>
 </head>
 <body>
 	<script>
@@ -98,7 +136,16 @@
 							</ul>
 							<br>
 							<ul class="product-btns">
-								<li><a href="#"><i class="fa fa-heart-o"></i> 관심상품에 추가</a></li>
+								<c:if test="${empty mvo.prodInterestId }">
+									<li><a href="#" onclick="insertH('${mvo.memberId }', '${mvo.prodId }')"><i class="fa fa-heart-o"></i> 관심상품 추가</a></li>
+									<!-- <i class="fa fa-heart"></i> 꽉 찬 하트 -->
+								</c:if>
+								<c:if test="${!empty mvo.prodInterestId }">
+									<li><a href="#"
+										onclick="delHeart('${mvo.prodInterestId}')"><i
+											class="fa fa-heart"></i></i> 관심상품 삭제</a></li>
+									<!-- <i class="fa fa-heart"></i> 꽉 찬 하트 -->
+								</c:if>
 							</ul>
 							<br>
 							<c:if test="${memberId eq vo.memberId}">

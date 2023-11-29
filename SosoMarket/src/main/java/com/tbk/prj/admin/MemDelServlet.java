@@ -29,7 +29,7 @@ public class MemDelServlet extends HttpServlet {
 		vo.setMemberId(request.getParameter("memberId"));
 		int n = dao.delMem(vo);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("gentelella-master/production/memberSelect.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("admin/memberSelect.jsp");
 		dispatcher.forward(request, response);
 	}
 

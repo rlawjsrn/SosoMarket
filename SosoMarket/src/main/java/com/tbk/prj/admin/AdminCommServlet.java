@@ -33,7 +33,7 @@ public class AdminCommServlet extends HttpServlet {
 		System.out.println(posts); //for check
 		request.setAttribute("posts", posts); 
 		
-		String viewPage="gentelella-master/production/memComm.jsp"; 
+		String viewPage="admin/memComm.jsp"; 
 		RequestDispatcher dispatcher= request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request,response); 
 	}

@@ -45,7 +45,7 @@ public class AdminServlet extends HttpServlet {
 		mlist = dao.monthSell();
 		request.setAttribute("mlist", mlist);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("gentelella-master/production/memberSelect.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("admin/memberSelect.jsp");
 		dispatcher.forward(request, response);
 	}
 
