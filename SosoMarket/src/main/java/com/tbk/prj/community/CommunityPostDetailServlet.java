@@ -2,6 +2,9 @@ package com.tbk.prj.community;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 /**
  * Servlet implementation class CommunityPostDetailServlet
@@ -31,35 +35,42 @@ public class CommunityPostDetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// Get the post ID from the request parameter
+		
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
         String postId = request.getParameter("postId");
+        
 
-        // Check if the post ID is not null or empty
-        if (postId != null && !postId.isEmpty()) {
-            // Retrieve the post details using the DAO
-            CommunityDAO dao = new CommunityDAO();
+			CommunityDAO dao = new CommunityDAO();
             CommunityVO post = dao.getPostById(postId);
+
             
-            // Retrieve comments for the post 
-            ArrayList<CommVO> comments = dao.getCommentsByPostId(postId);
-            
-            // Check if the post details are found
-            if (post != null) {
-                // Set the post details as an attribute in the request
-                request.setAttribute("post", post);
-                request.setAttribute("comments", comments); 
-                
-                // Forward the request to the CommunityPostDetail.jsp
-                String viewPage="community/CommunityPostDetail.jsp"; 
-        		RequestDispatcher dispatcher= request.getRequestDispatcher(viewPage);
-        		dispatcher.forward(request,response); 
-        		} else {
-                // If the post is not found, redirect to the post list page
-                response.sendRedirect( "/SosoMarket/CommunityPostList.do");
-            }
-        } else {
-            // If the post ID is null or empty, redirect to the post list page
-            response.sendRedirect( "/SosoMarket/CommunityPostList.do");
-        }
+         // Retrieve top-level comments for the product
+    		ArrayList<CommVO> topLevelComments = dao.getCommentsByPostId(postId);
+    		System.out.println(topLevelComments);
+
+    		// Create a map to hold top-level comments and their replies
+    		Map<CommVO, List<CommVO>> commentsAndRepliesMap = new LinkedHashMap<>();
+
+    		// Iterate through each top-level comment
+    		for (CommVO topLevelComment : topLevelComments) {
+    		    ArrayList<CommVO> replies = dao.getRepliesByCommentId(topLevelComment.getCommId());
+    		    System.out.println("CommId : " + topLevelComment.getCommId() + " replies: " + replies);
+
+    		    // Associate the top-level comment with its replies
+    		    commentsAndRepliesMap.put(topLevelComment, replies);
+    		}
+
+    		System.out.println("Top Level Comments and Replies Map: " + commentsAndRepliesMap);
+
+    		// Set top-level comments and replies as separate attributes
+    		request.setAttribute("commentsAndRepliesMap", commentsAndRepliesMap);
+    		// Comment
+    		
+            request.setAttribute("post", post);
+    		RequestDispatcher dispatcher = request.getRequestDispatcher("community/CommunityPostDetail.jsp");
+    		dispatcher.forward(request, response);
     }
 
 	/**

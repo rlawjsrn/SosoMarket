@@ -1,27 +1,27 @@
 package com.tbk.prj.community;
 
-
-import com.google.gson.Gson;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
+
+import com.google.gson.Gson;
 
 /**
- * Servlet implementation class CommGetCommentsServlet
+ * Servlet implementation class CommunityGetCommServlet
  */
-@WebServlet("/CommGetComments.do")
-public class CommGetCommentsServlet extends HttpServlet {
+@WebServlet("/CommunityGetComm.do")
+public class CommunityGetCommServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CommGetCommentsServlet() {
+    public CommunityGetCommServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,26 +30,26 @@ public class CommGetCommentsServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String postId = request.getParameter("postId");
+		request.setCharacterEncoding("utf-8"); 
+		 // Retrieve parameters from the request
+	    String postId = request.getParameter("postId");
 
-        // Check if the post ID is not null or empty
-        if (postId != null && !postId.isEmpty()) {
-            // Retrieve comments for the post using the DAO
-            CommunityDAO dao = new CommunityDAO();
-            ArrayList<CommVO> comments = dao.getCommentsByPostId(postId);
+	    // Validate parameters
+	    if (postId != null && !postId.isEmpty()) {
+	        // Call the DAO method to get comments for the post
+	        CommunityDAO dao = new CommunityDAO();
+	        ArrayList<CommVO> comments = dao.getCommentsByPostId(postId);
 
-            // Convert comments to JSON and send as the response
-            response.setContentType("application/json");
+	        response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(new Gson().toJson(comments));
-        } else {
-            // If the post ID is null or empty
-        	System.out.println("The post id is null");
+	    } else {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write("[]"); 
-        }
-    }
+            response.getWriter().write("fail: Incomplete parameters");
+	        System.out.println("Comments Retrieval Error: Incomplete parameters");
+	    }
+	}
 	
 
 	/**

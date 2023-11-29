@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="resources/css/style-community.css?after">
 </head>
 <body>
-    <jsp:include page="../resources/header.html" />
+    <jsp:include page="../resources/header.jsp" />
 
     <!-- breadcrumb -->
     <div id="breadcrumb" class="section">

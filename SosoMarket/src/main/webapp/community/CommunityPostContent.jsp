@@ -15,9 +15,8 @@
 <script src="resources/js/script-community.js?after"></script>
 <style>
 .text-center.center-btn-container {
-    text-align: center;
+	text-align: center;
 }
-
 </style>
 </head>
 <body>
@@ -67,6 +66,10 @@
 
 				<!-- /posts-container -->
 			</div>
+	<!-- 		<button id="loadMoreBtn" class="primary-btn cta-btn">더 보기</button>
+			<button id="hideCommentsBtn" style="display: none;"
+				class="primary-btn cta-btn">게시글 숨기기</button>
+				 -->
 			<!-- Centered search form -->
 			<div class="col-md-6 ">
 
@@ -77,21 +80,70 @@
 							class="d-flex align-items-baseline" id="searchForm">
 							<select id="sortOption" name="sortOption" class="input-select">
 								<option value="1">최신순</option>
-								<option value="2">오래된순 </option>
+								<option value="2">오래된순</option>
 								<option value="3">인기순</option>
 							</select> <input type="text" id="search" name="search" class="input"
-								placeholder="필요한 상품을 검색하세요!"> <input type="submit"
+								placeholder="필요한 게시글을  검색하세요!"> <input type="submit"
 								value="검색" class="search-btn">
 						</form>
 						<!-- /search form  -->
-						</div>
 					</div>
 				</div>
 			</div>
-			</div>
+		</div>
+	</div>
 
 
-<script>
+	<script>
+		$(document).ready(function() {
+			// Hide all posts initially
+			$('.encapsulate').hide();
+
+			// Show the first 5 posts if there are more than 5
+			var initialPosts = $('.encapsulate');
+			if (initialPosts.length > 5) {
+				initialPosts.slice(0, 5).show();
+				$('#loadMoreBtn').show();
+			} else {
+				// If there are 5 or fewer posts, show all and hide the "Load More" button
+				initialPosts.show();
+				$('#loadMoreBtn').hide();
+			}
+
+			// Function to load more posts
+			function loadMorePosts() {
+				// Show the next 3 posts
+				$('.encapsulate:hidden').slice(0, 3).show();
+
+				// Hide the "Load More" button if no more hidden posts
+				if ($('.encapsulate:hidden').length === 0) {
+					$('#loadMoreBtn').hide();
+				}
+			}
+
+			// Attach click event to the "Load More" button
+			$('#loadMoreBtn').on('click', function() {
+				loadMorePosts();
+
+				// Show the "댓글 숨기기" button if no more hidden posts
+				if ($('.encapsulate:hidden').length === 0) {
+					$('#hideCommentsBtn').show();
+				}
+			});
+
+			// Attach click event to the "댓글 숨기기" button
+			$('#hideCommentsBtn').on('click', function() {
+				// Hide all comments except the first 5
+				$('.encapsulate').slice(5).hide();
+				// Show the "Load More" button if there are more than 5 comments
+				if ($('.encapsulate').length > 5) {
+					$('#loadMoreBtn').show();
+				}
+				// Hide the "댓글 숨기기" button
+				$(this).hide();
+			});
+		});
+
 		// Get the input element and the posts container
 		var searchInput = document.getElementById('search');
 
@@ -116,22 +168,35 @@
 			});
 		});
 
-		$(document).ready(function () {
-		    // Loop through each post-container
-		    $('.post-container').each(function () {
-		        var postDetail = $(this).find('.post-detail');
-		        var postId = $(this).data('post-id');
-		        var content = postDetail.html();
+		$(document)
+				.ready(
+						function() {
+							// Loop through each post-container
+							$('.post-container')
+									.each(
+											function() {
+												var postDetail = $(this).find(
+														'.post-detail');
+												var postId = $(this).data(
+														'post-id');
+												var content = postDetail.html();
 
-		        // Check if "Read more" link already exists
-		        if (postDetail.find('.read-more-link').length === 0) {
-		            // Truncate the content and append "Read more" link
-		            postDetail.html(content.substring(0, 300) + '...  ' +
-		                '<a href="/SosoMarket/CommunityPostDetail.do?postId=' +
-		                postId + '" class="read-more-link">Read more</a>');
-		        }
-		    });
-		});
+												// Check if "Read more" link already exists
+												if (postDetail
+														.find('.read-more-link').length === 0) {
+													// Truncate the content and append "Read more" link
+													postDetail
+															.html(content
+																	.substring(
+																			0,
+																			300)
+																	+ '...  '
+																	+ '<a href="/SosoMarket/CommunityPostDetail.do?postId='
+																	+ postId
+																	+ '" class="read-more-link">Read more</a>');
+												}
+											});
+						});
 
 		$(document)
 				.ready(

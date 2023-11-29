@@ -22,7 +22,7 @@ if (memberId != null) {
 <%
 }
 %>    
-<jsp:include page="../resources/header.html" />
+<jsp:include page="../resources/header.jsp" />
 
 <!-- BREADCRUMB -->
 <div id="breadcrumb" class="section">
@@ -97,11 +97,12 @@ if (memberId != null) {
                                     // Redirect to the post list page
                                     window.location.href = "/SosoMarket/CommunityPostList.do";
                                 } else {
-                                    showAlert("게시글 등록이 실패하였습니다. 원인: " + response);
+                                    showAlert("게시글 등록이 실패하였습니다. 로그인 해주세요!");
+                                    window.location.href = "/SosoMarket/LoginMove.do";
                                 }
                             },
                             error: function (error) {
-                                showAlert("게시글 등록이 실패하였습니다. 원인: " + error.statusText);
+                                showAlert("게시글 등록이 실패하였습니다. 다시 시도해주세요.");
                             }
                         });
                     }

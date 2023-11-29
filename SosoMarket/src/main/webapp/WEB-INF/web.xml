@@ -226,6 +226,54 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>CommunityCommCreateServlet</display-name>
+    <servlet-name>CommunityCommCreateServlet</servlet-name>
+    <servlet-class>com.tbk.prj.community.CommunityCommCreateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CommunityCommCreateServlet</servlet-name>
+    <url-pattern>/CommunityCommCreateServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CommunityGetCommServlet</display-name>
+    <servlet-name>CommunityGetCommServlet</servlet-name>
+    <servlet-class>com.tbk.prj.community.CommunityGetCommServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CommunityGetCommServlet</servlet-name>
+    <url-pattern>/CommunityGetCommServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CommunityCommUpdateServlet</display-name>
+    <servlet-name>CommunityCommUpdateServlet</servlet-name>
+    <servlet-class>com.tbk.prj.community.CommunityCommUpdateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CommunityCommUpdateServlet</servlet-name>
+    <url-pattern>/CommunityCommUpdateServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CommunityCommDeleteServlet</display-name>
+    <servlet-name>CommunityCommDeleteServlet</servlet-name>
+    <servlet-class>com.tbk.prj.community.CommunityCommDeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CommunityCommDeleteServlet</servlet-name>
+    <url-pattern>/CommunityCommDeleteServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CommunityInsertServlet</display-name>
+    <servlet-name>CommunityInsertServlet</servlet-name>
+    <servlet-class>com.tbk.prj.community.CommunityInsertServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CommunityInsertServlet</servlet-name>
+    <url-pattern>/CommunityInsertServlet</url-pattern>
+
 
     <display-name>ProdAdminListServlet</display-name>
     <servlet-name>ProdAdminListServlet</servlet-name>
@@ -300,6 +348,5 @@
   <servlet-mapping>
     <servlet-name>BlankServlet</servlet-name>
     <url-pattern>/BlankServlet</url-pattern>
-
   </servlet-mapping>
 </web-app>
