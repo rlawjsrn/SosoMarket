@@ -14,7 +14,7 @@ public class ChatVO {
 	private String generation_date;
 	private String member_id;
 
-	// 상품
+//	상품
 	private String product_name;
 	private String product_status;
 	private String product_price;
@@ -23,6 +23,10 @@ public class ChatVO {
 	private String nickname;
 	private String buyer_nickname;
 	private int rating_score;
+	private String otherMemberId;
+	
+//	구매내역
+	private String buy_id;
 
 	public String getChat_id() {
 		return chat_id;
@@ -134,6 +138,22 @@ public class ChatVO {
 
 	public void setRating_score(int rating_score) {
 		this.rating_score = rating_score;
+	}
+
+	public String getOtherMemberId() {
+		return otherMemberId;
+	}
+
+	public void setOtherMemberId(String otherMemberId) {
+		this.otherMemberId = otherMemberId;
+	}
+
+	public String getBuy_id() {
+		return buy_id;
+	}
+
+	public void setBuy_id(String buy_id) {
+		this.buy_id = buy_id;
 	}
 
 }

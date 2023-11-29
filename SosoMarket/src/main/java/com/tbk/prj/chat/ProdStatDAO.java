@@ -8,6 +8,7 @@ public class ProdStatDAO extends DAO {
 
 	private final String ProdStat = "update product\r\n" + "set product_status = ?\r\n" + "where product_id = ?";
 
+
 	public int updateProdStat(ChatVO vo) {
 		int result = 0;
 
@@ -17,6 +18,7 @@ public class ProdStatDAO extends DAO {
 			connect();
 			psmt = conn.prepareStatement(ProdStat);
 			System.out.println(vo.getProduct_status());
+			System.out.println(vo.getProduct_id());
 			psmt.setString(1, vo.getProduct_status());
 			psmt.setString(2, vo.getProduct_id());
 			result = psmt.executeUpdate();
@@ -27,6 +29,14 @@ public class ProdStatDAO extends DAO {
 			disconnect();
 		}
 
+		return result;
+	}
+	
+	private final String BuyList = "insert into buy values(BUYSEQ.nextval, ?, ?)";
+	
+	public int insertBuy(ChatVO vo) {
+		int result = 0;
+		
 		return result;
 	}
 }
