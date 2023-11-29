@@ -9,7 +9,9 @@
 </head>
 
 <body>
-<% String memberId = (String) session.getAttribute("member_id"); %>
+	<%
+	String memberId = (String) session.getAttribute("member_id");
+	%>
 	<div class="msg_info">
 		<!-- 상품 사진 -->
 		<div class="prod_img">
@@ -34,52 +36,36 @@
 			</p>
 			<p class="prod_pric">${prodVo.product_price }원</p>
 		</div>
-		<!-- 상품 상태 변경 -->
-<%-- 		<div class="prod_stat_sel">
+		<div class="prod_stat_sel">
 			<ul class="prod_stat_ul">
-				<li class="prod_stat_li"><a
-					href="/SosoMarket/ProdStat.do?product_status='1'&product_id=${prodVo.product_id }">판매</a></li>
-				<li class="prod_stat_li"><a
-					href="/SosoMarket/ProdStat.do?product_status='2'&product_id=${prodVo.product_id }">예약</a></li>
+				<!-- 상품 상태 변경 -->
+				<!-- 판매중, 예약중이며 로그인 계정 == 판매자 계정일 때 -->
+				<c:if test="${prodVo.buyer_id != memberId}">
+					<c:choose>
+						<c:when test="${prodVo.product_status eq 0}">
+							<li class="prod_stat_li"><a
+								href="/SosoMarket/ProdStat.do?product_status='1'&product_id=${prodVo.product_id }&chat_id=${prodVo.chat_id }">판매</a></li>
+							<li class="prod_stat_li"><a
+								href="/SosoMarket/ProdStat.do?product_status='2'&product_id=${prodVo.product_id }">예약</a></li>
+						</c:when>
+						<c:when test="${prodVo.product_status eq 2}">
+							<li class="prod_stat_li"><a
+								href="/SosoMarket/ProdStat.do?product_status='1'&product_id=${prodVo.product_id }">판매
+									완료</a></li>
+							<li class="prod_stat_li"><a
+								href="/SosoMarket/ProdStat.do?product_status='0'&product_id=${prodVo.product_id }">예약
+									취소</a></li>
+						</c:when>
+					</c:choose>
+				</c:if>
+				<c:if
+					test="${prodVo.product_status == 1 && (prodVo.buy_mem_id == memberId || prodVo.buy_mem_id == prodVo.other_mem_id)}">
+					<li class="prod_stat_li long"><a
+						href="/SosoMarket/MemberReview.do?member_id=${vo.otherMemberId }">
+							거래 후기 작성</a></li>
+				</c:if>
 			</ul>
-		</div> --%>
-		<c:choose>
-			<c:when test="${prodVo.product_status eq '0'}">
-				<div class="prod_stat_sel">
-					<ul class="prod_stat_ul">
-						<li class="prod_stat_li"><a
-							href="/SosoMarket/ProdStat.do?product_status='1'&product_id=${prodVo.product_id }">판매</a></li>
-						<li class="prod_stat_li"><a
-							href="/SosoMarket/ProdStat.do?product_status='2'&product_id=${prodVo.product_id }">예약</a></li>
-					</ul>
-				</div>
-			</c:when>
-			<c:when test="${prodVo.product_status eq '1'}">
-				<div class="prod_stat_sel">
-					<ul class="prod_stat_ul">
-						<c:choose>
-							<!-- 아이디값 보고 거래후기 띄울지 말 건지 하는 거 해야 됨 화이팅 -->
-						</c:choose>
-						<li class="prod_stat_li long"><a href="/SosoMarket/MemberReview.do?member_id=${vo.member_id }">거래 후기 작성</a></li>
-					</ul>
-				</div>
-			</c:when>
-			<c:when test="${prodVo.product_status eq '2'}">
-				<div class="prod_stat_sel">
-					<ul class="prod_stat_ul">
-						<li class="prod_stat_li"><a
-							href="/SosoMarket/ProdStat.do?product_status='1'&product_id=${prodVo.product_id }">판매 완료</a></li>
-						<li class="prod_stat_li"><a
-							href="/SosoMarket/ProdStat.do?product_status='0'&product_id=${prodVo.product_id }">예약 취소</a></li>
-					</ul>
-				</div>
-			</c:when>
-		</c:choose>
-
-		<!-- 거래후기 -->
-		<!-- 			<div class="user_scr">
-				<a href="#">거래 후기 남기기</a>
-			</div> -->
+		</div>
 	</div>
 
 	<!-- 채팅창 내부 (수정 중!!!) -->
