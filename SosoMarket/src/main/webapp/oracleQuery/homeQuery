@@ -1,0 +1,18 @@
+-- 홈 메인화면 상품 8개 
+
+select p.product_id, c.category_name, p.product_name, TO_CHAR(p.product_price,'FM999,999,999,999')as product_price, pp.product_photo_name
+From product p, product_photo pp, category c
+Where substr(pp.product_photo_name,1,6) = p.product_id
+And substr(p.product_id,1,2) = c.category_id
+And substr(pp.product_photo_name,7,6) = 'fl0001'
+And rownum <= 8 order by substr(p.product_id,3,4) desc;
+
+-- 홈 상세페이지 
+
+SELECT p.product_id, p.product_name,TO_CHAR(p.product_price,'FM999,999,999,999')as product_price,p.product_status,
+       p.product_views,p.product_description,p.generation_date,c.category_name,pi.product_interest_id,m.member_id
+FROM product p, category c, product_interest pi, member m
+WHERE substr(p.product_id,1,2) = c.category_id 
+AND p.product_id = pi.product_id
+AND p.member_id = m.member_id
+AND p.product_id = 'dd0001'; 

@@ -46,11 +46,13 @@ public class ProdOneServlet extends HttpServlet {
 //		송다희 끝
 		if (prodId != null && !prodId.isEmpty()) {
 			ProdDAO dao = new ProdDAO();
+			int r = dao.prodViewCount(prodId);
 			ProdVO vo = dao.prodOneList(prodId);
 			
 			ArrayList<ProdVO> list = new ArrayList<ProdVO>();
+
 			list = dao.prodOnePhotoList(prodId);
-			
+
 			if (vo != null) {
 				request.setAttribute("vo", vo);
 				request.setAttribute("list", list);
