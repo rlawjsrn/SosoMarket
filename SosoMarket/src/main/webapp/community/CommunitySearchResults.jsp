@@ -9,8 +9,18 @@
 <meta charset="UTF-8">
 <title>Search Results</title>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<link href="resources/css/style-community.css?after" rel="stylesheet">
+<link rel="stylesheet" href="resources/community-css/style-community.css?after">
 <script src="resources/js/script-community.js?after"></script>
+<style> 
+.title{
+	font-size: 14px;
+	color: #555;
+	display:inline-block; 
+	margin-left: 46% !important;
+	text-align:center;
+	margin-bottom:20px;
+	}
+</style>
 </head>
 <body>
 	<%-- <% String postOrderNumber = (String) request.getAttribute("postOrderNumber");%> --%>

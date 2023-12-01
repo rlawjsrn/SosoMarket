@@ -2,7 +2,6 @@ package com.tbk.prj.community;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,27 +37,24 @@ public class CommunityPostUpdateServlet extends HttpServlet {
 		String postDetail = request.getParameter("postDetail");
 
 		System.out.println("Received parameters - postId: " + postId);
-		if (postTitle != null && postDetail != null) {
+		
+		  if (postTitle != null && postDetail != null && !postDetail.isEmpty() && !postTitle.isEmpty()) {
+		            CommunityVO post = new CommunityVO();
+		            post.setPostId(postId);
+		            post.setPostTitle(postTitle);
+		            post.setPostDetail(postDetail);
 
-			CommunityVO post = new CommunityVO();
-			post.setPostId(postId);
-			post.setPostTitle(postTitle);
-			post.setPostDetail(postDetail);
+		            CommunityDAO dao = new CommunityDAO();
 
-			CommunityDAO dao = new CommunityDAO();
-
-			System.out.println("Updating post with ID: " + postId);
-			boolean postUpdated = dao.updatePost(post);
-			System.out.println("Post updated: " + postUpdated);
-			if (postUpdated) {
-				System.out.println("ok");
-			    response.sendRedirect("/SosoMarket/CommunityPostDetail.do?postId=" + postId);
-			
-			} else {
-				System.out.println(" no ok");
-			    response.sendRedirect("/SosoMarket/CommunityPostDetail.do?postId=" + postId);
-			}
-		}
+		            System.out.println("Updating post with ID: " + postId);
+		            boolean postUpdated = dao.updatePost(post);
+	                response.getWriter().write(postUpdated ? "success" : "failure");
+	                if (postUpdated) {
+	                    System.out.println("Post updated successfully");
+	                } else {
+	                    System.out.println("Failed to update post");
+	                }
+		    }
 	}
 
 	/**
