@@ -54,7 +54,7 @@ public class ProdSelectCtgrListServlet extends HttpServlet {
 			priceMax = Integer.parseInt(priceMaxParam);
 		}
 
-		if (request.getParameter("selectedCategories") == null) {
+		if (request.getParameter("selectedCategories") == null || request.getParameter("selectedCategories") == "") {
 			selectedCategories = null;
 		} else {
 			selectedCategories = request.getParameter("selectedCategories").split(",");
