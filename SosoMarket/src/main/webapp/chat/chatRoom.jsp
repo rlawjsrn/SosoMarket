@@ -6,6 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script>
+/* AJAX 필요 */
+</script>
 </head>
 
 <body>
