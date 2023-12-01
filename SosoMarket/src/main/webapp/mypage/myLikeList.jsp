@@ -51,7 +51,7 @@
 							<c:forEach var="vo" items="${list}">
 								<tr>
 									<td class="product-thumbnail">
-										<img src="./upload/${vo.productPhotoName }.png?after" alt="Image" class="img-fluid">
+										<img src="./upload/${vo.productPhotoName }.png?after" alt="Image" class="img-fluid" style="width: 263px; height: 263px;" alt="">
 									</td>
 									<td class="product-name">
 										<h2 class="h5 text-black">${vo.productName }</h2>

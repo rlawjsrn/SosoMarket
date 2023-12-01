@@ -23,6 +23,7 @@ const phoneAutoHyphen = (target) => {
 	        alert("닉네임를 입력해주세요");
 	        $('#nickname').focus();
 	        return false;
+	        
 	    }
 	    $.ajax({
 	        type: 'post',
@@ -45,25 +46,22 @@ const phoneAutoHyphen = (target) => {
 	    });
 	}
  
+ const editForm = document.forms['editForm'];
+ 
  function submitAfterChecks(new_nick) {
 	 var nickname = $('#nickname').val();
-	 console.log("isNicknameAvailable: " + isNicknameAvailable);
-	 console.log("nickname: " + nickname);
-	 console.log("new_nick: " + new_nick);
 	 if(nickname === new_nick){
-    	 console.log(nickname + "nick submit");
-    	 console.log(new_nick + "new submit");
+    	 document.forms['editForm'].submit();
     	 return true;
-     }else if(isNicknameAvailable == false) {
+     }else if(!isNicknameAvailable) {
          alert("사용중인 닉네임입니다.");
          $('#nickname').focus();
-         console.log(nickname + "nick submit");
-         console.log(isNicknameAvailable);
          return false;
-     }else if(isNicknameAvailable == true){
+     }else{
+    	 document.forms['editForm'].submit();
     	 return true;
      }
-     return false;
+	 return false;
  }
 </script>
 

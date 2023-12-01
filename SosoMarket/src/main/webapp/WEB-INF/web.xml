@@ -371,4 +371,5 @@
     <servlet-name>UpdatePwdServlet</servlet-name>
     <url-pattern>/UpdatePwdServlet</url-pattern>
   </servlet-mapping>
+
 </web-app>

@@ -37,6 +37,7 @@ public class ProdOneServlet extends HttpServlet {
 		ProdVO mvo = new ProdVO();
 		mvo.setProdId(prodId);
 		mvo.setMemberId(request.getParameter("memberId"));
+		System.out.println(request.getParameter("memberId") + "들어오니");
 		
 		mvo = mdao.MyLike(mvo);
 		MypageLikeVO likevo = new MypageLikeVO();

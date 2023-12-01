@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ChatListServlet
@@ -30,7 +31,15 @@ public class ChatListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		ChatListDAO dao = new ChatListDAO();
+		
+		// 미로그인 시 접근 방지
+		HttpSession session = request.getSession();
+		if(session.getAttribute("memberId") == null) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("member/login.jsp");
+			dispatcher.forward(request, response);
+		}
+		
+		ChatDAO dao = new ChatDAO();
 		ChatVO vo = new ChatVO();
 		ArrayList<ChatVO> list = new ArrayList<ChatVO>();
 		

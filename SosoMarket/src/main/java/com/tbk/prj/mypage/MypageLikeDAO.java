@@ -174,7 +174,7 @@ public class MypageLikeDAO extends DAO {
 				vo.setPostTitle(rs.getString("post_title"));
 				vo.setPostDetail(rs.getString("post_detail"));
 				vo.setPostViews(rs.getInt("post_views"));
-				vo.setGenerationDate(rs.getDate("generation_date"));
+				vo.setGenerationDate(rs.getString("generation_date"));
 				// vo 에다가 하나씩 담는 과정.
 				list.add(vo);
 			}

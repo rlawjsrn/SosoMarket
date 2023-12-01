@@ -23,7 +23,7 @@ public class ProdVO {
 	int prodCount; // 상품 카운트
 	int todayCount; // 오늘 거래된 상품
 	// 송다희
-	int likeCount;	// 찜 횟수 확인
+	int likeCount; // 찜 횟수 확인
 
 	public int getLikeCount() {
 		return likeCount;
@@ -48,7 +48,6 @@ public class ProdVO {
 	public void setProdCount(int prodCount) {
 		this.prodCount = prodCount;
 	}
-
 
 	public String getMemberId() {
 		return memberId;
@@ -114,7 +113,6 @@ public class ProdVO {
 		this.prodDscrp = prodDscrp;
 	}
 
-
 	public String getProdInterestId() {
 		return prodInterestId;
 	}
@@ -147,8 +145,6 @@ public class ProdVO {
 		this.prodPhotoName = prodPhotoName;
 	}
 
-
-	
 	public Date getProdGenerationDate() {
 		return prodGenerationDate;
 	}
@@ -181,6 +177,7 @@ public class ProdVO {
 	public void setCntCtgr(int cntCtgr) {
 		this.cntCtgr = cntCtgr;
 	}
+
 	public String getCategoryName() {
 		return categoryName;
 	}
