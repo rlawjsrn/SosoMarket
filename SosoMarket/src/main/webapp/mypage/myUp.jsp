@@ -88,7 +88,7 @@ const phoneAutoHyphen = (target) => {
 							<h3 class="title">${vo.memberId }님의회원정보</h3>
 						</div>
 						<form action="/SosoMarket/MemberUp.do?memberId=${vo.memberId }"
-							method="post" name="editForm">
+							method="post">
 							<div class="form-group">
 								닉네임<input class="input" type="text" name="nickname"
 									id="nickname" value="${vo.nickname }">
@@ -115,7 +115,10 @@ const phoneAutoHyphen = (target) => {
 									value="${vo.ratingScore }" readonly="readonly">
 							</div>
 							<button class="primary-btn" type="button"
-								onclick="submitAfterChecks('${vo.nickname }')">수정하기</button>
+								onclick="console.log('Calling submitAfterChecks'); submitAfterChecks('${vo.nickname }')">수정하기</button>
+							<button class="primary-btn" type="button"
+								onclick="location.href='/SosoMarket/EditPwd.do?memberId=${vo.memberId }'">비밀번호
+								변경</button>
 						</form>
 						<br>
 						<button class="primary-btn"
