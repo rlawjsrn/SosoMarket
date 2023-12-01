@@ -53,3 +53,12 @@ where product_id = ?;
 update product
 set product_status = '2'
 where product_id = ?;
+
+
+-- 구매 내역 업데이트
+INSERT INTO buy (buy_id, product_id, member_id)
+VALUES (BUYSEQ.nextval, ?, (SELECT buyer_id FROM chat WHERE chat_id = ?));
+
+
+-- 구매자 조회
+select member_id from buy where product_id = ?;

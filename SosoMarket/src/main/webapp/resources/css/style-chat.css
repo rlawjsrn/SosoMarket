@@ -321,6 +321,10 @@ img {
 	text-align: center;
 }
 
+.long {
+	width: 50%;
+}
+
 .prod_stat_li a {
 	text-decoration: none;
 	color: #014A8F;
