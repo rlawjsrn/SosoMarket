@@ -273,8 +273,8 @@
   <servlet-mapping>
     <servlet-name>CommunityInsertServlet</servlet-name>
     <url-pattern>/CommunityInsertServlet</url-pattern>
-
-
+  </servlet-mapping>
+  <servlet>
     <display-name>ProdAdminListServlet</display-name>
     <servlet-name>ProdAdminListServlet</servlet-name>
     <servlet-class>com.tbk.prj.admin.ProdAdminListServlet</servlet-class>
@@ -292,8 +292,8 @@
   <servlet-mapping>
     <servlet-name>AdminProdDelServlet</servlet-name>
     <url-pattern>/AdminProdDelServlet</url-pattern>
-
-
+  </servlet-mapping>
+  <servlet>
     <display-name>HomeProdOneServlet</display-name>
     <servlet-name>HomeProdOneServlet</servlet-name>
     <servlet-class>home.HomeProdOneServlet</servlet-class>
@@ -311,6 +311,8 @@
   <servlet-mapping>
     <servlet-name>HomeProdPopServlet</servlet-name>
     <url-pattern>/HomeProdPopServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <display-name>ProdDelServlet</display-name>
     <servlet-name>ProdDelServlet</servlet-name>
     <servlet-class>com.tbk.prj.prod.ProdDelServlet</servlet-class>
@@ -348,5 +350,25 @@
   <servlet-mapping>
     <servlet-name>BlankServlet</servlet-name>
     <url-pattern>/BlankServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EditPwdServlet</display-name>
+    <servlet-name>EditPwdServlet</servlet-name>
+    <servlet-class>com.tbk.prj.mypage.EditPwdServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditPwdServlet</servlet-name>
+    <url-pattern>/EditPwdServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdatePwdServlet</display-name>
+    <servlet-name>UpdatePwdServlet</servlet-name>
+    <servlet-class>com.tbk.prj.mypage.UpdatePwdServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdatePwdServlet</servlet-name>
+    <url-pattern>/UpdatePwdServlet</url-pattern>
   </servlet-mapping>
 </web-app>

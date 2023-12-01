@@ -69,7 +69,7 @@ const phoneAutoHyphen = (target) => {
 
 <script>
 
-<% String memberId = (String)session.getAttribute("memberId");%>
+<%String memberId = (String) session.getAttribute("memberId");%>
 </script>
 </head>
 
@@ -89,17 +89,20 @@ const phoneAutoHyphen = (target) => {
 						<div class="section-title">
 							<h3 class="title">${vo.memberId }님의회원정보</h3>
 						</div>
-						<form action="/SosoMarket/MemberUp.do?memberId=${vo.memberId }" method="post">
+						<form action="/SosoMarket/MemberUp.do?memberId=${vo.memberId }"
+							method="post">
 							<div class="form-group">
 								닉네임<input class="input" type="text" name="nickname"
 									id="nickname" value="${vo.nickname }">
-								<button class="primary-btn" type="button" onclick="nicknameCheckFunction('${vo.nickname }')">중복 체크</button>
+								<button class="primary-btn" type="button"
+									onclick="nicknameCheckFunction('${vo.nickname }')">중복
+									체크</button>
 							</div>
 							<div class="form-group">
 								폰 번호<input class="input" type="text" name="phoneNumber"
-									id="phoneNumber" value= "${vo.phoneNumber}"
+									id="phoneNumber" value="${vo.phoneNumber}"
 									oninput="phoneAutoHyphen(this)" maxlength="13">
-									 <!--  -->
+								<!--  -->
 							</div>
 							<div class="form-group">
 								이메일<input class="input" type="email" name="email" id="email"
@@ -113,7 +116,11 @@ const phoneAutoHyphen = (target) => {
 								승진률<input class="input" type="text" name="address"
 									value="${vo.ratingScore }" readonly="readonly">
 							</div>
-							<button class="primary-btn" type="button" onclick="console.log('Calling submitAfterChecks'); submitAfterChecks('${vo.nickname }')">수정하기</button>
+							<button class="primary-btn" type="button"
+								onclick="console.log('Calling submitAfterChecks'); submitAfterChecks('${vo.nickname }')">수정하기</button>
+							<button class="primary-btn" type="button"
+								onclick="location.href='/SosoMarket/EditPwd.do?memberId=${vo.memberId }'">비밀번호
+								변경</button>
 						</form>
 						<br>
 						<button class="primary-btn"

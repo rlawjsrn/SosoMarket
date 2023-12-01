@@ -155,6 +155,7 @@ public class ProdVO {
 
 	public void setProdGenerationDate(Date prodGenerationDate) {
 		this.prodGenerationDate = prodGenerationDate;
+	}
 
 	public String getCategoryId() {
 		return categoryId;

@@ -145,6 +145,22 @@
     session.removeAttribute("messageType");
     }
     %>
+    
+    <%
+    String message = null;
+
+    if (session.getAttribute("message") != null) {
+        message = (String) session.getAttribute("message");
+    }
+    if (message != null) {
+%>
+    <script>
+        alert('<%=message%>');
+    </script>
+<%
+    session.removeAttribute("message");
+    }
+%>
 
     <jsp:include page="../resources/footer.html"></jsp:include>
 

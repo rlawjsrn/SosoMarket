@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import common.DAO;
 
+
 public class MemberDAO extends DAO {
 	// 비밀번호 암호화
 	public String encryptPassword(String password) {
@@ -279,6 +280,39 @@ public class MemberDAO extends DAO {
 				disconnect();
 			}
 			return vo;
+		}
+		
+		// 마이페이지 회원 비밀번호 변경
+		public int updatePwd(MemberVO vo, String pwd,String newPwd) {
+			int result = 0;
+			
+			try {
+				connect();
+				sql = "update member\r\n"
+						+ "set password = ?"
+						+ "where member_id=? AND password = ?";
+				psmt = conn.prepareStatement(sql);
+				
+				
+				// 입력받은 비밀번호를 암호화하여 쿼리에 넣습니다.
+				String encryptedPassword = encryptPassword(pwd);
+				String newencryptedPassword = encryptPassword(newPwd);
+
+				// 암호화한 비밀번호 확인
+				System.out.println(encryptedPassword);
+				psmt.setString(1, newencryptedPassword);
+				psmt.setString(2, vo.getMemberId());
+				psmt.setString(3, encryptedPassword);
+			
+				result = psmt.executeUpdate();
+				System.out.println(vo.getMemberId() + "비밀번호 업데이트~!~!");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				disconnect();
+			}
+
+			return result;
 		}
 }
 
