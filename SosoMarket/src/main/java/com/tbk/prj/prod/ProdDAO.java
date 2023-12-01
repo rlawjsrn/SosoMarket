@@ -298,7 +298,6 @@ public class ProdDAO extends DAO {
 		return list;
 	}
 
-// 상품 전체 조회 필터링
 	// 상품 전체 조회 필터링
 	public ArrayList<ProdVO> selectFiltering(String stOption, String qtOption, String[] categories, int priceMin,
 			int priceMax) {
@@ -307,8 +306,8 @@ public class ProdDAO extends DAO {
 				+ "최고가: " + priceMax);
 		ArrayList<ProdVO> list = new ArrayList<>();
 		StringBuilder sql = new StringBuilder(
-				"SELECT p.product_id, c.category_name, p.product_name, TO_CHAR(p.product_price, 'FM999,999,999,999') as product_price, pp.product_photo_id\r\n"
-						+ "FROM (SELECT product_id, product_name, product_price FROM product ");
+				"SELECT p.product_id, c.category_name, p.product_name, TO_CHAR(p.product_price, 'FM999,999,999,999') as product_price, pp.product_photo_name\r\n"
+						+ "FROM (SELECT product_id, product_name, product_price, product_views FROM product ");
 
 		// 쿼리에 정렬 옵션 추가
 		if ("0".equals(stOption)) { // 조회 많은 순
@@ -379,6 +378,8 @@ public class ProdDAO extends DAO {
 				ProdVO vo = new ProdVO();
 
 				vo.setProdId(rs.getString("product_id")); // 상품 아이디
+				vo.setProdPhotoName(rs.getString("product_photo_name")); // 사진 이름
+				vo.setProdPrice(rs.getString("product_price")); // 상품 가격
 				vo.setCategory(rs.getString("category_name")); // 카테고리명
 				vo.setProdName(rs.getString("product_name")); // 상품명
 

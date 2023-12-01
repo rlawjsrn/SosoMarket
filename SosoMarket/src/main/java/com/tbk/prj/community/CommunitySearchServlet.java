@@ -38,7 +38,7 @@ public class CommunitySearchServlet extends HttpServlet {
         System.out.println(postOrderNumber);
         
         String sortOption = request.getParameter("sortOption");
-        request.setAttribute("sortOption", sortOption != null ? sortOption : "1");
+        request.setAttribute("sortOption", sortOption);
         System.out.println("Sort Option: " + sortOption);
 
         if (searchQuery != null && !searchQuery.isEmpty()) {

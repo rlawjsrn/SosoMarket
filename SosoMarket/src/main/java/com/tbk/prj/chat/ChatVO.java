@@ -5,28 +5,46 @@ public class ChatVO {
 //	채팅방
 	private String chat_id;
 	private String product_id;
-	private String buyer_id;
+	private String buyer_id; // 구매 희망한 member_id
 
 //	채팅메세지
 	private String chat_message_id;
 	private String chat_message;
 	private String read_or_not;
 	private String generation_date;
-	private String member_id;
+	private String member_id; // 채팅 보낸 member_id
 
 //	상품
 	private String product_name;
 	private String product_status;
 	private String product_price;
+	private String prod_mem_id; // 판매자 member_id
 
 //	회원
 	private String nickname;
 	private String buyer_nickname;
 	private int rating_score;
-	private String otherMemberId;
-	
+	private String other_mem_id; // 채팅 상대방 member_id
+
 //	구매내역
 	private String buy_id;
+	private String buy_mem_id; // 상품 구매한 member_id
+
+	public String getOther_mem_id() {
+		return other_mem_id;
+	}
+
+	public void setOther_mem_id(String other_mem_id) {
+		this.other_mem_id = other_mem_id;
+	}
+
+	public String getProd_mem_id() {
+		return prod_mem_id;
+	}
+
+	public void setProd_mem_id(String prod_mem_id) {
+		this.prod_mem_id = prod_mem_id;
+	}
 
 	public String getChat_id() {
 		return chat_id;
@@ -140,20 +158,20 @@ public class ChatVO {
 		this.rating_score = rating_score;
 	}
 
-	public String getOtherMemberId() {
-		return otherMemberId;
-	}
-
-	public void setOtherMemberId(String otherMemberId) {
-		this.otherMemberId = otherMemberId;
-	}
-
 	public String getBuy_id() {
 		return buy_id;
 	}
 
 	public void setBuy_id(String buy_id) {
 		this.buy_id = buy_id;
+	}
+
+	public String getBuy_mem_id() {
+		return buy_mem_id;
+	}
+
+	public void setBuy_mem_id(String buy_mem_id) {
+		this.buy_mem_id = buy_mem_id;
 	}
 
 }

@@ -41,10 +41,12 @@ public class CommunityPostDetailServlet extends HttpServlet {
 		
         String postId = request.getParameter("postId");
         
-
+     
 			CommunityDAO dao = new CommunityDAO();
+			dao.postViewCount(postId);
             CommunityVO post = dao.getPostById(postId);
 
+            //Comment Start 
             
          // Retrieve top-level comments for the product
     		ArrayList<CommVO> topLevelComments = dao.getCommentsByPostId(postId);
@@ -66,7 +68,7 @@ public class CommunityPostDetailServlet extends HttpServlet {
 
     		// Set top-level comments and replies as separate attributes
     		request.setAttribute("commentsAndRepliesMap", commentsAndRepliesMap);
-    		// Comment
+    		// Comment End
     		
             request.setAttribute("post", post);
     		RequestDispatcher dispatcher = request.getRequestDispatcher("community/CommunityPostDetail.jsp");

@@ -99,7 +99,9 @@ function applyFilters() {
 }
 
 </script>
-
+<script>
+	<% String memberid = (String)session.getAttribute("memberId");%>
+</script>
 </head>
 <body>
 	<jsp:include page="../resources/header.jsp" />
@@ -204,7 +206,7 @@ function applyFilters() {
 						<!-- product -->
 						<c:forEach var="voo" items="${list}">
 							<div class="col-md-4 col-xs-6"
-								onclick="location.href='/SosoMarket/ProdOne.do?prodId=${voo.prodId }'">
+								onclick="location.href='/SosoMarket/ProdOne.do?prodId=${voo.prodId }&memberId='+ memberId">
 								<div class="product" id="prodId${voo.prodId }">
 									<div class="product-img">
 										<img id="prodPhotoName"

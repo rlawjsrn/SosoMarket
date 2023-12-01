@@ -132,7 +132,7 @@ public class CommunityDAO extends DAO {
 
 			// SQL statement to insert a new post using the sequence for post_id
 			String sql = "INSERT INTO community (post_id, post_title, post_detail, member_id, generation_date, post_views) "
-					+ "VALUES ('co' || LPAD(postSeq.nextval, 4, '0'), ?, ?, ?, TO_DATE(TO_CHAR(sysdate, 'YY/MM/DD HH24:MI:SS'), 'YY/MM/DD HH24:MI:SS'), 0)";
+					+ "VALUES ('co' || LPAD(postSeq.nextval, 4, '0'), ?, ?, ?, TO_DATE(TO_CHAR(current_timestamp, 'YY/MM/DD HH24:MI:SS'), 'YY/MM/DD HH24:MI:SS'), 0)";
 
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, post.getPostTitle());
@@ -431,6 +431,24 @@ public class CommunityDAO extends DAO {
 			disconnect();
 		}
 		return false;
+	}
+	
+
+	// 조회수 업데이트
+	public int postViewCount(String postId) {
+		try {
+			connect();
+			String sql = "UPDATE community SET post_views = post_views + 1 WHERE post_id = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, postId);
+			int r = psmt.executeUpdate();
+			return r;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return 0;
 	}
 
 }

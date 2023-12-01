@@ -43,8 +43,8 @@ public class ProdSelectCtgrListServlet extends HttpServlet {
 		int priceMin = 0;
 		int priceMax = 0;
 
-		String priceMinParam = request.getParameter("priceMin");
-		String priceMaxParam = request.getParameter("priceMax");
+		String priceMinParam = request.getParameter("priceMin").replaceAll("[^\\uAC00-\\uD7A3\\dA-Za-z\\s]", "");
+		String priceMaxParam = request.getParameter("priceMax").replaceAll("[^\\uAC00-\\uD7A3\\dA-Za-z\\s]", "");
 
 		if (priceMinParam != null && !priceMinParam.isEmpty()) {
 			priceMin = Integer.parseInt(priceMinParam);
