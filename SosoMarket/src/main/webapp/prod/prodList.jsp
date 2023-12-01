@@ -10,103 +10,94 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 
-    function applyFilters() 
-    {
-    	// 정렬 기준 값
-        var sortOption = document.getElementById("sortOption").value;
-    	
-    	// 보여질 갯수 값
-        var quantityOption = document.getElementById("quantityOption").value;
+function applyFilters() {
+    // 정렬 기준 값
+    var sortOption = document.getElementById("sortOption").value;
 
-        // 카테고리 체크박스 선택값
-        var checkboxes = document.querySelectorAll('input[type=checkbox]');
-        var selectedCategories = Array.from(checkboxes)
-            .filter(checkbox => checkbox.checked)
-            .map(checkbox => checkbox.value);
-        
-        // 가격 범위 값
-        var priceMin = document.getElementById("price-min").value;
-        var priceMax = document.getElementById("price-max").value;
+    // 보여질 갯수 값
+    var quantityOption = document.getElementById("quantityOption").value;
+
+    // 카테고리 체크박스 선택값
+    var checkboxes = document.querySelectorAll('input[type=checkbox]');
+    var selectedCategories = Array.from(checkboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
+
+    // 가격 범위 값
+    var priceMin = document.getElementById("price-min").value;
+    var priceMax = document.getElementById("price-max").value;
 
 
-        // 데이터 전송
-        var data = {
-            sortOption: sortOption,
-            quantityOption: quantityOption,
-            selectedCategories: selectedCategories.join(","),
-            priceMin: priceMin,
-            priceMax: priceMax
-        };
-        
-        console.log("데이터 찍어봐!!!!!"+ data);
-        
-        $.ajax({
-            url: "/SosoMarket/ProdCtgrList.do",
-            type: "POST",
-            data: {
-                sortOption: sortOption,
-                quantityOption: quantityOption,
-                selectedCategories: selectedCategories.join(","),
-                priceMin: priceMin,
-                priceMax: priceMax
-            },
-            dataType:"json",
-            success: function (response) {
-                // 서버에서 받아온 데이터(response)를 처리
-                alert("서버에서 success");
-                console.log(response);
+    // 데이터 전송
+    var data = {
+        sortOption: sortOption,
+        quantityOption: quantityOption,
+        selectedCategories: selectedCategories.join(","),
+        priceMin: priceMin,
+        priceMax: priceMax
+    };
 
-                // 받아온 데이터를 화면에 적용
-                var productListContainer = document.getElementById("product-list-container");
-                productListContainer.innerHTML = ""; // 기존 내용 비우기
+    console.log(data);
 
-                if (Array.isArray(response)) {
-                    // response가 배열인 경우
-                    response.forEach(function (voo) {
-                        var prodPhotoName = voo.prodPhotoName;
-                        var category = voo.category;
-                        var prodName = voo.prodName;
-                        var prodPrice = voo.prodPrice;
+    $.ajax({
+                url: "/SosoMarket/ProdCtgrList.do",
+                type: "POST",
+                data: data,
+                dataType: "json",
+                success: function (response) {
+                    // 서버에서 받아온 데이터(response)를 처리
+                    alert("success");
+                    console.log(response);
 
-                        var productHtml = `
-                            <div class="col-md-4 col-xs-6">
-                                <div class="product" id="prodId">
-                                    <div class="product-img">
-                                        <img id="prodPhotoName" src="./upload/${prodPhotoName}.png?after" alt="">
-                                    </div>
-                                    <div class="product-body">
-                                        <p class="product-category" id="category">${category}</p>
-                                        <h3 class="product-name" id="prodName">
-                                            <a href="#">${prodName}</a>
-                                        </h3>
-                                        <h4 class="product-price" id="prodPrice">${prodPrice}원</h4>
+                    // 받아온 데이터를 화면에 적용
+                    var productListContainer = document.getElementById("product-list-container");
 
-                                        <div class="product-btns">
-                                            <button class="add-to-wishlist">
-                                                <i class="fa fa-heart-o"></i><span class="tooltipp">관심상품등록</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
+                    productListContainer.innerHTML = ""; // 기존 내용 비우기
 
-                        productListContainer.innerHTML += productHtml;
-                    });
-                } else {
-                    // response가 배열이 아닌 경우
-                    console.error("Response is not an array:", response);
-                }
-
-                alert("success");
-                // 여기에서 받아온 데이터를 활용하여 원하는 동작 수행
-            },
-            error: function (error) {
-                console.error(error);
-                alert("error");
+                    if (Array.isArray(response)) {
+                        // response가 배열인 경우
+                        let res = ""; 
+                        for (let i = 0; i < response.length; i++) {
+                        console.log(response[i].prodId);
+                            res += "<div class='col-md-4 col-xs-6' onclick='location.href=\"/SosoMarket/ProdOne.do?prodId=" + response[i].prodId + "\"'>" +
+                                "<div class='product' id='prodId'>" +
+                                "<div class='product-img'>" +
+                                "<img id='prodPhotoName' src='./upload/" + response[i].prodPhotoName +
+                                ".png?after' alt=''>" +
+                                "</div>" +
+                                "<div class='product-body'>" +
+                                "<p class='product-category' id='category'>" + response[i].category + "</p>" +
+                                "<h3 class='product-name' id='prodName'>" +
+                                "<a href='#'>" + response[i].prodName + "</a>" +
+                                "</h3>" +
+                                "<h4 class='product-price' id='prodPrice'>" + response[i].prodPrice + "원</h4>" +
+                                "<div class='product-btns'>" +
+                                "<button class='add-to-wishlist'>" +
+                                "<i class='fa fa-heart-o'></i><span class='tooltipp'>관심상품등록</span>" +
+                                "</button>" +
+                                "</div>" +
+                                "</div>" +
+                                "</div>" +
+                                "</div>"
+                        }
+                        $ ('#product-list-container').html(res);
+                    }
+            else {
+                // response가 배열이 아닌 경우
+                alert("배열 아님")
+                console.error("Response is not an array:", response);
             }
-        });
-    }
+
+            alert("success");
+            // 여기에서 받아온 데이터를 활용하여 원하는 동작 수행
+        },
+        error: function (error) {
+            console.error(error);
+            alert("error");
+        }
+});
+}
+
 </script>
 <script>
 	<% String memberid = (String)session.getAttribute("memberId");%>
@@ -169,7 +160,8 @@
 						<c:forEach var="vv" items="${popList}">
 							<div class="product-widget">
 								<div class="product-img">
-									<img src="./upload/${vv.prodPhotoName}.png?after" style="width: 60px; height: 60px;" alt="">
+									<img src="./upload/${vv.prodPhotoName}.png?after"
+										style="width: 60px; height: 60px;" alt="">
 								</div>
 								<div class="product-body">
 									<p class="product-category">${vv.category }</p>
@@ -209,8 +201,8 @@
 
 					<!-- store products -->
 					<div id="product-list-container" class="row">
-					
-					<!-- 아작스 들어올 부분!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
+						<!-- 아작스 들어올 부분!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 						<!-- product -->
 						<c:forEach var="voo" items="${list}">
 							<div class="col-md-4 col-xs-6"
