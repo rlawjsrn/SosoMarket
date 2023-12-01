@@ -20,7 +20,6 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
-
 <style>
 @keyframes slideUp {
 	0% {
@@ -41,14 +40,13 @@
 	justify-content: center;
 	align-items: center;
 	overflow: hidden;
+	text-align:center;
 }
 
 .post-image {
 	width: 150px;
 	height: 150px;
 	position: relative;
-	top: -100%;
-	left: 45%;
 	transform: translateX(-50%);
 	animation: slideUp 2s ease-in-out forwards;
 }
@@ -111,7 +109,8 @@
 	background-color: #F0F8FF;
 	display: none;
 	margin-top: 20px;
-	border-radius: 10%;
+	border-radius: 15px;
+	margin-right:30px;
 }
 
 .reviews li {
@@ -122,7 +121,7 @@
 .noPosts {
 	background-color: #F0F8FF;
 	padding: 20px;
-	border-radius: 5%;
+	border-radius: 15px;
 }
 
 .review-form {
@@ -133,8 +132,11 @@
 #product-tab {
 	margin-top: 30px !important;
 }
+.pstDt{ 
+	width:350px !important; 
+	height: 80px !important;
+}
 </style>
-<link rel="stylesheet" href="resources/css/style-community.css?after">
 
 <script>
 
@@ -207,7 +209,7 @@ function updateComment(commId) {
 				alert('댓글 성공적으로 수정되었습니다.');
 				window.location.reload();
 			} else {
-				alert('댓글 수정이 실패하였습니다.다시 시도해주세요! ');
+				alert('수정할 내용을 입력해주세요. ');
 				console.error('Failed to update comment.');
 			}
 		},
@@ -461,13 +463,13 @@ function cancelUpdateComment() {
 																				<%
 																				if (memberId == null || memberId.trim().isEmpty()) {
 																				%>
-																				<input class="input" style="width: 350px;"
+																				<input class="form-control" style="width: 350px;"
 																					type="text" readonly="readonly" value="먼저 로그인~!">
 
 																				<%
 																				} else {
 																				%>
-																				<input class="input" style="width: 350px;"
+																				<input class="form-control" style="width: 350px;"
 																					type="text" readonly="readonly"
 																					value="<%=memberId%>">
 
@@ -475,8 +477,9 @@ function cancelUpdateComment() {
 																				}
 																				%>
 
-																				<textarea class="input" style="width: 350px;"
+																				<textarea class="form-control pstDt"
 																					placeholder="답변을 작성해주세요" name="commentDetail"></textarea>
+																					<br>
 																				<!-- Adjusted the height of the textarea -->
 																				<button class="primary-btn" style="font-size: 12px;"
 																					type="submit">답변 작성</button>
@@ -527,11 +530,7 @@ function cancelUpdateComment() {
 												</div>
 											</div>
 											<!-- /Reviews -->
-											<button id="loadMoreBtn" class="primary-btn cta-btn">더
-												보기</button>
-											<button id="hideCommentsBtn" style="display: none;"
-												class="primary-btn cta-btn">댓글 숨기기</button>
-
+						<button id="loadMoreBtn"  class="primary-btn cta-btn">더 보기 </button>  <button id="hideCommentsBtn" style="display: none;" class="primary-btn cta-btn">댓글 숨기기</button>
 
 
 										</c:if>
@@ -542,43 +541,13 @@ function cancelUpdateComment() {
 									</div>
 									<!-- /Comment Section -->
 
-
-								<%-- 	<!-- Review Form -->
-									<div class="col-md-3">
-										<div id="review-form">
-											<form class="review-form" id="commentForm"
-												action="/SosoMarket/CommunityCommCreate.do?postId=${post.postId}"
-												method="post">
-												<input type="hidden" name="postId" value="${post.postId}" />
-												<%
-												if (memberId == null || memberId.trim().isEmpty()) {
-												%>
-												<input class="input" type="text" readonly="readonly"
-													value="먼저 로그인~!">
-												<%
-												} else {
-												%>
-												<input class="input" type="text" readonly="readonly"
-													value="<%=memberId%>">
-												<%
-												}
-												%>
-												<textarea class="input" placeholder="댓글을 작성해주세요"
-													name="commentDetail"></textarea>
-												<button class="primary-btn" type="submit">댓글 작성</button>
-
-											</form>
-										</div>
-									</div>
-									<!-- /Review Form --> --%>
-
-
 									<!-- Update Comment Form -->
 										<div id="update-comment-form" style="display: none;">
 											<form class="update-comment-form" id="updateCommentForm">
 												<input type="hidden" id="updateCommId" />
-												<textarea class="input" id="updatedText"
+												<textarea class="form-control input" id="updatedText"
 													placeholder="댓글을 수정해주세요"></textarea>
+													<br>
 												<button class="primary-btn" type="button"
 													onclick="submitUpdateComment()">댓글 수정</button>
 												<button class="primary-btn" type="button"
@@ -610,6 +579,26 @@ function cancelUpdateComment() {
 	<script src="resources/js/main.js"></script>
 
 	<script>
+	// AJAX call when the page loads
+	$(document)
+			.ready(
+					function() {
+						var communityPostContentUrl = '/SosoMarket/CommunityPostContent.do'; // Adjust the URL as needed
+
+						// AJAX call to CommunityPostContent.do
+						$.ajax({
+							url : communityPostContentUrl,
+							method : 'GET', // Assuming you want to retrieve data
+							success : function(data) {
+								// Update the content of a specific element with the response
+								$('.community-post-content-container')
+										.html(data);
+							},
+							error : function(error) {
+								console.error('Error:', error);
+							}
+						});
+					});
 	
 	$(document).ready(function () {
 	    // Hide all comments initially
@@ -617,8 +606,8 @@ function cancelUpdateComment() {
 
 	    // Show the first 5 comments if there are more than 5
 	    var initialComments = $('#reviews .comment');
-	    if (initialComments.length > 5) {
-	        initialComments.slice(0, 5).show();
+	    if (initialComments.length > 3) {
+	        initialComments.slice(0, 3).show();
 	        $('#loadMoreBtn').show();
 	    } else {
 	        // If there are 5 or fewer comments, show all and hide the "Load More" button
@@ -629,7 +618,7 @@ function cancelUpdateComment() {
 	    // Function to load more comments
 	    function loadMoreComments() {
 	        // Show the next 3 comments
-	        $('#reviews .comment:hidden').slice(0, 3).show();
+	        $('#reviews .comment:hidden').slice(0, 2).show();
 
 	        // Hide the "Load More" button if no more hidden comments
 	        if ($('#reviews .comment:hidden').length === 0) {
@@ -650,15 +639,16 @@ function cancelUpdateComment() {
 	    // Attach click event to the "댓글 숨기기" button
 	    $('#hideCommentsBtn').on('click', function () {
 	        // Hide all comments except the first 5
-	        $('#reviews .comment').slice(5).hide();
+	        $('#reviews .comment').slice(3).hide();
 	        // Show the "Load More" button if there are more than 5 comments
-	        if ($('#reviews .comment').length > 5) {
+	        if ($('#reviews .comment').length > 3) {
 	            $('#loadMoreBtn').show();
 	        }
 	        // Hide the "댓글 숨기기" button
 	        $(this).hide();
 	    });
 	});
+	
 	
 	function submitComment() {
         var commentText = encodeURIComponent(document.getElementById('commentText').value.trim());
@@ -695,26 +685,7 @@ $("textarea").on('input', function () {
 });
 
 
-		// AJAX call when the page loads
-		$(document)
-				.ready(
-						function() {
-							var communityPostContentUrl = '/SosoMarket/CommunityPostContent.do'; // Adjust the URL as needed
 
-							// AJAX call to CommunityPostContent.do
-							$.ajax({
-								url : communityPostContentUrl,
-								method : 'GET', // Assuming you want to retrieve data
-								success : function(data) {
-									// Update the content of a specific element with the response
-									$('.community-post-content-container')
-											.html(data);
-								},
-								error : function(error) {
-									console.error('Error:', error);
-								}
-							});
-						});
 		
 		
 		

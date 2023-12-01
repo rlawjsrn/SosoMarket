@@ -9,10 +9,21 @@
 <meta charset="UTF-8">
 <title>Community</title>
 
-<link rel="stylesheet" href="resources/css/style-community.css?after">
+<link rel="stylesheet"
+	href="resources/community-css/style-community.css?after">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script src="resources/js/script-community.js?after"></script>
+<style>
+.title {
+	font-size: 14px;
+	color: #555;
+	display: inline-block;
+	margin-left: 43% !important;
+	text-align: center;
+	margin-bottom: 20px;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="../resources/header.jsp" />
@@ -49,12 +60,12 @@
 						<form action="CommunitySearch.do" method="post"
 							class="d-flex align-items-baseline" id="searchForm">
 							<select id="sortOption" name="sortOption" class="input-select">
-								<option value="1">최신순</option>
-								<option value="2">오래된순</option>
-								<option value="3">인기순</option>
+								<option value="1" ${param.sortOption == '1' ? 'selected' : ''}>최신순</option>
+								<option value="2" ${param.sortOption == '2' ? 'selected' : ''}>오래된순</option>
+								<option value="3" ${param.sortOption == '3' ? 'selected' : ''}>인기순</option>
 							</select> <input type="text" id="search" name="search" class="input"
-								placeholder="필요한  게시글을  검색하세요!"> <input type="submit"
-								value="검색" class="search-btn">
+								placeholder="필요한 게시글을 검색하세요!" value="${param.search}"> <input
+								type="submit" value="검색" class="search-btn">
 						</form>
 						<!-- /search form  -->
 
@@ -74,12 +85,11 @@
 				<div>
 					<span class="num"> 번호</span> <span class="title"> 게시글 제목 </span>
 				</div>
-
 				<c:forEach var="post" items="${posts}" varStatus="loopStatus">
 					<c:set var="postOrderNumber"
 						value="${totalPosts - loopStatus.index}" />
 					<div class="encapsulate">
-						<span class="post-order-number">${totalPosts - loopStatus.index}</span>
+						<span class="post-order-number">${loopStatus.index + 1}</span>
 
 						<div class="post-container" data-post-id="${post.postId}">
 
@@ -111,9 +121,12 @@
 
 				<!-- /posts-container -->
 			</div>
-			<button id="loadMoreBtn" class="primary-btn cta-btn">더 보기</button>
-			<button id="hideCommentsBtn" style="display: none;"
-				class="primary-btn cta-btn">게시글 숨기기</button>
+			<div class="col-md-10">
+				<button id="loadMoreBtn" class="primary-btn cta-btn backPostList">더
+					보기</button>
+				<button id="hideCommentsBtn" style="display: none;"
+					class="primary-btn cta-btn backPostList">게시글 숨기기</button>
+			</div>
 			<!-- /row -->
 		</div>
 		<!-- /container -->
@@ -122,59 +135,57 @@
 	<jsp:include page="../resources/footer.html" />
 
 	<script>
-	
-	$(document).ready(function () {
-	    // Hide all posts initially
-	    $('.encapsulate').hide();
+		$(document).ready(function() {
+			// Hide all posts initially
+			$('.encapsulate').hide();
 
-	    // Show the first 5 posts if there are more than 5
-	    var initialPosts = $('.encapsulate');
-	    if (initialPosts.length > 5) {
-	        initialPosts.slice(0, 5).show();
-	        $('#loadMoreBtn').show();
-	    } else {
-	        // If there are 5 or fewer posts, show all and hide the "Load More" button
-	        initialPosts.show();
-	        $('#loadMoreBtn').hide();
-	    }
+			// Show the first 5 posts if there are more than 5
+			var initialPosts = $('.encapsulate');
+			if (initialPosts.length > 7) {
+				initialPosts.slice(0, 7).show();
+				$('#loadMoreBtn').show();
+			} else {
+				// If there are 5 or fewer posts, show all and hide the "Load More" button
+				initialPosts.show();
+				$('#loadMoreBtn').hide();
+			}
 
-	    // Function to load more posts
-	    function loadMorePosts() {
-	        // Show the next 3 posts
-	        $('.encapsulate:hidden').slice(0,3).show();
+			// Function to load more posts
+			function loadMorePosts() {
+				// Show the next 3 posts
+				$('.encapsulate:hidden').slice(0, 3).show();
 
-	        // Hide the "Load More" button if no more hidden posts
-	        if ($('.encapsulate:hidden').length === 0) {
-	            $('#loadMoreBtn').hide();
-	        }
-	    }
+				// Hide the "Load More" button if no more hidden posts
+				if ($('.encapsulate:hidden').length === 0) {
+					$('#loadMoreBtn').hide();
+				}
+			}
 
-	    // Attach click event to the "Load More" button
-	    $('#loadMoreBtn').on('click', function () {
-	        loadMorePosts();
+			// Attach click event to the "Load More" button
+			$('#loadMoreBtn').on('click', function() {
+				loadMorePosts();
 
-	        // Show the "댓글 숨기기" button if no more hidden posts
-	        if ($('.encapsulate:hidden').length === 0) {
-	            $('#hideCommentsBtn').show();
-	        }
-	    });
-	    
-	    // Attach click event to the "댓글 숨기기" button
-	    $('#hideCommentsBtn').on('click', function () {
-	        // Hide all comments except the first 5
-	        $('.encapsulate').slice(5).hide();
-	        // Show the "Load More" button if there are more than 5 comments
-	        if ($('.encapsulate').length > 5) {
-	            $('#loadMoreBtn').show();
-	        }
-	        // Hide the "댓글 숨기기" button
-	        $(this).hide();
-	    });
-	});
+				// Show the "댓글 숨기기" button if no more hidden posts
+				if ($('.encapsulate:hidden').length === 0) {
+					$('#hideCommentsBtn').show();
+				}
+			});
+
+			// Attach click event to the "댓글 숨기기" button
+			$('#hideCommentsBtn').on('click', function() {
+				// Hide all comments except the first 5
+				$('.encapsulate').slice(7).hide();
+				// Show the "Load More" button if there are more than 5 comments
+				if ($('.encapsulate').length > 7) {
+					$('#loadMoreBtn').show();
+				}
+				// Hide the "댓글 숨기기" button
+				$(this).hide();
+			});
+		});
 
 		// Get the input element and the posts container
 		var searchInput = document.getElementById('search');
-
 		// Add an event listener to the input field for real-time search
 		$('#search').on('input', function() {
 			var searchText = $(this).val().toLowerCase().trim();
@@ -193,6 +204,7 @@
 					$(this).hide();
 				}
 			});
+	
 		});
 
 		$(document)
