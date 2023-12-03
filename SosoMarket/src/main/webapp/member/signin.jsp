@@ -130,8 +130,18 @@ body {
 </head>
 <body>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script type="text/javascript">
 
+<script>
+    $(document).ready(function () {
+        // Check if there's a notification message in the URL (e.g., from a redirect)
+        var notificationMessage = '<%= request.getParameter("notificationMessage") %>';
+        if (notificationMessage) {
+            alert(notificationMessage);
+        }
+    });
+</script>
+<script type="text/javascript">
+// 아이디 중복 체크
 function idCheckFunction() {
     var memberId = $('#memberId').val();
     if (memberId === "") {
@@ -155,7 +165,7 @@ function idCheckFunction() {
         }
     });
 }
-
+// 닉네임 중복 체크
 function nicknameCheckFunction() {
     var nickname = $('#nickname').val();
     if (nickname === "") {
@@ -179,6 +189,7 @@ function nicknameCheckFunction() {
     });
 }
 
+// 비밀번호 일치 확인
 function passwordCheckFunction() {
     var password1 = $('#password').val();
     var password2 = $('#password2').val();
@@ -187,6 +198,28 @@ function passwordCheckFunction() {
     } else {
         $('#passwordCheckMessage').html('');
     }
+}
+
+function sendVerificationEmail() {
+    var email = $('#email').val();  // Get the email value from the input field
+
+    $.ajax({
+        type: 'post',
+        url: '/SosoMarket/MemberEmailSendServlet',
+        data: { email: email },  // Pass the email to the server
+        success: function (result) {
+            // Handle the success response
+            if (result === "true") {
+                alert("인증 메일을 보냈습니다.");  // Show a notification to the user
+            } else {
+                alert("메일 전송 실패. 다시 시도해주세요.");  // Show an error notification
+            }
+        },
+        error: function () {
+            // Handle the error response
+            alert("서버 오류. 다시 시도해주세요.");  // Show an error notification
+        }
+    });
 }
 
 function submitForm() {
@@ -323,8 +356,6 @@ function submitForm() {
     }
 }
 
-
-
 </script>
 
 <jsp:include page="../resources/header.jsp"></jsp:include>
@@ -369,11 +400,12 @@ function submitForm() {
         </div>
         <div class="textForm">
             <input type="text" id="email" name="email" placeholder="이메일">
-            <button type="button">인증 메일 보내기</button>
+            <input type="button" value="인증 메일 보내기" onclick="sendVerificationEmail()">
+           
         </div>
         <div class="textForm">
             <input type="text" id="emailVrf" name="emailVrf" placeholder="이메일 인증">
-            <button type="button">인증</button>
+            <input type="button" value="인증" onclick="emailcheckFunction()">
             <input type="hidden" name="authPass" id="authPass" value="false">
         </div>
         <div class="textForm">

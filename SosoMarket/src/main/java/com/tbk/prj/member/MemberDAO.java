@@ -5,6 +5,16 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Properties;
+import java.util.Random;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import common.DAO;
 
@@ -235,6 +245,82 @@ public class MemberDAO extends DAO {
 		    }
 		    return null;
 		}
+// 인증번호 생성 6자리 영어대문자, 숫자		
+		public String authCodeMaker() {
+		    String authCode = null;
+		    
+		    StringBuffer temp = new StringBuffer();
+		    Random rnd = new Random();
+		    for (int i = 0; i < 6; i++) { // 6자리로 수정
+		        int rIndex = rnd.nextInt(2); // 0 또는 1만 선택하도록 수정
+		        switch (rIndex) {
+		            case 0:
+		                // A-Z
+		                temp.append((char) ((int) (rnd.nextInt(26)) + 65));
+		                break;
+		            case 1:
+		                // 0-9
+		                temp.append((rnd.nextInt(10)));
+		                break;
+		        }
+		    }
+		    
+		    authCode = temp.toString();
+		    System.out.println(authCode);
+		    
+		    return authCode;
+		}
+		
+		public boolean sendVerificationEmail(String email, String authCode) {
+	        // SMTP settings for sending email
+			String host = "smtp.gmail.com";
+	        String username = "zhdzhdvksvks@gmail.com";
+	        String password = "onbf dduh yumf xkqd";
+
+	        // Email content and delivery settings
+	        String subject = "이메일 인증";
+	        String content = "인증번호: " + authCode;
+
+	        Properties props = new Properties();
+	        props.put("mail.smtp.host", host);
+	        props.put("mail.smtp.auth", "true");
+	        props.put("mail.smtp.starttls.enable", "true"); // Enable TLS connection
+
+	        // Additional properties for SSL
+	        props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+	        props.put("mail.smtp.socketFactory.port", "465"); // Use port 465 for SSL
+	        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+
+	        try {
+	            // Create a session with the properties
+	            Session emailSession = Session.getInstance(props, new Authenticator() {
+	                protected PasswordAuthentication getPasswordAuthentication() {
+	                    return new PasswordAuthentication(username, password);
+	                }
+	            });
+
+	            // Set additional properties for the Transport object
+	            Transport transport = emailSession.getTransport("smtp");
+	            transport.connect(host, username, password);
+
+	            // Send email
+	            MimeMessage message = new MimeMessage(emailSession);
+	            message.setFrom(new InternetAddress(username));
+	            message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+	            message.setSubject(subject);
+	            message.setContent(content, "text/html;charset=utf-8");
+	            transport.sendMessage(message, message.getAllRecipients());
+	            transport.close();
+
+	            return true; // Email sent successfully
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return false;
+	            }
+	    }
+		
+		
+		
 //		송다희 수정
 //		마이페이지 - 닉네임 수정 
 		public int updateNic(MemberVO vo) {

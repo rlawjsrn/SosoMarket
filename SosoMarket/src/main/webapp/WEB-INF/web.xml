@@ -373,6 +373,26 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+
+    <display-name>MemberEmailSnedServlet</display-name>
+    <servlet-name>MemberEmailSnedServlet</servlet-name>
+    <servlet-class>com.tbk.prj.member.MemberEmailSnedServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberEmailSnedServlet</servlet-name>
+    <url-pattern>/MemberEmailSnedServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MemberEmailSendServlet</display-name>
+    <servlet-name>MemberEmailSendServlet</servlet-name>
+    <servlet-class>com.tbk.prj.member.MemberEmailSendServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberEmailSendServlet</servlet-name>
+    <url-pattern>/MemberEmailSendServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <display-name>ReviewServlet</display-name>
     <servlet-name>ReviewServlet</servlet-name>
     <servlet-class>com.tbk.prj.chat.ReviewServlet</servlet-class>
