@@ -6,19 +6,35 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script>
-/* AJAX 필요 */
-</script>
+
 </head>
 
 <body>
+<script>
+
+/* 후기창 띄우기 */
+document.getElementById("call_review").addEventListener("click", function(event) {
+    event.preventDefault();
+    var reviewDiv = document.getElementById("review");
+    reviewDiv.classList.remove("hidden");
+    }
+});
+function openReview() {
+	var reviewDiv = document.getElementById("review");
+    reviewDiv.classList.remove("hidden");
+}
+
+
+
+</script>
+
 	<%
 	String memberId = (String) session.getAttribute("member_id");
 	%>
 	<div class="msg_info">
 		<!-- 상품 사진 -->
 		<div class="prod_img">
-			<img src="" alt="">
+			<img src="./upload/${photoVO.prodPhotoName }.png?after" alt="photo">
 		</div>
 		<!-- 상품 이름/상태/가격 -->
 		<div class="prod_txt">
@@ -63,9 +79,9 @@
 				</c:if>
 				<c:if
 					test="${prodVo.product_status == 1 && (prodVo.buy_mem_id == memberId || prodVo.buy_mem_id == prodVo.other_mem_id)}">
-					<li class="prod_stat_li long"><a
-						href="/SosoMarket/MemberReview.do?member_id=${vo.otherMemberId }">
-							거래 후기 작성</a></li>
+					<li class="prod_stat_li long">
+						<a id="call_review" href="#" onclick="openReview()">거래 후기 작성</a>
+					</li>
 				</c:if>
 			</ul>
 		</div>
@@ -85,10 +101,6 @@
 				</c:when>
 				<c:otherwise>
 					<div class="incoming_msg">
-						<div class="incoming_msg_img">
-							<img src="https://ptetutorials.com/images/user-profile.png"
-								alt="sunil">
-						</div>
 						<div class="received_msg">
 							<div class="received_withd_msg">
 								<p>${vo.chat_message }</p>
@@ -109,5 +121,69 @@
 		</div>
 	</div>
 
+	<!-- 후기 -->
+	<div id="review" class="hidden">
+		<div class="review_container">
+			<h3>${prodVo.other_mem_id }님과의 거래는 어떠셨나요?</h3>
+			<form method="post" id="reviewForm">
+				<div class="review_sel">
+					<input type="radio" id="good" name="score" value="2" class="custom-radio">
+					<label for="good">좋았어요!</label>
+				</div>
+				<div class="review_sel">
+					<input type="radio" id="soso" name="score" value="1" class="custom-radio">
+					<label for="soso">무난했어요~</label>
+				</div>
+				<div class="review_sel">
+					<input type="radio" id="bad" name="score" value="3" class="custom-radio">
+					<label for="bad">별로였어요..</label>
+				</div>
+				<button class="primary-btn" onclick="submitReview()">후기 남기기</button>
+			</form>
+			<button class="primary-btn" onclick="closeReview()">X</button>
+		</div>
+	</div>
+	
+<script>
+
+/* 후기창 열기 */
+function openReview() {
+	var reviewDiv = document.getElementById("review");
+    reviewDiv.classList.remove("hidden");
+}
+
+/* 후기창 닫기 */
+function closeReview() {
+	var reviewDiv = document.getElementById("review");
+    reviewDiv.classList.add("hidden");
+}
+
+/* 후기 등록 */
+function submitReview() {
+    var score = document.querySelector('input[name="score"]:checked').value;
+    var member_id = "${prodVo.other_mem_id }";
+    var product_id = "${prodVo.product_id }";
+
+    $.ajax({
+        type: "POST",
+        url: "/SosoMarket/ReviewServlet",
+        data: {
+            score: score,
+            member_id: member_id,
+            product_id: product_id
+        },
+        success: function(result) {
+            // 성공 시 알람창 띄우기
+            if (result == 1) {
+            	alert("후기가 성공적으로 등록되었습니다.");
+            } else {
+            	alert("후기 등록에 실패하였습니다. 다시 등록해주세요.");
+            }
+        }
+    });
+}
+
+
+</script>
 </body>
 </html>
