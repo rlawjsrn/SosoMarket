@@ -19,8 +19,10 @@ public class ChatVO {
 	private String product_status;
 	private String product_price;
 	private String prod_mem_id; // 판매자 member_id
+//	송다희 추가
+	private String prodPhotoName;// 상품사진경로
 
-//	회원
+	// 회원
 	private String nickname;
 	private String buyer_nickname;
 	private int rating_score;
@@ -172,6 +174,14 @@ public class ChatVO {
 
 	public void setBuy_mem_id(String buy_mem_id) {
 		this.buy_mem_id = buy_mem_id;
+	}
+
+	public String getProdPhotoName() {
+		return prodPhotoName;
+	}
+
+	public void setProdPhotoName(String prodPhotoName) {
+		this.prodPhotoName = prodPhotoName;
 	}
 
 }

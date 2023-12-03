@@ -91,7 +91,7 @@ function closeReview() {
 								<div class="chat_list">
 									<div class="chat_people">
 										<div class="chat_img">
-											<img src="https://ptetutorials.com/images/user-profile.png"
+											<img src="./upload/${vo.prodPhotoName }.png?after"
 												alt="sunil">
 										</div>
 										<div class="chat_ib">

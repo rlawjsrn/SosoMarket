@@ -42,6 +42,12 @@ public class ChatRoomServlet extends HttpServlet {
 		String chat_id = request.getParameter("chat_id");
 		prodVo = prodDao.selectProdInfo(chat_id);
 		
+//		송다희 상품 사진 추가
+		ChatVO photoVO = new ChatVO();
+		photoVO.setProduct_id(request.getParameter("product_id"));
+		System.out.println(request.getParameter("product_id") + "상품아이디");
+		photoVO = prodDao.selectPhoto(photoVO);
+//		송다희 끝
 		System.out.println("상품판매자 : " + prodVo.getProd_mem_id());
 		
 		// 수정 중
@@ -73,6 +79,8 @@ public class ChatRoomServlet extends HttpServlet {
 		
 		request.setAttribute("prodVo", prodVo);
 		request.setAttribute("list", list);
+		
+		request.setAttribute("photoVO", photoVO);
 
 		String viewPage = "chat/chatRoom.jsp";
 
