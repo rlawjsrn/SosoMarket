@@ -27,6 +27,7 @@ public class ReviewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		ChatDAO dao = new ChatDAO();
 		
 		// 회원, 점수
 		String member_id = request.getParameter("member_id");
@@ -36,7 +37,15 @@ public class ReviewServlet extends HttpServlet {
 			score *= -1;
 		
 		// 점수 업데이트
-		int result = new ChatDAO().updateMemScore(score, member_id);
+		int result = dao.updateMemScore(score, member_id);
+		
+		// 상품상태 업데이트
+		if (result == 1) {
+			ChatVO vo = new ChatVO();
+			vo.setProduct_id(request.getParameter("product_id"));
+			vo.setProduct_status("3");
+			dao.updateProdStat(vo);
+		}
 		
 		response.getWriter().write(String.valueOf(result));
 	}

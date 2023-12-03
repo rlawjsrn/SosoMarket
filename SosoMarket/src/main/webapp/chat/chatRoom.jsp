@@ -24,12 +24,7 @@ function openReview() {
     reviewDiv.classList.remove("hidden");
 }
 
-/* 후기창 닫기 */
-function closeReview() {
-	console.log("X눌림");
-	var reviewDiv = document.getElementById("review");
-    reviewDiv.classList.add("hidden");
-}
+
 
 </script>
 
@@ -85,8 +80,7 @@ function closeReview() {
 				<c:if
 					test="${prodVo.product_status == 1 && (prodVo.buy_mem_id == memberId || prodVo.buy_mem_id == prodVo.other_mem_id)}">
 					<li class="prod_stat_li long">
-						<a id="call_review" href="#">거래 후기 작성</a>
-						<button id="call_review" onclick="openReview()">거래 후기 작성</button>
+						<a id="call_review" href="#" onclick="openReview()">거래 후기 작성</a>
 					</li>
 				</c:if>
 			</ul>
@@ -128,7 +122,7 @@ function closeReview() {
 	</div>
 
 	<!-- 후기 -->
-	<div id="review">
+	<div id="review" class="hidden">
 		<div class="review_container">
 			<h3>${prodVo.other_mem_id }님과의 거래는 어떠셨나요?</h3>
 			<form method="post" id="reviewForm">
@@ -151,17 +145,32 @@ function closeReview() {
 	</div>
 	
 <script>
+
+/* 후기창 열기 */
+function openReview() {
+	var reviewDiv = document.getElementById("review");
+    reviewDiv.classList.remove("hidden");
+}
+
+/* 후기창 닫기 */
+function closeReview() {
+	var reviewDiv = document.getElementById("review");
+    reviewDiv.classList.add("hidden");
+}
+
 /* 후기 등록 */
 function submitReview() {
     var score = document.querySelector('input[name="score"]:checked').value;
     var member_id = "${prodVo.other_mem_id }";
+    var product_id = "${prodVo.product_id }";
 
     $.ajax({
         type: "POST",
         url: "/SosoMarket/ReviewServlet",
         data: {
             score: score,
-            member_id: member_id
+            member_id: member_id,
+            product_id: product_id
         },
         success: function(result) {
             // 성공 시 알람창 띄우기
@@ -173,6 +182,8 @@ function submitReview() {
         }
     });
 }
+
+
 </script>
 </body>
 </html>
