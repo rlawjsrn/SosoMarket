@@ -164,7 +164,6 @@ public class ChatDAO extends DAO {
 	public ChatVO selectBuyerMember(ChatVO vo) {
 		System.out.println("구매자 조회하러 들어옴");
 		sql = "select member_id from buy where product_id = ?";
-		String buy_mem_id = null;
 		
 		System.out.println("상품아이디 : " + vo.getProduct_id());
 		
@@ -208,5 +207,23 @@ public class ChatDAO extends DAO {
 			disconnect();
 		}
 		return vo;
+	}
+  
+	// 회원 점수 업데이트
+	public int updateMemScore(int score, String member_id) {
+		sql = "update member set rating_score = rating_score + " + score + " where member_id = ?";
+		int result = 0;
+		try {
+			connect();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, member_id);
+			result = psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return result;
+
 	}
 }

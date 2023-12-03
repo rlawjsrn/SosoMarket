@@ -54,6 +54,7 @@ public class ProdSelectCtgrListServlet extends HttpServlet {
 			priceMax = Integer.parseInt(priceMaxParam);
 		}
 
+		System.out.println("카테고리 불러봐: " + request.getParameter("selectedCategories"));
 		if (request.getParameter("selectedCategories") == null || request.getParameter("selectedCategories") == "") {
 			selectedCategories = null;
 		} else {
