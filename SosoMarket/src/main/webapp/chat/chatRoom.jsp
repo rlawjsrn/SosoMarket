@@ -18,7 +18,7 @@
 	<div class="msg_info">
 		<!-- 상품 사진 -->
 		<div class="prod_img">
-			<img src="" alt="">
+			<img src="./upload/${photoVO.prodPhotoName }.png?after" alt="photo">
 		</div>
 		<!-- 상품 이름/상태/가격 -->
 		<div class="prod_txt">
