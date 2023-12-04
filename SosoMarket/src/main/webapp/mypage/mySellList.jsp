@@ -9,11 +9,9 @@
 <title>Insert title here</title>
 <!-- 부트스트랩 css -->
 <link href="css2/bootstrap.min.css?after" rel="stylesheet">
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-	rel="stylesheet">
 <link href="css2/tiny-slider.css?after" rel="stylesheet">
 <link href="css2/style.css?after" rel="stylesheet">
+<link href="resources/css/style-mypage.css?after" rel="stylesheet">
 <style>
 #tabCon1, #tabCon2, #tabCon3 {
 	display: none;
@@ -23,7 +21,7 @@
 <body>
 
 	<!-- nav 부트스트랩 -->
-	<div class="container mb-5">
+	<div class="mb-5">
 		<div class="section-title mb-5">
 			<div class="section-nav">
 				<ul class="section-tab-nav tab-nav">
@@ -39,7 +37,7 @@
 	<!-- 다른 부트스트랩 -->
 	<div class="untree_co-section before-footer-section mt-5">
 		<!-- 판매중인 상품 목록 띄우기 -->
-		<div class="container" id="tabCon1">
+		<div class="" id="tabCon1">
 			<div class="row mb-5">
 				<form class="col-md-12" method="post">
 					<div class="site-blocks-table">
@@ -76,7 +74,7 @@
 			</div>
 		</div>
 	<!-- 거래완료 목록 띄우기 -->
-		<div class="container" id="tabCon2">
+		<div class="" id="tabCon2">
 			<div class="row mb-5">
 				<form class="col-md-12" method="post">
 					<div class="site-blocks-table">
@@ -114,7 +112,7 @@
 		</div>
 		
 		<!-- 예약중 거래 목록 띄우기 -->
-		<div class="container" id="tabCon3">
+		<div class="" id="tabCon3">
 			<div class="row mb-5">
 				<form class="col-md-12" method="post">
 					<div class="site-blocks-table">
