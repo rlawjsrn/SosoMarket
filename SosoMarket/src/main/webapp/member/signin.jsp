@@ -136,7 +136,7 @@ body {
         // Check if there's a notification message in the URL (e.g., from a redirect)
         var notificationMessage = '<%= request.getParameter("notificationMessage") %>';
         if (notificationMessage) {
-            alert(notificationMessage);
+            
         }
     });
 </script>
@@ -212,6 +212,29 @@ function passwordCheckFunction() {
 // 인증번호 전송
 function sendVerificationEmail() {
     var email = $('#email').val();  // Get the email value from the input field
+    
+    if (email === "") {
+        alert("이메일을 입력해주세요");
+        $('#email').focus();
+        return false;
+    }
+    var form = document.getElementById('signupForm');
+    var str = form.email.value;
+	var atPos = str.indexOf('@');
+	var dotPos = str.indexOf('.');
+	var eMailSize = str.length;
+	
+	if (
+	  atPos > 0 &&                                    // '@' 문자가 첫 번째 문자 이후에 나타나는지 확인
+	  dotPos > atPos + 1 &&                           // '.' 문자가 '@' 이후에 나타나는지 확인
+	  dotPos + 1 < eMailSize                           // '.' 문자가 마지막 문자가 아닌지 확인
+	) {
+		
+	} else {
+	  alert('이메일 주소 형식이 올바르지 않습니다.');
+	  document.form.email.focus();
+	  return;
+	}
 
     $.ajax({
         type: 'post',

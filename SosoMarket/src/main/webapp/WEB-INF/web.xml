@@ -409,10 +409,12 @@
   <servlet-mapping>
     <servlet-name>CompareAuthCodeServlet</servlet-name>
     <url-pattern>/CompareAuthCodeServlet</url-pattern>
+  </servlet-mapping>
+   <servlet>
     <display-name>JoinChatServlet</display-name>
     <servlet-name>JoinChatServlet</servlet-name>
     <servlet-class>com.tbk.prj.chat.JoinChatServlet</servlet-class>
-  </servlet-mapping>
+  </servlet>
   <servlet-mapping>
     <servlet-name>JoinChatServlet</servlet-name>
     <url-pattern>/JoinChatServlet</url-pattern>
