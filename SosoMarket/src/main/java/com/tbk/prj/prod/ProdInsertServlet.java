@@ -29,9 +29,8 @@ public class ProdInsertServlet extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("ProdInsertServlet 실행되니???");
 
-		ServletContext context = getServletContext();
-		String rootDir = getServletContext().getRealPath("/");
-		String saveDir = rootDir + "upload";
+		String saveDir = "C:\\Users\\fkaus\\git\\sosomarket\\SosoMarket\\src\\main\\webapp\\upload";
+		
 		System.out.println(saveDir);
 		int maxSize = 1024 * 1024 * 30;
 		String encoding = "UTF-8";
@@ -70,7 +69,7 @@ public class ProdInsertServlet extends HttpServlet {
 				String ext = originFileName.substring(originFileName.lastIndexOf("."));
 				String fileTempName = prodIdVo.getProdId() + "fl000" + i + ext;
 				File tempFile = new File(saveDir + "/" + fileTempName);
-
+				System.out.println(tempFile);
 				if (!originFile.renameTo(tempFile)) {
 					System.out.println("파일명변경 실패");
 				}
