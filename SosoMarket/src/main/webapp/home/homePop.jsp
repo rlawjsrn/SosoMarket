@@ -15,7 +15,7 @@
 				<img src="./upload/${product.prodPhotoName}.png?after" alt="">
 			</div>
 			<div class="product-body">
-				<p class="product-category">${product.categoryName}</p>
+				<p class="product-category">${product.category}</p>
 				<h3 class="product-name">
 					<a style="align-content: center" href="#">${product.prodName}</a>
 				</h3>

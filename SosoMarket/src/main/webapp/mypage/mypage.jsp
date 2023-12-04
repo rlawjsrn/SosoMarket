@@ -13,6 +13,7 @@
 	rel="stylesheet">
 <!-- Template Main CSS File -->
 <link href="resources/Mycss/styleMypage.css?after" rel="stylesheet">
+<link href="resources/css/style-mypage.css?after" rel="stylesheet">
 <!-- Vendor CSS Files -->
 <link href="resources/Mycss/bootstrapMypage.min.css?after"
 	rel="stylesheet">
