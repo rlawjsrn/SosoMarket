@@ -30,7 +30,7 @@ where p.member_id = 'test3'
 
 
 -- 채팅 리스트 조회(사진 추가)
-select c.chat_id, c.buyer_id, mc.nickname as buyer_nickname, p.member_id, mp.nickname, p.product_id, p.product_name, m.chat_message, m.generation_date, pp.product_photo_name
+select DISTINCT(c.chat_id), c.buyer_id, mc.nickname as buyer_nickname, p.member_id, mp.nickname, p.product_id, p.product_name, m.chat_message, m.generation_date, pp.product_photo_name
 from chat c
      inner join product p on c.product_id = p.product_id
      inner join (SELECT chat_id, chat_message, read_or_not, generation_date
