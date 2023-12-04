@@ -48,6 +48,23 @@ or p.member_id = 'test3')
 and SUBSTR(pp.product_photo_name,7,6) = 'fl0001'
 
 
+-- 채팅 없는 채탱 리스트 조회
+select c.chat_id, c.buyer_id, mc.nickname as buyer_nickname, p.member_id, mp.nickname, p.product_id, p.product_name, pp.product_photo_name
+from chat c
+     inner join product p on c.product_id = p.product_id
+     LEFT JOIN member mc ON c.buyer_id = mc.member_id
+     LEFT JOIN member mp ON p.member_id = mp.member_id 
+     inner JOIN product_photo pp on c.product_id = substr(pp.product_photo_name,1,6)
+where (c.buyer_id = 'test3'
+or p.member_id = 'test3')
+and chat_id in (SELECT chat_id FROM chat
+                WHERE NOT EXISTS (
+                SELECT 1
+                FROM chat_message
+                WHERE chat_message.chat_id = chat.chat_id))
+and SUBSTR(pp.product_photo_name,7,6) = 'fl0001'
+
+
 -- 채팅방 메시지 조회
 select member_id, chat_message, generation_date
 from chat_message
@@ -85,3 +102,7 @@ select member_id from buy where product_id = ?;
 
 -- 회원 점수 업데이트
 update member set rating_score = rating_score + ? where member_id = ?;
+
+
+-- 채팅방 insert
+insert into chat values(concat('ch', LPAD(chatSeq.nextval,4,0)), 'test3', 'wg0005', sysdate);

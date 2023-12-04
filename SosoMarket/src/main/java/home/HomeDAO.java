@@ -115,5 +115,22 @@ public class HomeDAO extends DAO {
 		return list;
 	}
 	
+	// 조회수 업데이트
+	public int HomeprodViewCount(String prodId) {
+		try {
+			connect();
+			String sql = "UPDATE product SET product_views = product_views + 1 WHERE product_id = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, prodId);
+			int r = psmt.executeUpdate();
+			return r;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return 0;
+	}
+	
 
 }

@@ -409,5 +409,12 @@
   <servlet-mapping>
     <servlet-name>CompareAuthCodeServlet</servlet-name>
     <url-pattern>/CompareAuthCodeServlet</url-pattern>
+    <display-name>JoinChatServlet</display-name>
+    <servlet-name>JoinChatServlet</servlet-name>
+    <servlet-class>com.tbk.prj.chat.JoinChatServlet</servlet-class>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>JoinChatServlet</servlet-name>
+    <url-pattern>/JoinChatServlet</url-pattern>
   </servlet-mapping>
 </web-app>
