@@ -13,8 +13,9 @@ public class ChatDAO extends DAO {
 	private String sql;
 
 	// 채팅 목록 조회
-	public ArrayList<ChatVO> selectChatList(ChatVO vo, ArrayList<ChatVO> list) {
-		sql = "select c.chat_id, c.buyer_id, mc.nickname as buyer_nickname, p.member_id, mp.nickname, p.product_id, p.product_name, m.chat_message, m.generation_date, pp.product_photo_name\r\n"
+
+	public ArrayList<ChatVO> selectChatList(ChatVO vo) {
+		sql = "select DISTINCT(c.chat_id), c.buyer_id, mc.nickname as buyer_nickname, p.member_id, mp.nickname, p.product_id, p.product_name, m.chat_message, m.generation_date, pp.product_photo_name\r\n"
 				+ "from chat c\r\n"
 				+ "     inner join product p on c.product_id = p.product_id\r\n"
 				+ "     inner join (SELECT chat_id, chat_message, read_or_not, generation_date\r\n"
@@ -270,15 +271,17 @@ public class ChatDAO extends DAO {
 
 	}
 	
-	// 상품 상세 채팅 걸기
-	public int insertChat(String memberId, String product_id) {
-		sql = "insert into chat values(concat('ch', LPAD(chatSeq.nextval,4,0)), ?, ?, sysdate)";
+
+//	송다희 추가
+	public int insertChat(ChatVO vo) {
+		sql = "insert into chat_message values(CONCAT('ms', LPAD(chatMsgSeq.nextval,4,0)), ?, ?, ?, 'r', systimestamp)";
 		int result = 0;
 		try {
 			connect();
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, memberId);
-			psmt.setString(2, product_id);
+			psmt.setString(1, vo.getChat_id());
+			psmt.setString(2, vo.getMember_id());
+			psmt.setString(3, vo.getChat_message());
 			result = psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -287,4 +290,22 @@ public class ChatDAO extends DAO {
 		}
 		return result;
 	}
+  
+     // 상품 상세 채팅 걸기
+   public int insertChat(String memberId, String product_id) {
+      sql = "insert into chat values(concat('ch', LPAD(chatSeq.nextval,4,0)), ?, ?, sysdate)";
+      int result = 0;
+      try {
+         connect();
+         psmt = conn.prepareStatement(sql);
+         psmt.setString(1, memberId);
+         psmt.setString(2, product_id);
+         result = psmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } finally {
+         disconnect();
+      }
+      return result;
+   }
 }

@@ -3,6 +3,8 @@ package com.tbk.prj.chat;
 public class ChatVO {
 
 //	채팅방
+	private String current_id;
+
 	private String chat_id;
 	private String product_id;
 	private String buyer_id; // 구매 희망한 member_id
@@ -184,4 +186,11 @@ public class ChatVO {
 		this.prodPhotoName = prodPhotoName;
 	}
 
+	public String getCurrent_id() {
+		return current_id;
+	}
+
+	public void setCurrent_id(String current_id) {
+		this.current_id = current_id;
+	}
 }

@@ -402,6 +402,15 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>ChatInsertServlet</display-name>
+    <servlet-name>ChatInsertServlet</servlet-name>
+    <servlet-class>com.tbk.prj.chat.ChatInsertServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChatInsertServlet</servlet-name>
+    <url-pattern>/ChatInsertServlet</url-pattern>
+  </servlet-mapping>
+    <servlet>
     <display-name>CompareAuthCodeServlet</display-name>
     <servlet-name>CompareAuthCodeServlet</servlet-name>
     <servlet-class>com.tbk.prj.member.CompareAuthCodeServlet</servlet-class>
