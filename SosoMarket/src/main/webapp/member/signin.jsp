@@ -140,12 +140,20 @@ body {
         }
     });
 </script>
-
+<%
+String authCode = request.getParameter("authCode");
+%>
 
 <script type="text/javascript">
 // 아이디 중복 체크
 function idCheckFunction() {
     var memberId = $('#memberId').val();
+    
+    if (memberId.length < 4 || memberId.length > 12) {
+        alert("아이디는 4~12자 이내로 입력 가능합니다.");
+        $('#memberId').focus();
+        return false;
+    }
     if (memberId === "") {
         alert("아이디를 입력해주세요");
         $('#memberId').focus();
@@ -160,7 +168,7 @@ function idCheckFunction() {
             if (result == 1) {
                 alert("사용가능한 아이디입니다.");
             } else {
-                alert("사용할 수 없는 아이디입니다.");
+                alert("사용 중인  아이디입니다.");
                 $('#memberId').focus();
                 return false;
             }
@@ -201,7 +209,7 @@ function passwordCheckFunction() {
         $('#passwordCheckMessage').html('');
     }
 }
-
+// 인증번호 전송
 function sendVerificationEmail() {
     var email = $('#email').val();  // Get the email value from the input field
 
@@ -224,6 +232,31 @@ function sendVerificationEmail() {
     });
 }
 
+
+// 인증번호비교
+function emailcheckFunction() {
+    var emailVrf = $('#emailVrf').val();
+
+    // Make an AJAX request to the server to compare the authentication numbers
+    $.ajax({
+        type: 'post',
+        url: '/SosoMarket/CompareAuthCodeServlet', // Change this URL to the correct servlet URL
+        data: { emailVrf: emailVrf },
+        success: function (result) {
+            if (result === "true") {
+                $('#authPass').val('true');
+                alert('이메일 인증에 성공했습니다.');
+            } else {
+                alert('이메일 확인 코드가 일치하지 않습니다.');
+            }
+        },
+        error: function () {
+            alert('AJAX 요청 중 오류가 발생했습니다.');
+        }
+    });
+}
+
+// submit
 function submitForm() {
     var form = document.getElementById('signupForm');
 
@@ -233,8 +266,9 @@ function submitForm() {
     var pno = form.phoneNumber.value;
     var email = form.email.value;
     const nick = form.nickname.value;
+    var authPass = form.authPass.value;
 
-    if (id === "" && id.length < 4 || id.length > 12) {
+    if (id === "") {
         alert("아이디를 입력해주세요");
         $('#memberId').focus();
         return false;
@@ -272,21 +306,28 @@ function submitForm() {
         return false;
     }
 	/*이메일 형식 검사 코드*/
-    var str=form.email.value;	   
-    var atPos = str.indexOf('@');
-    var atLastPos = str.lastIndexOf('@');
-    var dotPos = str.indexOf('.'); 
-    var spacePos = str.indexOf(' ');
-    var commaPos = str.indexOf(',');
-    var eMailSize = str.length;
-    if (atPos > 1 && atPos == atLastPos && 
-	   dotPos > 3 && spacePos == -1 && commaPos == -1 
-	   && atPos + 1 < dotPos && dotPos + 1 < eMailSize);
-    else {
-          alert('E-mail주소 형식이 잘못되었습니다.\n\r다시 입력해 주세요!');
-	      document.form.email.focus();
+    var str = form.email.value;
+		var atPos = str.indexOf('@');
+		var dotPos = str.indexOf('.');
+		var eMailSize = str.length;
+		
+		if (
+		  atPos > 0 &&                                    // '@' 문자가 첫 번째 문자 이후에 나타나는지 확인
+		  dotPos > atPos + 1 &&                           // '.' 문자가 '@' 이후에 나타나는지 확인
+		  dotPos + 1 < eMailSize                           // '.' 문자가 마지막 문자가 아닌지 확인
+		) {
+			
+		} else {
+		  alert('이메일 주소 형식이 올바르지 않습니다. 유효한 이메일 주소를 입력해주세요.');
+		  document.form.email.focus();
 		  return;
-    }
+		}
+		
+		if (authPass !== "true") {
+	        alert("이메일 인증을 해주세요");
+	        document.form.emailVrf.focus();
+	        return false;
+	    }
     
     if (nick === "") {
         alert("닉네임을 입력해주세요");
@@ -406,7 +447,7 @@ function submitForm() {
            
         </div>
         <div class="textForm">
-            <input type="text" id="emailVrf" name="emailVrf" placeholder="이메일 인증">
+            <input type="text" id="emailVrf" name="emailVrf" placeholder="인증코드 6자리">
             <input type="button" value="인증" onclick="emailcheckFunction()">
             <input type="hidden" name="authPass" id="authPass" value="false">
         </div>
