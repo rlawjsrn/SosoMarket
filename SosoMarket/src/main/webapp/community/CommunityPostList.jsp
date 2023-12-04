@@ -7,6 +7,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Community</title>
 
 <link rel="stylesheet"
@@ -23,6 +25,7 @@
 	text-align: center;
 	margin-bottom: 20px;
 }
+
 </style>
 </head>
 <body>
@@ -58,7 +61,7 @@
 
 						<!-- search form  -->
 						<form action="CommunitySearch.do" method="post"
-							class="d-flex align-items-baseline" id="searchForm">
+							class="form d-flex align-items-baseline" id="searchForm">
 							<select id="sortOption" name="sortOption" class="input-select">
 								<option value="1" ${param.sortOption == '1' ? 'selected' : ''}>최신순</option>
 								<option value="2" ${param.sortOption == '2' ? 'selected' : ''}>오래된순</option>

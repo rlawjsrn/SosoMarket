@@ -112,36 +112,10 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="hot-deal">
-						<ul class="hot-deal-countdown">
-							<li>
-								<div>
-									<h3>소</h3>
-									<span>SO</span>
-								</div>
-							</li>
-							<li>
-								<div>
-									<h3>소</h3>
-									<span>SO</span>
-								</div>
-							</li>
-							<li>
-								<div>
-									<h3>마</h3>
-									<span>MAR</span>
-								</div>
-							</li>
-							<li>
-								<div>
-									<h3>켓</h3>
-									<span>KET</span>
-								</div>
-							</li>
-						</ul>
 						<h2 class="text-uppercase">사내에서 이걸 사네?</h2>
-						<p>야 너두 할 수 있어</p>
-
-						<a class="primary-btn cta-btn" onclick="checkLoginAndRedirect()">상품 등록하러 가기</a>
+						<p>지금 필요한 물건을</p>
+						<p>가장 가까운 곳에서!</p>
+						<a class="primary-btn cta-btn" onclick="checkLoginAndRedirect()">상품 등록하러 가기 →</a>
 
 					</div>
 				</div>
@@ -151,69 +125,6 @@
 		<!-- /container -->
 	</div>
 	<!-- /HOT DEAL SECTION -->
-
-	<!-- SECTION -->
-	<div class="section">
-		<!-- container -->
-		<div class="container">
-			<!-- row -->
-			<div class="row">
-				<!-- shop -->
-				<div class="col-md-4 col-xs-6">
-					<div class="shop">
-						<div class="shop-img">
-							<img src="./img/shop01.png" alt="">
-						</div>
-						<div class="shop-body">
-							<h3>
-								Laptop<br>Collection
-							</h3>
-							<a href="#" class="cta-btn">Shop now <i
-								class="fa fa-arrow-circle-right"></i></a>
-						</div>
-					</div>
-				</div>
-				<!-- /shop -->
-
-				<!-- shop -->
-				<div class="col-md-4 col-xs-6">
-					<div class="shop">
-						<div class="shop-img">
-							<img src="./img/shop03.png" alt="">
-						</div>
-						<div class="shop-body">
-							<h3>
-								Accessories<br>Collection
-							</h3>
-							<a href="#" class="cta-btn">Shop now <i
-								class="fa fa-arrow-circle-right"></i></a>
-						</div>
-					</div>
-				</div>
-				<!-- /shop -->
-
-				<!-- shop -->
-				<div class="col-md-4 col-xs-6">
-					<div class="shop">
-						<div class="shop-img">
-							<img src="./img/shop02.png" alt="">
-						</div>
-						<div class="shop-body">
-							<h3>
-								Cameras<br>Collection
-							</h3>
-							<a href="#" class="cta-btn">Shop now <i
-								class="fa fa-arrow-circle-right"></i></a>
-						</div>
-					</div>
-				</div>
-				<!-- /shop -->
-			</div>
-			<!-- /row -->
-		</div>
-		<!-- /container -->
-	</div>
-	<!-- /SECTION -->
 
 	<!-- SECTION -->
 	<div class="section">

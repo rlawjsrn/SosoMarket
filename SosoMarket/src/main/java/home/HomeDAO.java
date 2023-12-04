@@ -19,7 +19,7 @@ public class HomeDAO extends DAO {
 				+ "Where substr(pp.product_photo_name,1,6) = p.product_id\r\n"
 				+ "And substr(p.product_id,1,2) = c.category_id\r\n"
 				+ "And substr(pp.product_photo_name,7,6) = 'fl0001'\r\n"
-				+ "And rownum <= 8 order by substr(p.product_id,3,4) desc";
+				+ "And rownum <= 9 order by substr(p.product_id,3,4) desc";
 
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -115,5 +115,53 @@ public class HomeDAO extends DAO {
 		return list;
 	}
 	
+	// 조회수 업데이트
+	public int HomeprodViewCount(String prodId) {
+		try {
+			connect();
+			String sql = "UPDATE product SET product_views = product_views + 1 WHERE product_id = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, prodId);
+			int r = psmt.executeUpdate();
+			return r;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return 0;
+	}
+	
+	// 인기 상품 조회
+		public ArrayList<ProdVO> getHomePopularProdList() {
+			connect();
+			ArrayList<ProdVO> list = new ArrayList<>();
+			String sql = "SELECT p.product_id, c.category_name, p.product_name, TO_CHAR(p.product_price, 'FM999,999,999,999') as product_price, pp.product_photo_name \r\n"
+					+ "FROM(SELECT  product_id, product_name, product_price \r\n" + "FROM product\r\n"
+					+ "ORDER BY product_views DESC ) p, product_photo pp, category c\r\n"
+					+ "WHERE SUBSTR(pp.product_photo_name,1,6) = p.product_id\r\n"
+					+ "AND SUBSTR(p.product_id,1,2) = c.category_id\r\n" + "AND ROWNUM <= 9\r\n"
+					+ "AND SUBSTR(pp.product_photo_name,7,6) = 'fl0001'";
+
+			try {
+				psmt = conn.prepareStatement(sql);
+				rs = psmt.executeQuery();
+
+				while (rs.next()) {
+					ProdVO vo = new ProdVO();
+					vo.setProdId(rs.getString("product_id")); // 상품 아이디
+					vo.setCategory(rs.getString("category_name")); // 카테고리명
+					vo.setProdName(rs.getString("product_name")); // 상품명
+					vo.setProdPrice(rs.getString("product_price")); // 판매가액
+					vo.setProdPhotoName(rs.getString("product_photo_name")); // 상품사진아이디
+					list.add(vo);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				disconnect();
+			}
+			return list;
+		}
 
 }

@@ -278,8 +278,33 @@ public class MemberDAO extends DAO {
 	        String password = "onbf dduh yumf xkqd";
 
 	        // Email content and delivery settings
-	        String subject = "이메일 인증";
-	        String content = "인증번호: " + authCode;
+	        String subject = "SOSOMARKET 이메일 인증";
+	        String content = "<html>" +
+	                 "<head>" +
+	                 "    <style>" +
+	                 "        body { font-family: Arial, sans-serif; }" +
+	                 "        .container { max-width: 600px; margin: 0 auto; }" +
+	                 "        .header { background-color: #3498db; color: #fff; padding: 20px; text-align: center; }" +
+	                 "        .content { padding: 20px; }" +
+	                 "        .footer { background-color: #f2f2f2; padding: 10px; text-align: center; }" +
+	                 "    </style>" +
+	                 "</head>" +
+	                 "<body>" +
+	                 "    <div class='container'>" +
+	                 "        <div class='header'>" +
+	                 "            <h2>SOSOMARKET 이메일 인증</h2>" +
+	                 "        </div>" +
+	                 "        <div class='content'>" +
+	                 "            <p>Dear User,</p>" +
+	                 "            <p>인증 번호는:  <strong>" + authCode + "</strong> 입니다.</p>" +
+	                 "            <p>이 코드를 입력하여 이메일 주소를 인증해주세요.</p>" +
+	                 "        </div>" +
+	                 "        <div class='footer'>" +
+	                 "            <p>SOSOMARKET을 이용해주셔서 감사합니다.</p>" +
+	                 "        </div>" +
+	                 "    </div>" +
+	                 "</body>" +
+	                 "</html>";
 
 	        Properties props = new Properties();
 	        props.put("mail.smtp.host", host);

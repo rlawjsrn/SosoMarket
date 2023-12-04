@@ -33,6 +33,7 @@ public class HomeProdOneServlet extends HttpServlet {
 
 		if (prodId != null && !prodId.isEmpty()) {
 			HomeDAO dao = new HomeDAO();
+			int r = dao.HomeprodViewCount(prodId);
 			ProdVO vo = dao.HomeOne(prodId);
 			ArrayList<ProdVO> list = new ArrayList<ProdVO>();
 			list = dao.homeOnePhotoList(prodId);
