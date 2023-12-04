@@ -71,7 +71,7 @@ public class AdminDAO extends DAO{
 							+ "GROUP BY  c.category_id, SUBSTR(p.product_id, 1, 2), c.category_name";
 
 //	상품 전체 조회
-	private String prodList = "SELECT p.product_id, c.category_name, p.product_name, TO_CHAR(p.product_price,'FM999,999,999,999')as product_price, p.member_id, p.product_views, p.product_status\r\n"
+	private String prodList = "SELECT DISTINCT(p.product_id), c.category_name, p.product_name, TO_CHAR(p.product_price,'FM999,999,999,999')as product_price, p.member_id, p.product_views, p.product_status\r\n"
 							+ "FROM product p, category c\r\n"
 							+ "WHERE SUBSTR(p.product_id,1,2) = c.category_id";
 	
