@@ -7,6 +7,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Community</title>
 
 <link rel="stylesheet"
@@ -23,6 +25,7 @@
 	text-align: center;
 	margin-bottom: 20px;
 }
+
 </style>
 </head>
 <body>

@@ -10,13 +10,14 @@
 
 <meta charset="UTF-8">
 <title>Community Post Detail</title>
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<link rel=stylesheet
-	href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css	">
+<!-- <link rel=stylesheet
+	href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css	"> -->
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"> </script>
 <link rel=stylesheet
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
@@ -135,6 +136,19 @@
 .pstDt{ 
 	width:350px !important; 
 	height: 80px !important;
+}
+.form-color {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment-input {
+    flex: 1; /* Takes up the remaining space */
+}
+
+.comment-link {
+    margin-left: 10px; /* Adjust the margin as needed */
 }
 </style>
 
@@ -307,14 +321,15 @@ function cancelUpdateComment() {
 </head>
 
 <body>
+
+	<jsp:include page="../resources/header.jsp" />
+
 	<%
 	String memberId = null;
 	if (session.getAttribute("memberId") != null) {
 		memberId = (String) session.getAttribute("memberId");
 	}
 	%>
-
-	<jsp:include page="../resources/header.jsp" />
 
 	<!-- breadcrumb -->
 	<div id="breadcrumb" class="section">
@@ -402,7 +417,7 @@ function cancelUpdateComment() {
 												class="rounded-circle mr-2"> <input type="text"
 												class="form-control comment-input" id="commentText"
 												placeholder="Enter your comment..."> &nbsp; &nbsp; <a
-												href="#" onclick="submitComment()" class="comment-button">comment</a>
+												href="#" onclick="submitComment()" class="comment-link" >comment</a>
 
 										</div>
 										
@@ -429,10 +444,11 @@ function cancelUpdateComment() {
 																		<div class="comment-icons-container">
 																			<span class="ml-3"> <c:if
 																					test="${memberId eq entry.key.memberId}">
-
+																					<i class="fa fa-file-upload mr-2"></i>
 																					<a class="fa fa-edit mr-2"
 																						onclick="showUpdateForm('${entry.key.commId}', '${entry.key.commentDetail}')"></a>
-																					<a class="fa fa-trash-o mr-2"
+																					<a class="fa fa-trash-o mr-2" 
+																					
 																						onclick="deleteComment('${entry.key.commId}')"></a>
 																				</c:if> <!-- Add a "답변 달기" button --> <a
 																				class="fa fa-comment-o mr-2"
