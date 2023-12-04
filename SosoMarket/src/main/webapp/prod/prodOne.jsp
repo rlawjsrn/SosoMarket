@@ -9,42 +9,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>상품상세조회페이지</title>
 <script>
-	/* 관심상품 삭제 */
-	function delHeart(productInterestId) {
-		$.ajax({
-			url : '/SosoMarket/ProdDelH.do?row=' + productInterestId,
-			method : 'POST',
-			data : {
-				productInterestId : productInterestId
-			},
-			success : function(data) {
-				alert('삭제되었습니다!')
-				window.location.reload();
-			},
-			error : function(error) {
-				console.error('Error', error);
-			}
-		});
-	}
+   /* 관심상품 삭제 */
+   function delHeart(productInterestId) {
+      $.ajax({
+         url : '/SosoMarket/ProdDelH.do?row=' + productInterestId,
+         method : 'POST',
+         data : {
+            productInterestId : productInterestId
+         },
+         success : function(data) {
+            alert('삭제되었습니다!')
+            window.location.reload();
+         },
+         error : function(error) {
+            console.error('Error', error);
+         }
+      });
+   }
 
-	/* 관심상품 등록 */
-	function insertH(memberId, prodId) {
-		$.ajax({
-			url : '/SosoMarket/ProdInsertH.do?memberId=' + memberId  + "&prodId=" + prodId,
-			method : 'POST',
-			data : {
-				memberId : memberId,
-				prodId : prodId
-			},
-			success : function(data) {
-				alert('추가하였습니다!')
-				window.location.reload();
-			},
-			error : function(error) {
-				console.error('Error', error);
-			}
-		});
-	}
+   /* 관심상품 등록 */
+   function insertH(memberId, prodId) {
+      $.ajax({
+         url : '/SosoMarket/ProdInsertH.do?memberId=' + memberId  + "&prodId=" + prodId,
+         method : 'POST',
+         data : {
+            memberId : memberId,
+            prodId : prodId
+         },
+         success : function(data) {
+            alert('추가하였습니다!')
+            window.location.reload();
+         },
+         error : function(error) {
+            console.error('Error', error);
+         }
+      });
+   }
 </script>
 </head>
 <body>
@@ -70,9 +70,7 @@
 			}
 		}
 	</script>
-	<%
-	String memberId = (String) session.getAttribute("memberId");
-	%>
+
 	<jsp:include page="../resources/header.jsp" />
 
 	<!-- SECTION -->

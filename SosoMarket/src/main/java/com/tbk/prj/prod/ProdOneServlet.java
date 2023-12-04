@@ -32,19 +32,20 @@ public class ProdOneServlet extends HttpServlet {
 
 		System.out.println("상품아이디 찍어봐: " + prodId);
 
-//		송다희 추가
-		MypageLikeDAO mdao = new MypageLikeDAO();
-		ProdVO mvo = new ProdVO();
-		mvo.setProdId(prodId);
-		mvo.setMemberId(request.getParameter("memberId"));
-		System.out.println(request.getParameter("memberId") + "들어오니");
-		
-		mvo = mdao.MyLike(mvo);
-		MypageLikeVO likevo = new MypageLikeVO();
-		
-		likevo.setProductInterestId(request.getParameter("row"));
-		int n = mdao.delHeart(likevo);
-//		송다희 끝
+//      송다희 추가
+      MypageLikeDAO mdao = new MypageLikeDAO();
+      ProdVO mvo = new ProdVO();
+      mvo.setProdId(prodId);
+      mvo.setMemberId(request.getParameter("memberId"));
+      System.out.println(request.getParameter("memberId") + "들어오니");
+      
+      mvo = mdao.MyLike(mvo);
+      MypageLikeVO likevo = new MypageLikeVO();
+      
+      likevo.setProductInterestId(request.getParameter("row"));
+      int n = mdao.delHeart(likevo);
+//      송다희 끝
+
 		if (prodId != null && !prodId.isEmpty()) {
 			ProdDAO dao = new ProdDAO();
 			int r = dao.prodViewCount(prodId);
@@ -58,12 +59,10 @@ public class ProdOneServlet extends HttpServlet {
 				request.setAttribute("vo", vo);
 				request.setAttribute("list", list);
 				
-				
-//				송다희 추가
-				request.setAttribute("mvo", mvo);
-				request.setAttribute("likevo", likevo);
-//				송다희 끝
-				
+//	            송다희 추가
+	            request.setAttribute("mvo", mvo);
+	            request.setAttribute("likevo", likevo);
+//	            송다희 끝
 				
 				RequestDispatcher dispatcher = request.getRequestDispatcher("prod/prodOne.jsp");
 				dispatcher.forward(request, response);
