@@ -373,7 +373,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-
     <display-name>MemberEmailSnedServlet</display-name>
     <servlet-name>MemberEmailSnedServlet</servlet-name>
     <servlet-class>com.tbk.prj.member.MemberEmailSnedServlet</servlet-class>
@@ -400,5 +399,15 @@
   <servlet-mapping>
     <servlet-name>ReviewServlet</servlet-name>
     <url-pattern>/ReviewServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ProdPhotoDelServlet</display-name>
+    <servlet-name>ProdPhotoDelServlet</servlet-name>
+    <servlet-class>com.tbk.prj.prod.ProdPhotoDelServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProdPhotoDelServlet</servlet-name>
+    <url-pattern>/ProdPhotoDelServlet</url-pattern>
   </servlet-mapping>
 </web-app>
