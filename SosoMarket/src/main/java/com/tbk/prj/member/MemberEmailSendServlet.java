@@ -32,7 +32,7 @@ public class MemberEmailSendServlet extends HttpServlet {
 	    String authCode = new MemberDAO().authCodeMaker(); 
 
 	    HttpSession session = request.getSession();
-	    session.setAttribute("authCode", authCode);
+	    
 
 	    // Assuming your MemberDAO is in the same package as your servlet
 	    MemberDAO memberDAO = new MemberDAO();
@@ -47,6 +47,9 @@ public class MemberEmailSendServlet extends HttpServlet {
 	        // Email sending failed, set an error message
 	        session.setAttribute("notificationMessage", "메일 전송 실패. 다시 시도해주세요.");
 	    }
+	    
+	    session.setAttribute("authCode", authCode);
+	    System.out.println("서블릿"+authCode);
 
 	    response.getWriter().write(String.valueOf(emailSent));
 	

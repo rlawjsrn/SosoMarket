@@ -402,10 +402,17 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>CompareAuthCodeServlet</display-name>
+    <servlet-name>CompareAuthCodeServlet</servlet-name>
+    <servlet-class>com.tbk.prj.member.CompareAuthCodeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CompareAuthCodeServlet</servlet-name>
+    <url-pattern>/CompareAuthCodeServlet</url-pattern>
     <display-name>JoinChatServlet</display-name>
     <servlet-name>JoinChatServlet</servlet-name>
     <servlet-class>com.tbk.prj.chat.JoinChatServlet</servlet-class>
-  </servlet>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>JoinChatServlet</servlet-name>
     <url-pattern>/JoinChatServlet</url-pattern>
