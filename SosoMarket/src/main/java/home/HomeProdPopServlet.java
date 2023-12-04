@@ -29,9 +29,9 @@ public class HomeProdPopServlet extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		
 		List<ProdVO> list = new ArrayList<ProdVO>();
-		ProdDAO dao = new ProdDAO();
+		HomeDAO dao = new HomeDAO();
 		
-		list = dao.getPopularProdList();
+		list = dao.getHomePopularProdList();
 		request.setAttribute("list", list);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("home/homePop.jsp");
