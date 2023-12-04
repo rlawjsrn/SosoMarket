@@ -133,7 +133,7 @@ body {
 
 <script>
     $(document).ready(function () {
-        // Check if there's a notification message in the URL (e.g., from a redirect)
+        // URL에서 알림 메시지가 있는지 확인합니다. (예: 리디렉션으로부터 전달된 메시지)
         var notificationMessage = '<%= request.getParameter("notificationMessage") %>';
         if (notificationMessage) {
             
@@ -209,48 +209,114 @@ function passwordCheckFunction() {
         $('#passwordCheckMessage').html('');
     }
 }
+//도메인 체크 API
+function domainCheck(callback) {
+    var xhr = new XMLHttpRequest();
+    var url = 'http://apis.data.go.kr/B551505/whois/domain_name';
+    var serviceKey = 'cuTaIR9oecCXrKhEDekErNIeWS5o3gonlPjCehw64H9aUoRBZjg5rNcM8oYfPgvOSw30dT5RaUNYEuAwZxU4OQ%3D%3D'; // Replace with your actual service key
+    
+    var form = document.getElementById('signupForm');
+    var email = form.email.value;
+
+    // '@' 기호를 구분자로 사용하여 두 부분으로 분리
+    var emailParts = email.split('@');
+
+    if (emailParts.length === 2) {
+        // 두 번째 부분 (인덱스 1)은 '@' 이후의 도메인을 포함합니다.
+        var domain = emailParts[1];
+        alert('Domain: ' + domain);
+        
+     	// 쿼리 파라미터 생성
+        var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + serviceKey;
+        queryParams += '&' + encodeURIComponent('query') + '=' + encodeURIComponent(domain);
+        queryParams += '&' + encodeURIComponent('answer') + '=' + encodeURIComponent('xml');
+        
+     	// GET 요청 전송
+        xhr.open('GET', url + queryParams);
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                if (this.status == 200) {
+                	
+                	// 응답이 정상인지 확인합니다.
+                    var isNormal = isNormalResponse(this.responseText);
+                    callback(isNormal);
+                } else {
+                    console.error('Request failed. Status code:', this.status);
+                    callback(false); // 오류 처리를 위해 false를 전달하여 콜백 호출
+                }
+            }
+        };
+
+        xhr.send('');
+    } else {
+        console.error('Invalid email address.');
+        callback(false); // 유효하지 않은 이메일 주소인 경우 false를 전달하여 콜백 호출
+    }
+}
+// result code 응답성공:1000, 그외 실패
+function isNormalResponse(responseText) {
+	// XML 응답을 파싱합니다.
+    var parser = new DOMParser();
+    var xmlDoc = parser.parseFromString(responseText, 'text/xml');
+
+ 	// <result_code>의 값을 가져옵니다.
+    var resultCode = xmlDoc.querySelector('result_code').textContent;
+
+ 	// 결과 코드가 '10000'인지 확인합니다.
+    return resultCode === '10000';
+}
+
 // 인증번호 전송
 function sendVerificationEmail() {
-    var email = $('#email').val();  // Get the email value from the input field
+    var email = $('#email').val(); // 입력 필드에서 이메일 값을 가져옵니다.
     
     if (email === "") {
-        alert("이메일을 입력해주세요");
+        alert("이메일을 입력해주세요.");
         $('#email').focus();
         return false;
     }
+    
     var form = document.getElementById('signupForm');
     var str = form.email.value;
-	var atPos = str.indexOf('@');
-	var dotPos = str.indexOf('.');
-	var eMailSize = str.length;
-	
-	if (
-	  atPos > 0 &&                                    // '@' 문자가 첫 번째 문자 이후에 나타나는지 확인
-	  dotPos > atPos + 1 &&                           // '.' 문자가 '@' 이후에 나타나는지 확인
-	  dotPos + 1 < eMailSize                           // '.' 문자가 마지막 문자가 아닌지 확인
-	) {
-		
-	} else {
-	  alert('이메일 주소 형식이 올바르지 않습니다.');
-	  document.form.email.focus();
-	  return;
-	}
+    var atPos = str.indexOf('@');
+    var dotPos = str.indexOf('.');
+    var eMailSize = str.length;
 
-    $.ajax({
-        type: 'post',
-        url: '/SosoMarket/MemberEmailSendServlet',
-        data: { email: email },  // Pass the email to the server
-        success: function (result) {
-            // Handle the success response
-            if (result === "true") {
-                alert("인증 메일을 보냈습니다.");  // Show a notification to the user
-            } else {
-                alert("메일 전송 실패. 다시 시도해주세요.");  // Show an error notification
-            }
-        },
-        error: function () {
-            // Handle the error response
-            alert("서버 오류. 다시 시도해주세요.");  // Show an error notification
+    if (
+        atPos > 0 && // '@' 문자가 첫 번째 문자 이후에 나타나는지 확인합니다.
+        dotPos > atPos + 1 && // '.' 문자가 '@' 이후에 나타나는지 확인합니다.
+        dotPos + 1 < eMailSize // '.' 문자가 마지막 문자가 아닌지 확인합니다.
+    ) {
+        // 유효한 이메일 형식입니다.
+    } else {
+        alert('이메일 주소 형식이 올바르지 않습니다.');
+        $('#email').focus();
+        return;
+    }
+
+    domainCheck(function(isDomainValid) {
+        if (isDomainValid) {
+            // 도메인 체크가 성공하면 이곳에서 원하는 작업을 수행합니다.
+            $.ajax({
+                type: 'post',
+                url: '/SosoMarket/MemberEmailSendServlet',
+                data: { email: email }, // 이메일을 서버에 전달합니다.
+                success: function (result) {
+                    // 성공 응답을 처리합니다.
+                    if (result === "true") {
+                        alert("인증 이메일이 전송되었습니다."); // 사용자에게 알림을 표시합니다.
+                    } else {
+                        alert("메일 전송에 실패했습니다. 다시 시도해주세요."); // 오류 알림을 표시합니다.
+                    }
+                },
+                error: function () {
+                    // 오류 응답을 처리합니다.
+                    alert("서버 오류입니다. 다시 시도해주세요."); // 오류 알림을 표시합니다.
+                }
+            });
+        } else {
+            alert('도메인을 확인해주세요.');
+            $('#email').focus();
         }
     });
 }
@@ -260,10 +326,10 @@ function sendVerificationEmail() {
 function emailcheckFunction() {
     var emailVrf = $('#emailVrf').val();
 
-    // Make an AJAX request to the server to compare the authentication numbers
+    // 서버로 인증 번호를 비교하기 위해 AJAX 요청을 보냅니다.
     $.ajax({
         type: 'post',
-        url: '/SosoMarket/CompareAuthCodeServlet', // Change this URL to the correct servlet URL
+        url: '/SosoMarket/CompareAuthCodeServlet', 
         data: { emailVrf: emailVrf },
         success: function (result) {
             if (result === "true") {
@@ -347,10 +413,10 @@ function submitForm() {
 		}
 		
 		if (authPass !== "true") {
-	        alert("이메일 인증을 해주세요");
-	        document.form.emailVrf.focus();
-	        return false;
-	    }
+		    alert("이메일 인증을 해주세요");
+		    document.form.emailVrf.focus();
+		    return false;
+		} 
     
     if (nick === "") {
         alert("닉네임을 입력해주세요");
