@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ProdStatServlet
@@ -30,6 +31,9 @@ public class ProdStatServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
+		HttpSession session = request.getSession();
+		String memberId = (String) session.getAttribute("memberId");
+		
 		ChatDAO dao = new ChatDAO();
 		ChatVO vo = new ChatVO();
 		
@@ -46,7 +50,7 @@ public class ProdStatServlet extends HttpServlet {
 		
 		request.setAttribute("prodVo", vo);
 		
-		String viewPage = "chat/chatList.jsp";
+		String viewPage = "/ChatList.do?member_id=" + memberId;
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}

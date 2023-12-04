@@ -13,6 +13,7 @@ public class ChatDAO extends DAO {
 	private String sql;
 
 	// 채팅 목록 조회
+
 	public ArrayList<ChatVO> selectChatList(ChatVO vo) {
 		sql = "select DISTINCT(c.chat_id), c.buyer_id, mc.nickname as buyer_nickname, p.member_id, mp.nickname, p.product_id, p.product_name, m.chat_message, m.generation_date, pp.product_photo_name\r\n"
 				+ "from chat c\r\n"
@@ -30,7 +31,6 @@ public class ChatDAO extends DAO {
 				+ "where (c.buyer_id = ?\r\n"
 				+ "or p.member_id = ?)\r\n"
 				+ "and SUBSTR(pp.product_photo_name,7,6) = 'fl0001'";
-		ArrayList<ChatVO> list = new ArrayList<ChatVO>();
 
 		try {
 			connect();
@@ -49,6 +49,50 @@ public class ChatDAO extends DAO {
 				vo.setProduct_name(rs.getString("product_name"));
 				vo.setChat_message(rs.getString("chat_message"));
 				vo.setGeneration_date(rs.getString("generation_date").substring(2, 16));
+				vo.setProdPhotoName(rs.getString("product_photo_name"));
+				list.add(vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+
+		return list;
+	}
+	
+	// 채팅 없는 채팅 목록 조회
+	public ArrayList<ChatVO> selectBinChatList(ChatVO vo, ArrayList<ChatVO> list) {
+		sql = "select c.chat_id, c.buyer_id, mc.nickname as buyer_nickname, p.member_id, mp.nickname, p.product_id, p.product_name, pp.product_photo_name\r\n"
+				+ "from chat c\r\n"
+				+ "     inner join product p on c.product_id = p.product_id\r\n"
+				+ "     LEFT JOIN member mc ON c.buyer_id = mc.member_id\r\n"
+				+ "     LEFT JOIN member mp ON p.member_id = mp.member_id \r\n"
+				+ "     inner JOIN product_photo pp on c.product_id = substr(pp.product_photo_name,1,6)\r\n"
+				+ "where (c.buyer_id = ?\r\n"
+				+ "or p.member_id = ?)\r\n"
+				+ "and chat_id in (SELECT chat_id FROM chat\r\n"
+				+ "                WHERE NOT EXISTS (\r\n"
+				+ "                SELECT 1\r\n"
+				+ "                FROM chat_message\r\n"
+				+ "                WHERE chat_message.chat_id = chat.chat_id))\r\n"
+				+ "and SUBSTR(pp.product_photo_name,7,6) = 'fl0001'";
+
+		try {
+			connect();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getMember_id());
+			psmt.setString(2, vo.getMember_id());
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				vo = new ChatVO();
+				vo.setChat_id(rs.getString("chat_id"));
+				vo.setBuyer_id(rs.getString("buyer_id"));
+				vo.setBuyer_nickname(rs.getString("buyer_nickname"));
+				vo.setMember_id(rs.getString("member_id"));
+				vo.setNickname(rs.getString("nickname"));
+				vo.setProduct_id(rs.getString("product_id"));
+				vo.setProduct_name(rs.getString("product_name"));
 				vo.setProdPhotoName(rs.getString("product_photo_name"));
 				list.add(vo);
 			}
@@ -87,7 +131,7 @@ public class ChatDAO extends DAO {
 
 		return list;
 	}
-
+	
 	// 채팅방 상품 정보 조회
 	public ChatVO selectProdInfo(String chat_id) {
 		sql = "select p.member_id, c.buyer_id, p.product_id, p.product_name, p.product_status,\r\n"
@@ -227,6 +271,7 @@ public class ChatDAO extends DAO {
 
 	}
 	
+
 //	송다희 추가
 	public int insertChat(ChatVO vo) {
 		sql = "insert into chat_message values(CONCAT('ms', LPAD(chatMsgSeq.nextval,4,0)), ?, ?, ?, 'r', systimestamp)";
@@ -245,4 +290,22 @@ public class ChatDAO extends DAO {
 		}
 		return result;
 	}
+  
+     // 상품 상세 채팅 걸기
+   public int insertChat(String memberId, String product_id) {
+      sql = "insert into chat values(concat('ch', LPAD(chatSeq.nextval,4,0)), ?, ?, sysdate)";
+      int result = 0;
+      try {
+         connect();
+         psmt = conn.prepareStatement(sql);
+         psmt.setString(1, memberId);
+         psmt.setString(2, product_id);
+         result = psmt.executeUpdate();
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } finally {
+         disconnect();
+      }
+      return result;
+   }
 }
