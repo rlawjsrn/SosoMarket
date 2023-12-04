@@ -9,17 +9,31 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     
-        // 상품 가격 유효성 검사
-        function validateForm() {
-            var prodPrice = document.forms["prodModifyfrm"]["prodPrice"].value;
-            var numReg = /^[0-9]+$/;
-            if (!numReg.test(prodPrice)) {
-                alert("가격은 숫자만 입력해주세요.");
-                return false;
-            }
-            return true;
-        }
 
+/* 상품 가격 콤마 표시 */
+function comma(str) {
+	str = String(str);
+	return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+
+function uncomma(str) {
+	str = String(str);
+	return str.replace(/[^\d]+/g, '');
+}
+
+function inputNumberFormat(obj) {
+	obj.value = comma(uncomma(obj.value));
+}
+
+function inputOnlyNumberFormat(obj) {
+	obj.value = onlynumber(uncomma(obj.value));
+}
+
+function onlynumber(str) {
+	str = String(str);
+	return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1');
+}
+    
         function photoDel(prodPhotoName, cnt) {
             // 파일 삭제 구현, 이미지 div 숨김
             var uploadButton = document.querySelector('.fa-upload');
@@ -94,8 +108,8 @@
 
 	<!-- SECTION -->
 	<div class="section">
-		<form action="/SosoMarket/ProdUpdate.do?prodId=${vo.prodId}" method="post"
-			enctype="multipart/form-data" id="prodModifyfrm"
+		<form action="/SosoMarket/ProdUpdate.do?prodId=${vo.prodId}"
+			method="post" enctype="multipart/form-data" id="prodModifyfrm"
 			onsubmit="return validateForm();">
 			<!-- container -->
 			<div class="container">
@@ -118,7 +132,7 @@
 							<div class="form-group">
 								<input class="input" type="text" name="prodPrice"
 									placeholder="가격을 입력해주세요." required="required"
-									value="${vo.prodPrice }">
+									value="${vo.prodPrice }" onkeyup="inputNumberFormat(this);">
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" name="place"
