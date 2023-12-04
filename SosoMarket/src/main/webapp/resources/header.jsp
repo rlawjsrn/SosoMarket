@@ -125,7 +125,7 @@ if (memberId != null) {
 							<!-- Wishlist -->
 							<div>
 							
-								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"
+								<a class="dropdown-toggle" aria-expanded="true"
 									href="/SosoMarket/ChatList.do?member_id=<%=memberId %>">
 									<i class="fa fa-comment-o"></i>
 									<span>소소톡</span>
@@ -136,7 +136,7 @@ if (memberId != null) {
 
 							<!-- Cart -->
 							<div class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown"
+								<a class="dropdown-toggle" 
 									aria-expanded="true" href="/SosoMarket/MyPageHome.do?memberId=<%=memberId %>"> <i
 									class="fa fa-shopping-cart"></i> <span>마이마켓</span>
 									<div class="qty">3</div>
