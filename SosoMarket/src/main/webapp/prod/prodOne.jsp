@@ -148,12 +148,25 @@
 								</c:if>
 							</ul>
 							<br>
-							<c:if test="${memberId eq vo.memberId}">
+							<%-- <c:if test="${memberId eq vo.memberId}">
 								<button class="primary-btn cta-btn"
 									onclick="deleteProduct('${vo.prodId}')">삭제하기</button>
 								<button class="primary-btn cta-btn"
 									onclick="location.href='/SosoMarket/ProdMod.do?prodId=${vo.prodId }'">수정하기</button>
-							</c:if>
+							</c:if> --%>
+							<!-- 채팅방 연결 추가 (수정중) -->
+							<c:choose>
+								<c:when test="${memberId eq vo.memberId}">
+									<button class="primary-btn cta-btn"
+										onclick="deleteProduct('${vo.prodId}')">삭제하기</button>
+									<button class="primary-btn cta-btn"
+										onclick="location.href='/SosoMarket/ProdMod.do?prodId=${vo.prodId }'">수정하기</button>
+								</c:when>
+								<c:otherwise>
+									<button class="primary-btn cta-btn"
+										onclick="location.href='/SosoMarket/JoinChat.do?prodId=${vo.prodId }'">채팅걸기</button>
+								</c:otherwise>
+							</c:choose>
 						</c:if>
 					</div>
 				</div>

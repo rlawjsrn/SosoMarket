@@ -269,4 +269,22 @@ public class ChatDAO extends DAO {
 		return result;
 
 	}
+	
+	// 상품 상세 채팅 걸기
+	public int insertChat(String memberId, String product_id) {
+		sql = "insert into chat values(concat('ch', LPAD(chatSeq.nextval,4,0)), ?, ?, sysdate)";
+		int result = 0;
+		try {
+			connect();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, memberId);
+			psmt.setString(2, product_id);
+			result = psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return result;
+	}
 }
