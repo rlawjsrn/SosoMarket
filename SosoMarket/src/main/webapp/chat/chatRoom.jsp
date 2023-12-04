@@ -138,9 +138,12 @@ function openReview() {
 					<input type="radio" id="bad" name="score" value="3" class="custom-radio">
 					<label for="bad">별로였어요..</label>
 				</div>
+				<br>
 				<button class="primary-btn" onclick="submitReview()">후기 남기기</button>
 			</form>
-			<button class="primary-btn" onclick="closeReview()">X</button>
+			<button class="close_btn" onclick="closeReview()">
+				<img src="https://cdn.icon-icons.com/icons2/2518/PNG/512/x_icon_150997.png" alt=""> 
+			</button>
 		</div>
 	</div>
 	
