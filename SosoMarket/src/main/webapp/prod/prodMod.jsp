@@ -13,6 +13,29 @@
 	%>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script>
+		/* 상품 가격 콤마 표시 */
+		function comma(str) {
+			str = String(str);
+			return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+		}
+
+		function uncomma(str) {
+			str = String(str);
+			return str.replace(/[^\d]+/g, '');
+		}
+
+		function inputNumberFormat(obj) {
+			obj.value = comma(uncomma(obj.value));
+		}
+
+		function inputOnlyNumberFormat(obj) {
+			obj.value = onlynumber(uncomma(obj.value));
+		}
+
+		function onlynumber(str) {
+			str = String(str);
+			return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1');
+		}
 		// 이미지 미리보기
 		function readURL(input, previewId) {
 			if (input.files && input.files[0]) {
@@ -139,7 +162,7 @@
 							<div class="form-group">
 								<input class="input" type="text" name="prodPrice"
 									placeholder="가격을 입력해주세요." required="required"
-									value="${vo.prodPrice }">
+									value="${vo.prodPrice }" onkeyup="inputNumberFormat(this);">
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" name="place"

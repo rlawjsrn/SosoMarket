@@ -40,7 +40,7 @@ public class ProdUpdateServlet extends HttpServlet {
 			
 			String category = multi.getParameter("category");
 			String prodName = multi.getParameter("prodName");
-			String prodPrice = multi.getParameter("prodPrice");
+			String prodPrice = multi.getParameter("prodPrice").replaceAll("[^\\uAC00-\\uD7A3\\dA-Za-z\\s]", "");
 			String placeTrans = multi.getParameter("place");
 			String prodDscrp = multi.getParameter("prodDscrp");
 //			String prodPic = multi.getFilesystemName();
