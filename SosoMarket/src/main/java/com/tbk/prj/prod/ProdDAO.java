@@ -265,10 +265,27 @@ public class ProdDAO extends DAO {
 	}
 
 // 상품 수정
-	public ProdVO updateProd(String prodId) {
+	public int updateProd(ProdVO vo) {
+		int r = 0;
+		try {
+			connect();
+			String sql = "UPDATE product SET product_name = ?, product_price = ?, place_transaction = ?, product_description = ? WHERE product_id = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getProdName());
+			psmt.setString(2, vo.getProdPrice());
+			psmt.setString(3, vo.getPlaceTrans());
+			psmt.setString(4, vo.getProdDscrp());
+			psmt.setString(5, vo.getProdId());
 
-		return null;
-
+			r = psmt.executeUpdate();
+			
+			System.out.println("수정 성공함? : " + r);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return r;
 	}
 
 // 카테고리 목록
@@ -401,6 +418,25 @@ public class ProdDAO extends DAO {
 			String sql = "DELETE FROM product_photo WHERE SUBSTR(product_photo_name, 1, 6) = ?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, prodId);
+
+			int r = psmt.executeUpdate();
+			return r > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return false;
+	}
+
+	// 상품 사진 삭제(수정용)
+	public boolean delModProdPhoto(String prodPhotoName) {
+		try {
+			connect();
+			System.out.println("상품사진삭제 이름: " + prodPhotoName);
+			String sql = "DELETE FROM product_photo WHERE product_photo_name = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, prodPhotoName);
 
 			int r = psmt.executeUpdate();
 			return r > 0;

@@ -402,6 +402,15 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>ProdPhotoDelServlet</display-name>
+    <servlet-name>ProdPhotoDelServlet</servlet-name>
+    <servlet-class>com.tbk.prj.prod.ProdPhotoDelServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProdPhotoDelServlet</servlet-name>
+    <url-pattern>/ProdPhotoDelServlet</url-pattern>
+</servlet-mapping>
+  <servlet>
     <display-name>ChatInsertServlet</display-name>
     <servlet-name>ChatInsertServlet</servlet-name>
     <servlet-class>com.tbk.prj.chat.ChatInsertServlet</servlet-class>
@@ -427,5 +436,6 @@
   <servlet-mapping>
     <servlet-name>JoinChatServlet</servlet-name>
     <url-pattern>/JoinChatServlet</url-pattern>
+
   </servlet-mapping>
 </web-app>
