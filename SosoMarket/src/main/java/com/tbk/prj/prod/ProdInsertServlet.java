@@ -29,8 +29,9 @@ public class ProdInsertServlet extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("ProdInsertServlet 실행되니???");
 
-		String saveDir = "C:\\Users\\fkaus\\git\\sosomarket\\SosoMarket\\src\\main\\webapp\\upload";
-		
+		ServletContext context = getServletContext();
+		String rootDir = context.getRealPath("/");
+		String saveDir = rootDir + "upload";
 		System.out.println(saveDir);
 		int maxSize = 1024 * 1024 * 30;
 		String encoding = "UTF-8";
