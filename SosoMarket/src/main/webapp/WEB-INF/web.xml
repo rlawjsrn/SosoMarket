@@ -409,5 +409,33 @@
   <servlet-mapping>
     <servlet-name>ProdPhotoDelServlet</servlet-name>
     <url-pattern>/ProdPhotoDelServlet</url-pattern>
+</servlet-mapping>
+  <servlet>
+    <display-name>ChatInsertServlet</display-name>
+    <servlet-name>ChatInsertServlet</servlet-name>
+    <servlet-class>com.tbk.prj.chat.ChatInsertServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChatInsertServlet</servlet-name>
+    <url-pattern>/ChatInsertServlet</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <display-name>CompareAuthCodeServlet</display-name>
+    <servlet-name>CompareAuthCodeServlet</servlet-name>
+    <servlet-class>com.tbk.prj.member.CompareAuthCodeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CompareAuthCodeServlet</servlet-name>
+    <url-pattern>/CompareAuthCodeServlet</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <display-name>JoinChatServlet</display-name>
+    <servlet-name>JoinChatServlet</servlet-name>
+    <servlet-class>com.tbk.prj.chat.JoinChatServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>JoinChatServlet</servlet-name>
+    <url-pattern>/JoinChatServlet</url-pattern>
+
   </servlet-mapping>
 </web-app>

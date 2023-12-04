@@ -63,6 +63,7 @@ public class ChatRoomServlet extends HttpServlet {
 //		String memberId = request.getParameter("memberId");
 		String memberId = (String) session.getAttribute("memberId");
 		System.out.println("로그인계정 : " + memberId);
+		prodVo.setCurrent_id(memberId);
 		
 		if (prodVo.getProd_mem_id().equals(memberId)) {
 			prodVo.setOther_mem_id(prodVo.getBuyer_id());

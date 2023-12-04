@@ -43,28 +43,6 @@
 		});
 	});
 </script>
-<script>
-
-/* 후기창 띄우기 */
-document.getElementById("call_review").addEventListener("click", function(event) {
-    event.preventDefault();
-    var reviewDiv = document.getElementById("review");
-    reviewDiv.classList.remove("hidden");
-    }
-});
-function openReview() {
-	var reviewDiv = document.getElementById("review");
-    reviewDiv.classList.remove("hidden");
-}
-
-/* 후기창 닫기 */
-function closeReview() {
-	console.log("X눌림");
-	var reviewDiv = document.getElementById("review");
-    reviewDiv.classList.add("hidden");
-}
-
-</script>
 </head>
 <body>
 

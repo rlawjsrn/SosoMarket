@@ -210,8 +210,7 @@ function applyFilters() {
 								<div class="product" id="prodId${voo.prodId }">
 									<div class="product-img">
 										<img id="prodPhotoName"
-											src="./upload/${voo.prodPhotoName}.png?after"
-											style="width: 263px; height: 263px;" alt="">
+											src="./upload/${voo.prodPhotoName}.png?after" alt="">
 									</div>
 									<div class="product-body">
 										<p class="product-category" id="category">${voo.category}</p>

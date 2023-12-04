@@ -9,9 +9,9 @@
 <title>Insert title here</title>
 <!-- 부트스트랩 css -->
 <link href="resources/css2/bootstrap.min.css?after" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <link href="resources/css2/tiny-slider.css?after" rel="stylesheet">
 <link href="resources/css2/style.css?after" rel="stylesheet">
+<link href="resources/css/style-mypage.css?after" rel="stylesheet">
 </head>
 <script>
 /* 관심상품 삭제 */
@@ -34,7 +34,7 @@
 
 	<!-- 다른 부트스트랩 -->
 	<div class="untree_co-section before-footer-section">
-		<div class="container">
+		<div class="">
 			<div class="row mb-5">
 				<form class="col-md-12" method="post">
 					<div class="site-blocks-table">
@@ -51,7 +51,7 @@
 							<c:forEach var="vo" items="${list}">
 								<tr>
 									<td class="product-thumbnail">
-										<img src="./upload/${vo.productPhotoName }.png?after" alt="Image" class="img-fluid" style="width: 263px; height: 263px;" alt="">
+										<img src="./upload/${vo.productPhotoName }.png?after" alt="Image" class="img-fluid" alt="">
 									</td>
 									<td class="product-name">
 										<h2 class="h5 text-black">${vo.productName }</h2>

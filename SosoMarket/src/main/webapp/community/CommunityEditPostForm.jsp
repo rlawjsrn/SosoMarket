@@ -91,6 +91,11 @@
 						function updatePost() {
 							var postTitle = encodeURIComponent($('#postTitle').val().trim());
 							var postDetail = encodeURIComponent($('#postDetail').val().trim());
+							
+						    postTitle = decodeURIComponent(postTitle);
+						    postDetail = decodeURIComponent(postDetail);
+
+						    
 							$.ajax({
 										type : "POST",
 										url : "/SosoMarket/CommunityPostUpdate.do?postId=${post.postId}", 

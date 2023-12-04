@@ -9,16 +9,14 @@
 <title>Insert title here</title>
 <!-- 부트스트랩 css -->
 <link href="css2/bootstrap.min.css?after" rel="stylesheet">
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-	rel="stylesheet">
 <link href="css2/tiny-slider.css?after" rel="stylesheet">
 <link href="css2/style.css?after" rel="stylesheet">
+<link href="resources/css/style-mypage.css?after" rel="stylesheet">
 </head>
 <body>
 	<!-- 다른 부트스트랩 -->
 	<div class="untree_co-section before-footer-section">
-		<div class="container">
+		<div class="">
 			<div class="row mb-5">
 				<form class="col-md-12" method="post">
 					<div class="site-blocks-table">
